@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.appts"
+        applicationId "com.cinepin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

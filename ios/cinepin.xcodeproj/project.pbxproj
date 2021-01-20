@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* apptsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* apptsTests.m */; };
-		060AA5A5B24664BBC96B794F /* libPods-appts-apptsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38E64E0C3BBFA44F4844B3FA /* libPods-appts-apptsTests.a */; };
+		00E356F31AD99517003FC87E /* cinepinTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* cinepinTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* apptsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* apptsTests.m */; };
+		2DCD954D1E0B4F2C00145EB5 /* cinepinTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* cinepinTests.m */; };
+		7E032CA05B0435FCEC2F8A47 /* libPods-cinepin-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC145C4A35CE93EDF3D8198 /* libPods-cinepin-tvOS.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		81F70A59B3FF05347DBE1149 /* libPods-appts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B366250F97A514148C2C7B2 /* libPods-appts.a */; };
-		8511049662C7FC5D9CEB0A86 /* libPods-appts-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88017B54115D4FC75B88E02D /* libPods-appts-tvOSTests.a */; };
-		A60F5EC354A3809A302270B7 /* libPods-appts-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE1BA5044A03BAFAAC6D9B2 /* libPods-appts-tvOS.a */; };
+		B693BCF74CDCA257933F3307 /* libPods-cinepin-cinepinTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DDD6BB9ABB5498796387EF0 /* libPods-cinepin-cinepinTests.a */; };
+		D1738FF27B93B2A0B45BC83B /* libPods-cinepin-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CF16032D217185024AD0E1A /* libPods-cinepin-tvOSTests.a */; };
+		E21174B06D3A5D4A8E25DB62 /* libPods-cinepin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0FC172C99C017FD1B296A20 /* libPods-cinepin.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,45 +28,45 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = appts;
+			remoteInfo = cinepin;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "appts-tvOS";
+			remoteInfo = "cinepin-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* apptsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = apptsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* cinepinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cinepinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* apptsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = apptsTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* appts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = appts.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = appts/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = appts/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = appts/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = appts/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = appts/main.m; sourceTree = "<group>"; };
-		1B2A44E505E84BD111414BD6 /* Pods-appts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appts.release.xcconfig"; path = "Target Support Files/Pods-appts/Pods-appts.release.xcconfig"; sourceTree = "<group>"; };
-		21261688D43DD7395A16D177 /* Pods-appts-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appts-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-appts-tvOSTests/Pods-appts-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* appts-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "appts-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* appts-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "appts-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		38E64E0C3BBFA44F4844B3FA /* libPods-appts-apptsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appts-apptsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F4816A9E4A639364B330FE4 /* Pods-appts-apptsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appts-apptsTests.debug.xcconfig"; path = "Target Support Files/Pods-appts-apptsTests/Pods-appts-apptsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5B366250F97A514148C2C7B2 /* libPods-appts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appts.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		735C79903766C985A08B4C9B /* Pods-appts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appts.debug.xcconfig"; path = "Target Support Files/Pods-appts/Pods-appts.debug.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = appts/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		88017B54115D4FC75B88E02D /* libPods-appts-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appts-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A381C17215F03F7CF5060401 /* Pods-appts-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appts-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-appts-tvOSTests/Pods-appts-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		AA60737E01782EBC60044878 /* Pods-appts-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appts-tvOS.release.xcconfig"; path = "Target Support Files/Pods-appts-tvOS/Pods-appts-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		C89284BBFAE5BA62D8145976 /* Pods-appts-apptsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appts-apptsTests.release.xcconfig"; path = "Target Support Files/Pods-appts-apptsTests/Pods-appts-apptsTests.release.xcconfig"; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* cinepinTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cinepinTests.m; sourceTree = "<group>"; };
+		0B7E939E1934BC07686358FD /* Pods-cinepin-cinepinTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cinepin-cinepinTests.release.xcconfig"; path = "Target Support Files/Pods-cinepin-cinepinTests/Pods-cinepin-cinepinTests.release.xcconfig"; sourceTree = "<group>"; };
+		135196651F553ABA7300723F /* Pods-cinepin-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cinepin-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-cinepin-tvOS/Pods-cinepin-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* cinepin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cinepin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = cinepin/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = cinepin/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = cinepin/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = cinepin/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = cinepin/main.m; sourceTree = "<group>"; };
+		2D02E47B1E0B4A5D006451C7 /* cinepin-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cinepin-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* cinepin-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "cinepin-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DDD6BB9ABB5498796387EF0 /* libPods-cinepin-cinepinTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cinepin-cinepinTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6CF16032D217185024AD0E1A /* libPods-cinepin-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cinepin-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = cinepin/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8DDCF87FA05C7041F3EE37CC /* Pods-cinepin-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cinepin-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-cinepin-tvOSTests/Pods-cinepin-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		A0122C0F9378AE8BDAB6D730 /* Pods-cinepin-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cinepin-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-cinepin-tvOSTests/Pods-cinepin-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		ACEA2C36B0F450855F62FECC /* Pods-cinepin-cinepinTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cinepin-cinepinTests.debug.xcconfig"; path = "Target Support Files/Pods-cinepin-cinepinTests/Pods-cinepin-cinepinTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C8B103D430C74BC4DE01F9D6 /* Pods-cinepin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cinepin.release.xcconfig"; path = "Target Support Files/Pods-cinepin/Pods-cinepin.release.xcconfig"; sourceTree = "<group>"; };
+		D0FC172C99C017FD1B296A20 /* libPods-cinepin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cinepin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF520069280E390E1356F938 /* Pods-cinepin-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cinepin-tvOS.release.xcconfig"; path = "Target Support Files/Pods-cinepin-tvOS/Pods-cinepin-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		DFC145C4A35CE93EDF3D8198 /* libPods-cinepin-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cinepin-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E62029B87539EF2BBA2E8E29 /* Pods-cinepin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cinepin.debug.xcconfig"; path = "Target Support Files/Pods-cinepin/Pods-cinepin.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		F1697FA133460DC0066517CA /* Pods-appts-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appts-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-appts-tvOS/Pods-appts-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		FFE1BA5044A03BAFAAC6D9B2 /* libPods-appts-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appts-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				060AA5A5B24664BBC96B794F /* libPods-appts-apptsTests.a in Frameworks */,
+				B693BCF74CDCA257933F3307 /* libPods-cinepin-cinepinTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81F70A59B3FF05347DBE1149 /* libPods-appts.a in Frameworks */,
+				E21174B06D3A5D4A8E25DB62 /* libPods-cinepin.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A60F5EC354A3809A302270B7 /* libPods-appts-tvOS.a in Frameworks */,
+				7E032CA05B0435FCEC2F8A47 /* libPods-cinepin-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,20 +98,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8511049662C7FC5D9CEB0A86 /* libPods-appts-tvOSTests.a in Frameworks */,
+				D1738FF27B93B2A0B45BC83B /* libPods-cinepin-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* apptsTests */ = {
+		00E356EF1AD99517003FC87E /* cinepinTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* apptsTests.m */,
+				00E356F21AD99517003FC87E /* cinepinTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = apptsTests;
+			path = cinepinTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -122,7 +122,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* appts */ = {
+		13B07FAE1A68108700A75B9A /* cinepin */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -133,7 +133,7 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = appts;
+			name = cinepin;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -141,10 +141,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				5B366250F97A514148C2C7B2 /* libPods-appts.a */,
-				38E64E0C3BBFA44F4844B3FA /* libPods-appts-apptsTests.a */,
-				FFE1BA5044A03BAFAAC6D9B2 /* libPods-appts-tvOS.a */,
-				88017B54115D4FC75B88E02D /* libPods-appts-tvOSTests.a */,
+				D0FC172C99C017FD1B296A20 /* libPods-cinepin.a */,
+				2DDD6BB9ABB5498796387EF0 /* libPods-cinepin-cinepinTests.a */,
+				DFC145C4A35CE93EDF3D8198 /* libPods-cinepin-tvOS.a */,
+				6CF16032D217185024AD0E1A /* libPods-cinepin-tvOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -159,12 +159,12 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* appts */,
+				13B07FAE1A68108700A75B9A /* cinepin */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* apptsTests */,
+				00E356EF1AD99517003FC87E /* cinepinTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				E8A2CE7812E1A7E70C946048 /* Pods */,
+				CB69ECBB35B7E738128A004A /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -174,25 +174,25 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* appts.app */,
-				00E356EE1AD99517003FC87E /* apptsTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* appts-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* appts-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* cinepin.app */,
+				00E356EE1AD99517003FC87E /* cinepinTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* cinepin-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* cinepin-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E8A2CE7812E1A7E70C946048 /* Pods */ = {
+		CB69ECBB35B7E738128A004A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				735C79903766C985A08B4C9B /* Pods-appts.debug.xcconfig */,
-				1B2A44E505E84BD111414BD6 /* Pods-appts.release.xcconfig */,
-				4F4816A9E4A639364B330FE4 /* Pods-appts-apptsTests.debug.xcconfig */,
-				C89284BBFAE5BA62D8145976 /* Pods-appts-apptsTests.release.xcconfig */,
-				F1697FA133460DC0066517CA /* Pods-appts-tvOS.debug.xcconfig */,
-				AA60737E01782EBC60044878 /* Pods-appts-tvOS.release.xcconfig */,
-				21261688D43DD7395A16D177 /* Pods-appts-tvOSTests.debug.xcconfig */,
-				A381C17215F03F7CF5060401 /* Pods-appts-tvOSTests.release.xcconfig */,
+				E62029B87539EF2BBA2E8E29 /* Pods-cinepin.debug.xcconfig */,
+				C8B103D430C74BC4DE01F9D6 /* Pods-cinepin.release.xcconfig */,
+				ACEA2C36B0F450855F62FECC /* Pods-cinepin-cinepinTests.debug.xcconfig */,
+				0B7E939E1934BC07686358FD /* Pods-cinepin-cinepinTests.release.xcconfig */,
+				135196651F553ABA7300723F /* Pods-cinepin-tvOS.debug.xcconfig */,
+				DF520069280E390E1356F938 /* Pods-cinepin-tvOS.release.xcconfig */,
+				A0122C0F9378AE8BDAB6D730 /* Pods-cinepin-tvOSTests.debug.xcconfig */,
+				8DDCF87FA05C7041F3EE37CC /* Pods-cinepin-tvOSTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -201,52 +201,52 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* apptsTests */ = {
+		00E356ED1AD99517003FC87E /* cinepinTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "apptsTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "cinepinTests" */;
 			buildPhases = (
-				4304C293331A232A76438418 /* [CP] Check Pods Manifest.lock */,
+				B878641F5D8B00174CADAA18 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				46BC08D8C29F55C8C6AF3A18 /* [CP] Copy Pods Resources */,
+				8A843CEA5ED3FB93EA63C24B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = apptsTests;
-			productName = apptsTests;
-			productReference = 00E356EE1AD99517003FC87E /* apptsTests.xctest */;
+			name = cinepinTests;
+			productName = cinepinTests;
+			productReference = 00E356EE1AD99517003FC87E /* cinepinTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* appts */ = {
+		13B07F861A680F5B00A75B9A /* cinepin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "appts" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "cinepin" */;
 			buildPhases = (
-				4F3809FF77CFD6BD3A2E9183 /* [CP] Check Pods Manifest.lock */,
+				580DC77FC68DFBCCAB229517 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				3474F7E13F3557B9D40ED1F1 /* [CP] Copy Pods Resources */,
+				6EDA7BD3E5C50535DF7D8B66 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = appts;
-			productName = appts;
-			productReference = 13B07F961A680F5B00A75B9A /* appts.app */;
+			name = cinepin;
+			productName = cinepin;
+			productReference = 13B07F961A680F5B00A75B9A /* cinepin.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* appts-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* cinepin-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "appts-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "cinepin-tvOS" */;
 			buildPhases = (
-				C2EC67F2047A4BC6AA4A27FD /* [CP] Check Pods Manifest.lock */,
+				CC5F367F4F0241E845B3C4D9 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -257,16 +257,16 @@
 			);
 			dependencies = (
 			);
-			name = "appts-tvOS";
-			productName = "appts-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* appts-tvOS.app */;
+			name = "cinepin-tvOS";
+			productName = "cinepin-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* cinepin-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* appts-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* cinepin-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "appts-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "cinepin-tvOSTests" */;
 			buildPhases = (
-				31C9E7F565D0442E188494B1 /* [CP] Check Pods Manifest.lock */,
+				97507E8AF64FF8493FDDE903 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -276,9 +276,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "appts-tvOSTests";
-			productName = "appts-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* appts-tvOSTests.xctest */;
+			name = "cinepin-tvOSTests";
+			productName = "cinepin-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* cinepin-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -307,7 +307,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "appts" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "cinepin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -320,10 +320,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* appts */,
-				00E356ED1AD99517003FC87E /* apptsTests */,
-				2D02E47A1E0B4A5D006451C7 /* appts-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* appts-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* cinepin */,
+				00E356ED1AD99517003FC87E /* cinepinTests */,
+				2D02E47A1E0B4A5D006451C7 /* cinepin-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* cinepin-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -391,7 +391,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		31C9E7F565D0442E188494B1 /* [CP] Check Pods Manifest.lock */ = {
+		580DC77FC68DFBCCAB229517 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -406,20 +406,20 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-appts-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-cinepin-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3474F7E13F3557B9D40ED1F1 /* [CP] Copy Pods Resources */ = {
+		6EDA7BD3E5C50535DF7D8B66 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-appts/Pods-appts-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-cinepin/Pods-cinepin-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -428,38 +428,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-appts/Pods-appts-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-cinepin/Pods-cinepin-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4304C293331A232A76438418 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-appts-apptsTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		46BC08D8C29F55C8C6AF3A18 /* [CP] Copy Pods Resources */ = {
+		8A843CEA5ED3FB93EA63C24B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-appts-apptsTests/Pods-appts-apptsTests-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-cinepin-cinepinTests/Pods-cinepin-cinepinTests-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -468,10 +446,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-appts-apptsTests/Pods-appts-apptsTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-cinepin-cinepinTests/Pods-cinepin-cinepinTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4F3809FF77CFD6BD3A2E9183 /* [CP] Check Pods Manifest.lock */ = {
+		97507E8AF64FF8493FDDE903 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -486,14 +464,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-appts-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-cinepin-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C2EC67F2047A4BC6AA4A27FD /* [CP] Check Pods Manifest.lock */ = {
+		B878641F5D8B00174CADAA18 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -508,7 +486,29 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-appts-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-cinepin-cinepinTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC5F367F4F0241E845B3C4D9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-cinepin-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -560,7 +560,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* apptsTests.m in Sources */,
+				00E356F31AD99517003FC87E /* cinepinTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,7 +586,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* apptsTests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* cinepinTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,12 +595,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* appts */;
+			target = 13B07F861A680F5B00A75B9A /* cinepin */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* appts-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* cinepin-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -608,14 +608,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F4816A9E4A639364B330FE4 /* Pods-appts-apptsTests.debug.xcconfig */;
+			baseConfigurationReference = ACEA2C36B0F450855F62FECC /* Pods-cinepin-cinepinTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = apptsTests/Info.plist;
+				INFOPLIST_FILE = cinepinTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -625,17 +625,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/appts.app/appts";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/cinepin.app/cinepin";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C89284BBFAE5BA62D8145976 /* Pods-appts-apptsTests.release.xcconfig */;
+			baseConfigurationReference = 0B7E939E1934BC07686358FD /* Pods-cinepin-cinepinTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = apptsTests/Info.plist;
+				INFOPLIST_FILE = cinepinTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -645,19 +645,19 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/appts.app/appts";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/cinepin.app/cinepin";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 735C79903766C985A08B4C9B /* Pods-appts.debug.xcconfig */;
+			baseConfigurationReference = E62029B87539EF2BBA2E8E29 /* Pods-cinepin.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = appts/Info.plist;
+				INFOPLIST_FILE = cinepin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -665,7 +665,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = appts;
+				PRODUCT_NAME = cinepin;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -674,12 +674,12 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1B2A44E505E84BD111414BD6 /* Pods-appts.release.xcconfig */;
+			baseConfigurationReference = C8B103D430C74BC4DE01F9D6 /* Pods-cinepin.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = appts/Info.plist;
+				INFOPLIST_FILE = cinepin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -687,7 +687,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = appts;
+				PRODUCT_NAME = cinepin;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -695,7 +695,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1697FA133460DC0066517CA /* Pods-appts-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 135196651F553ABA7300723F /* Pods-cinepin-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -706,14 +706,14 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "appts-tvOS/Info.plist";
+				INFOPLIST_FILE = "cinepin-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.appts-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.cinepin-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -723,7 +723,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AA60737E01782EBC60044878 /* Pods-appts-tvOS.release.xcconfig */;
+			baseConfigurationReference = DF520069280E390E1356F938 /* Pods-cinepin-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -734,14 +734,14 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "appts-tvOS/Info.plist";
+				INFOPLIST_FILE = "cinepin-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.appts-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.cinepin-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -751,7 +751,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21261688D43DD7395A16D177 /* Pods-appts-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = A0122C0F9378AE8BDAB6D730 /* Pods-cinepin-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -761,24 +761,24 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "appts-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "cinepin-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.appts-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.cinepin-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/appts-tvOS.app/appts-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/cinepin-tvOS.app/cinepin-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A381C17215F03F7CF5060401 /* Pods-appts-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 8DDCF87FA05C7041F3EE37CC /* Pods-cinepin-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -788,17 +788,17 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "appts-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "cinepin-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.appts-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.cinepin-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/appts-tvOS.app/appts-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/cinepin-tvOS.app/cinepin-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -919,7 +919,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "apptsTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "cinepinTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -928,7 +928,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "appts" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "cinepin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -937,7 +937,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "appts-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "cinepin-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -946,7 +946,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "appts-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "cinepin-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -955,7 +955,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "appts" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "cinepin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
