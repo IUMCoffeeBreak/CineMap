@@ -17,6 +17,7 @@ import { Homepage } from "./src/components/navbar-tabs/Homepage";
 import { Settings } from "./src/components/navbar-tabs/Settings";
 import constants from "./src/lib/utils/constants";
 import { Map } from "./src/components/navbar-tabs/Map";
+import Icons from "react-native-vector-icons/FontAwesome";
 
 declare const global: { HermesInternal: null | {} };
 
@@ -26,7 +27,32 @@ const App = () => {
     return (
         <>
             <NavigationContainer>
-                <Tab.Navigator initialRouteName={constants.tabs.HOME}>
+                <Tab.Navigator
+                    tabBarOptions={{
+                        activeTintColor: "tomato",
+                        inactiveTintColor: "gray"
+                    }}
+                    screenOptions={({ route }) => ({
+                        tabBarIcon: ({ focused, color, size }) => {
+                            let iconName;
+                            switch (route.name) {
+                                case constants.tabs.HOME:
+                                    iconName = "home";
+                                    break;
+                                case constants.tabs.MAP:
+                                    iconName = "map";
+                                    break;
+                                case constants.tabs.SETTINGS:
+                                    iconName = "cog";
+                                    break;
+                            }
+
+                            // You can return any component that you like here!
+                            return <Icons name={iconName} size={size} color={color} />;
+                        }
+                    })}
+                    initialRouteName={constants.tabs.HOME}
+                >
                     <Tab.Screen name={constants.tabs.HOME} component={Homepage} />
                     <Tab.Screen name={constants.tabs.MAP} component={Map} />
                     <Tab.Screen name={constants.tabs.SETTINGS} component={Settings} />
