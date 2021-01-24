@@ -8,6 +8,7 @@ target 'cinepin' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'GoogleMaps'
   target 'cinepinTests' do
     inherit! :complete
     # Pods for testing
