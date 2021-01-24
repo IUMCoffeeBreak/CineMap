@@ -16,19 +16,20 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Homepage } from "./src/components/navbar-tabs/Homepage";
 import { Settings } from "./src/components/navbar-tabs/Settings";
 import constants from "./src/lib/utils/constants";
+import { Map } from "./src/components/navbar-tabs/Map";
 
 declare const global: { HermesInternal: null | {} };
 
 const Tab = createBottomTabNavigator();
-const { HOME, SETTINGS } = constants.tabs;
 
 const App = () => {
     return (
         <>
             <NavigationContainer>
-                <Tab.Navigator initialRouteName={HOME}>
-                    <Tab.Screen name={HOME} component={Homepage} />
-                    <Tab.Screen name={SETTINGS} component={Settings} />
+                <Tab.Navigator initialRouteName={constants.tabs.HOME}>
+                    <Tab.Screen name={constants.tabs.HOME} component={Homepage} />
+                    <Tab.Screen name={constants.tabs.MAP} component={Map} />
+                    <Tab.Screen name={constants.tabs.SETTINGS} component={Settings} />
                 </Tab.Navigator>
             </NavigationContainer>
         </>

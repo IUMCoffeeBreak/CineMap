@@ -1,7 +1,8 @@
 export const constants = {
     tabs: {
         HOME: "Home",
-        SETTINGS: "Settings"
+        SETTINGS: "Settings",
+        MAP: "Map"
     }
 };
 
