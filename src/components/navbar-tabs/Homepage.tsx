@@ -12,7 +12,7 @@ export function Homepage() {
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
             <Text style={{ alignItems: "center" }}>Homepage</Text>
-            {/* NAtive map example */}
+            {/* Native map example */}
             {/*<MapView*/}
             {/*  */}
             {/*    style={styles.map}*/}
