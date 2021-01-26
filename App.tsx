@@ -18,6 +18,7 @@ import { Settings } from "./src/components/navbar-tabs/Settings";
 import constants from "./src/lib/utils/constants";
 import { Map } from "./src/components/navbar-tabs/Map";
 import Icons from "react-native-vector-icons/FontAwesome";
+import { Search } from "./src/components/navbar-tabs/Search";
 
 declare const global: { HermesInternal: null | {} };
 
@@ -45,6 +46,9 @@ const App = () => {
                                 case constants.tabs.SETTINGS:
                                     iconName = "cog";
                                     break;
+                                case constants.tabs.SEARCH:
+                                    iconName = "search";
+                                    break;
                             }
 
                             // You can return any component that you like here!
@@ -54,6 +58,7 @@ const App = () => {
                     initialRouteName={constants.tabs.HOME}
                 >
                     <Tab.Screen name={constants.tabs.HOME} component={Homepage} />
+                    <Tab.Screen name={constants.tabs.SEARCH} component={Search} />
                     <Tab.Screen name={constants.tabs.MAP} component={Map} />
                     <Tab.Screen name={constants.tabs.SETTINGS} component={Settings} />
                 </Tab.Navigator>
