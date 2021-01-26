@@ -8,14 +8,13 @@ export interface Record<T> {
 
 export interface Movie {
     title: string;
-    description: string;
-    locationIds: ID[];
+    description?: string;
+    locationIds?: ID[];
 }
 
 export interface Location {
     lat: number;
     lon: number;
-    movies: ID[];
 }
 
 export interface Schema {
@@ -30,14 +29,9 @@ const defaultSchema: Schema = {
 
 export class DataLayer {
     data: Schema;
-    private populated = false;
 
     constructor(initialData: Schema = defaultSchema) {
         this.data = initialData;
-    }
-
-    populateDb() {
-        if (this.populated) return;
     }
 
     addRecord<T>(record: T, where: any): ID {
@@ -74,7 +68,7 @@ export class DataLayer {
 
     findMoviesByLocation(loc: ID): Movie[] {
         return Object.entries(this.data.movies)
-            .filter(([, movie]) => movie.locationIds.includes(loc))
+            .filter(([, movie]) => movie?.locationIds?.includes(loc))
             .map(([, v]) => v);
     }
 
