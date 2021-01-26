@@ -9,7 +9,7 @@ import { SettingsTab } from "./src/components/navbar-tabs/SettingsTab";
 import { MapTab } from "./src/components/navbar-tabs/MapTab";
 import constants from "./src/lib/utils/constants";
 import Icons from "react-native-vector-icons/FontAwesome";
-import { MovieScreen } from "./src/components/MovieScreen";
+import { MovieView } from "./src/components/views/MovieView";
 import { SearchTab } from "./src/components/navbar-tabs/SearchTab";
 
 declare const global: { HermesInternal: null | {} };
@@ -28,7 +28,7 @@ const App = () => {
                     />
                     <Stack.Screen
                         name="Movie"
-                        component={MovieScreen}
+                        component={MovieView}
                     />
                 </Stack.Navigator>   */}
                 <Tab.Navigator
@@ -58,7 +58,7 @@ const App = () => {
                     })}
                     initialRouteName={constants.tabs.HOME}
                 >
-                    <Tab.Screen name={"temp-movie"} component={MovieScreen} />
+                    <Tab.Screen name={"temp-movie"} component={MovieView} />
                     <Tab.Screen name={constants.tabs.HOME} component={HomepageTab} />
                     <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} />
                     <Tab.Screen name={constants.tabs.MAP} component={MapTab} />

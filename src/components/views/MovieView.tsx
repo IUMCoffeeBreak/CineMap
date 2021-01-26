@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import MapView from "react-native-maps";
-import { Cast, LocationPin, Preview } from "../lib/utils/types";
+import { Cast, LocationPin, Preview } from "../../lib/utils/types";
 
 export interface MovieScreenProps {
     title: string;
@@ -12,7 +12,7 @@ export interface MovieScreenProps {
     preview: Preview;
 }
 
-export function MovieScreen(props: MovieScreenProps) {
+export function MovieView(props: MovieScreenProps) {
     return (
         <>
             <View style={styles.container}>
@@ -31,7 +31,7 @@ export function MovieScreen(props: MovieScreenProps) {
                     </View>
                     <Image
                         // {props.preview}
-                        source={require("../img/IMG.png")}
+                        source={require("../../img/IMG.png")}
                         resizeMode="contain"
                         style={styles.image}
                     />
