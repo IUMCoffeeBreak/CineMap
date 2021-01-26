@@ -1,8 +1,6 @@
-import React, { Component } from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import MapView, { Callout, Marker, UrlTile } from "react-native-maps";
-import { State, TouchableHighlight } from "react-native-gesture-handler";
-import { NavigationAction } from "react-navigation";
+import React from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
+import MapView, { Marker, UrlTile } from "react-native-maps";
 
 const styles = StyleSheet.create({
     map: {
@@ -33,7 +31,7 @@ export function MapTab() {
                     title={"Foo Place"}
                     description={"Im your first place"}
                     onPress={() => navigation.navigate("Movie")}
-                ></Marker>
+                />
             </MapView>
         </SafeAreaView>
     );
