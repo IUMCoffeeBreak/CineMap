@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export function Homepage() {
+export function HomepageTab() {
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
             <Text style={{ alignItems: "center" }}>Homepage</Text>

@@ -4,13 +4,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Homepage } from "./src/components/navbar-tabs/Homepage";
-import { Settings } from "./src/components/navbar-tabs/Settings";
-import { Map } from "./src/components/navbar-tabs/Map";
+import { HomepageTab } from "./src/components/navbar-tabs/HomepageTab";
+import { SettingsTab } from "./src/components/navbar-tabs/SettingsTab";
+import { MapTab } from "./src/components/navbar-tabs/MapTab";
 import constants from "./src/lib/utils/constants";
 import Icons from "react-native-vector-icons/FontAwesome";
 import { MovieScreen } from "./src/components/MovieScreen";
-import { Search } from "./src/components/navbar-tabs/Search";
+import { SearchTab } from "./src/components/navbar-tabs/SearchTab";
 
 declare const global: { HermesInternal: null | {} };
 
@@ -23,8 +23,8 @@ const App = () => {
             <NavigationContainer>
                 {/* <Stack.Navigator>
                     <Stack.Screen
-                        name="Map"
-                        component={Map}
+                        name="MapTab"
+                        component={MapTab}
                     />
                     <Stack.Screen
                         name="Movie"
@@ -59,10 +59,10 @@ const App = () => {
                     initialRouteName={constants.tabs.HOME}
                 >
                     <Tab.Screen name={"temp-movie"} component={MovieScreen} />
-                    <Tab.Screen name={constants.tabs.HOME} component={Homepage} />
-                    <Tab.Screen name={constants.tabs.SEARCH} component={Search} />
-                    <Tab.Screen name={constants.tabs.MAP} component={Map} />
-                    <Tab.Screen name={constants.tabs.SETTINGS} component={Settings} />
+                    <Tab.Screen name={constants.tabs.HOME} component={HomepageTab} />
+                    <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} />
+                    <Tab.Screen name={constants.tabs.MAP} component={MapTab} />
+                    <Tab.Screen name={constants.tabs.SETTINGS} component={SettingsTab} />
                 </Tab.Navigator>
             </NavigationContainer>
         </>

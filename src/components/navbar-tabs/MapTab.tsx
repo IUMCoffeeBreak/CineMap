@@ -15,7 +15,7 @@ export const romeCoordinates = {
     lon: 12.4964
 };
 
-export function Map() {
+export function MapTab() {
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
             <MapView

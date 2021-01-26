@@ -54,7 +54,7 @@ function submitSearch(text: string): Movie[] {
     return db.findMoviesByTitleText(text).map(v => v.movie);
 }
 
-export function Search() {
+export function SearchTab() {
     const [search, setSearch] = useState("");
     const [movies, setMovies] = useState<Movie[]>([]);
     const triggerSearch = text => {
@@ -85,4 +85,4 @@ export function Search() {
     );
 }
 
-export default Search;
+export default SearchTab;
