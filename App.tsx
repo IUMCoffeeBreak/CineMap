@@ -1,13 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from "react";
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -63,8 +53,6 @@ const App = () => {
                                     iconName = "search";
                                     break;
                             }
-
-                            // You can return any component that you like here!
                             return <Icons name={iconName} size={size} color={color} />;
                         }
                     })}
