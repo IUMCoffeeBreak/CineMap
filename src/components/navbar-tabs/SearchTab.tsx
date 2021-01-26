@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, TextStyle, View } from "react-native";
+import { Animated, FlatList, StyleSheet, Text, TextStyle, View } from "react-native";
 import { SearchBar } from "../../lib/components/SearchBar";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { Movie } from "../../lib/DataLayer";
@@ -42,11 +42,19 @@ const styles = StyleSheet.create({
 });
 
 function Item(props: Movie) {
+    const [animation] = useState(new Animated.Value(0));
+    useEffect(() => {
+        Animated.timing(animation, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 300
+        }).start();
+    }, []);
     return (
-        <View style={styles.listItem}>
+        <Animated.View style={{ ...styles.listItem, opacity: animation }}>
             <Text style={styles.title}>{props.title}</Text>
             <Text style={styles.body}>{props.description}</Text>
-        </View>
+        </Animated.View>
     );
 }
 
