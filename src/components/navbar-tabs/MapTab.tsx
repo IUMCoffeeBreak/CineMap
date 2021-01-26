@@ -1,6 +1,7 @@
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import MapView, { Marker, UrlTile } from "react-native-maps";
+import constants from "../../lib/utils/constants";
 
 const styles = StyleSheet.create({
     map: {
@@ -31,7 +32,7 @@ export function MapTab({navigation}) {
                         coordinate={{ latitude: romeCoordinates.lat, longitude: romeCoordinates.lon }}
                         title={"Foo Place"}
                         description={"Im your first place"}
-                        onPress={()=>navigation.navigate('MovieView')}
+                        onPress={()=>navigation.navigate(constants.views.MOVIE)}
 
                     />
                 </MapView>

@@ -20,16 +20,16 @@ export const constants = {
         MARGIN_TOP: 10
     },
     spacing: {
-        MARGIN_BOTTOM: 20,
-        MARGIN_TOP: 20,
-        MARGIN_LEFT: 20,
-        MARGIN_RIGHT: 20
+        MARGIN_BOTTOM: 10,
+        MARGIN_TOP: 10,
+        MARGIN_LEFT: 10,
+        MARGIN_RIGHT: 10
     },
     borders: {
         RADIUS: 10
     },
     views: {
-        MOVIE: "MovieView"
+        MOVIE: "Scheda Film"
     }
 };
 

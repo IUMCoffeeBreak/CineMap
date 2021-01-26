@@ -10,9 +10,9 @@ const styleCard: TextStyle = {
     backgroundColor: "white",
     borderRadius: 20,
     height: 120,
-    marginLeft: constants.spacing.MARGIN_LEFT,
-    marginRight: constants.spacing.MARGIN_RIGHT,
-    marginTop: constants.spacing.MARGIN_TOP,
+    marginLeft: constants.spacing.MARGIN_LEFT * 2,
+    marginRight: constants.spacing.MARGIN_RIGHT * 2,
+    marginTop: constants.spacing.MARGIN_TOP * 2,
     padding: 10,
     shadowColor: "#000",
     shadowOffset: {
