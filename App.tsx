@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { HomepageTab } from "./src/components/navbar-tabs/HomepageTab";
 import { SettingsTab } from "./src/components/navbar-tabs/SettingsTab";
 import { MapTab } from "./src/components/navbar-tabs/MapTab";
@@ -11,6 +10,8 @@ import constants from "./src/lib/utils/constants";
 import Icons from "react-native-vector-icons/FontAwesome";
 import { MovieView } from "./src/components/views/MovieView";
 import { SearchTab } from "./src/components/navbar-tabs/SearchTab";
+import { createStackNavigator } from "@react-navigation/stack";
+
 
 declare const global: { HermesInternal: null | {} };
 
@@ -21,53 +22,57 @@ const App = () => {
     return (
         <>
             <NavigationContainer>
-                {/* <Stack.Navigator>
+                <Stack.Navigator>
                     <Stack.Screen
-                        name="MapTab"
-                        component={MapTab}
+                        name={constants.tabs.HOME}
+                        component={TabNavigation}
                     />
                     <Stack.Screen
-                        name="Movie"
+                        name={constants.tabs.MOVIE}
                         component={MovieView}
                     />
-                </Stack.Navigator>   */}
-                <Tab.Navigator
-                    tabBarOptions={{
-                        activeTintColor: "tomato",
-                        inactiveTintColor: "gray"
-                    }}
-                    screenOptions={({ route }) => ({
-                        tabBarIcon: ({ focused, color, size }) => {
-                            let iconName;
-                            switch (route.name) {
-                                case constants.tabs.HOME:
-                                    iconName = "home";
-                                    break;
-                                case constants.tabs.MAP:
-                                    iconName = "map";
-                                    break;
-                                case constants.tabs.SETTINGS:
-                                    iconName = "cog";
-                                    break;
-                                case constants.tabs.SEARCH:
-                                    iconName = "search";
-                                    break;
-                            }
-                            return <Icons name={iconName} size={size} color={color} />;
-                        }
-                    })}
-                    initialRouteName={constants.tabs.HOME}
-                >
-                    <Tab.Screen name={"temp-movie"} component={MovieView} />
-                    <Tab.Screen name={constants.tabs.HOME} component={HomepageTab} />
-                    <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} />
-                    <Tab.Screen name={constants.tabs.MAP} component={MapTab} />
-                    <Tab.Screen name={constants.tabs.SETTINGS} component={SettingsTab} />
-                </Tab.Navigator>
+                </Stack.Navigator> 
             </NavigationContainer>
         </>
     );
 };
+
+const TabNavigation = () => {
+    return(
+        <Tab.Navigator
+            tabBarOptions={{
+                activeTintColor: "tomato",
+                inactiveTintColor: "gray"
+            }}
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+                    switch (route.name) {
+                        case constants.tabs.HOME:
+                            iconName = "home";
+                            break;
+                        case constants.tabs.MAP:
+                            iconName = "map";
+                            break;
+                        case constants.tabs.SETTINGS:
+                            iconName = "cog";
+                            break;
+                        case constants.tabs.SEARCH:
+                            iconName = "search";
+                            break;
+                    }
+                    return <Icons name={iconName} size={size} color={color} />;
+                }
+            })}
+            initialRouteName={constants.tabs.HOME}
+        >
+            <Tab.Screen name={constants.tabs.HOME} component={HomepageTab} />
+            <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} />
+            <Tab.Screen name={constants.tabs.MAP} component={MapTab} />
+            <Tab.Screen name={constants.tabs.SETTINGS} component={SettingsTab} />
+        </Tab.Navigator>
+    );
+}
 
 const styles = StyleSheet.create({
     scrollView: {
