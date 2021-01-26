@@ -3,7 +3,8 @@ export const constants = {
         HOME: "Home",
         SETTINGS: "Settings",
         MAP: "Map",
-        SEARCH: "Search"
+        SEARCH: "Search",
+        MOVIE: "MovieView"
     },
     colors: {
         GLOBAL_BACKGROUND_COLOR: "#eeeeee",

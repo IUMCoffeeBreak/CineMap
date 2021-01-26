@@ -1,3 +1,4 @@
+import { forSlideLeft } from "@react-navigation/stack/lib/typescript/src/TransitionConfigs/HeaderStyleInterpolators";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import MapView from "react-native-maps";
@@ -12,12 +13,18 @@ export interface MovieScreenProps {
     preview: Preview;
 }
 
+export const romeCoordinates = {
+    lat: 41.9028,
+    lon: 12.4964
+};
+
 export function MovieView(props: MovieScreenProps) {
+
     return (
         <>
-            <View style={styles.container}>
-                <View style={styles.titoloColumnRow}>
-                    <View style={styles.titoloColumn}>
+            <View style={styles.mainContainer}>
+                <View style={styles.headerContainer}>
+                    <View style={styles.headerInfoContainer}>
                         <Text style={styles.title}>
                             {/* {props.title} */}
                             Title
@@ -36,7 +43,15 @@ export function MovieView(props: MovieScreenProps) {
                         style={styles.image}
                     />
                 </View>
-                <MapView style={styles.mapView}></MapView>
+                <MapView 
+                    style={styles.mapView}
+                    initialRegion={{
+                        latitude: romeCoordinates.lat,
+                        longitude: romeCoordinates.lon,
+                        latitudeDelta: 0.5,
+                        longitudeDelta: 0.5
+                    }}    
+                ></MapView>
                 <Text style={styles.cheatSheet}>
                     {/* {props.descripion} */}
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, repudiandae? Quam facilis
@@ -49,47 +64,46 @@ export function MovieView(props: MovieScreenProps) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    title: {
-        color: "#121212",
-        height: 86,
-        width: 188,
-        textAlign: "center"
-    },
-    headerInfo: {
-        color: "#121212",
-        height: 100,
-        width: 178,
-        marginTop: 14,
-        marginLeft: 10
-    },
-    titoloColumn: {
-        width: 188
-    },
-    image: {
-        width: 178,
-        height: 200
-    },
-    titoloColumnRow: {
-        height: 200,
-        flexDirection: "row",
-        marginTop: 53,
-        marginRight: 9
-    },
-    mapView: {
-        width: 355,
-        height: 205,
-        backgroundColor: "#E6E6E6",
-        marginTop: 20,
-        marginLeft: 10
-    },
-    cheatSheet: {
-        color: "#121212",
-        height: 270,
-        width: 355,
-        marginTop: 18,
-        marginLeft: 10
-    }
-});
+  mainContainer: {
+    flex: 1,
+  },
+  headerContainer: {
+    flex: 1,
+    flexDirection: "row",
+    marginTop: 15
+  },
+  headerInfoContainer:{
+    flex: 1
+  },
+  title: {
+    color: "#121212",
+    width: 188,
+    height: 100,
+    textAlign: "center",
+  },
+  headerInfo: {
+    color: "#121212",
+    height: 100,
+    width: 188,
+    textAlign: "center"
+  },
+
+  image: {
+    width: 188,
+    height: 200
+  },
+
+  mapView: {
+    width: '93%',
+    height: 229,
+    backgroundColor: "#E6E6E6",
+    marginLeft: 15
+  },
+  cheatSheet: {
+    color: "#121212",
+    height: 229,
+    width: '95%',
+    marginTop: 20,
+    marginLeft: 15
+  }
+});;
