@@ -94,3 +94,9 @@ export const pick = (o, keys) => {
     }
     return obj;
 };
+
+export function uuid(length = 8) {
+    const id = Math.random().toString(16).substr(2, 4);
+    if (length <= 1) return id;
+    return id + uuid(length - 1);
+}

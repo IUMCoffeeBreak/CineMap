@@ -5,6 +5,6 @@ export interface LocationPin {
 export interface Cast {
     name: string;
 }
-export interface Preview{
+export interface Preview {
     img: string;
 }

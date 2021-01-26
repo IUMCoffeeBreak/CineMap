@@ -4,7 +4,6 @@ import MapView, { Callout, Marker, UrlTile } from "react-native-maps";
 import { State, TouchableHighlight } from "react-native-gesture-handler";
 import { NavigationAction } from "react-navigation";
 
-
 const styles = StyleSheet.create({
     map: {
         ...StyleSheet.absoluteFillObject
@@ -30,13 +29,11 @@ export function Map() {
             >
                 <UrlTile urlTemplate={"http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"} maximumZ={19} flipY={false} />
                 <Marker
-                    coordinate={{latitude: romeCoordinates.lat, longitude: romeCoordinates.lon}}
-                    title={'Foo Place'}
-                    description={'Im your first place'}
-                    onPress = {()=>
-                        navigation.navigate('Movie')}
-                >
-                </Marker>
+                    coordinate={{ latitude: romeCoordinates.lat, longitude: romeCoordinates.lon }}
+                    title={"Foo Place"}
+                    description={"Im your first place"}
+                    onPress={() => navigation.navigate("Movie")}
+                ></Marker>
             </MapView>
         </SafeAreaView>
     );

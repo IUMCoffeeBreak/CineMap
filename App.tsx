@@ -13,13 +13,14 @@ import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator } from "@react-navigation/stack";
 import { Homepage } from "./src/components/navbar-tabs/Homepage";
 import { Settings } from "./src/components/navbar-tabs/Settings";
 import { Map } from "./src/components/navbar-tabs/Map";
 import constants from "./src/lib/utils/constants";
 import Icons from "react-native-vector-icons/FontAwesome";
-import {MovieScreen} from "./src/components/MovieScreen";
+import { MovieScreen } from "./src/components/MovieScreen";
+import { Search } from "./src/components/navbar-tabs/Search";
 
 declare const global: { HermesInternal: null | {} };
 
@@ -58,6 +59,9 @@ const App = () => {
                                 case constants.tabs.SETTINGS:
                                     iconName = "cog";
                                     break;
+                                case constants.tabs.SEARCH:
+                                    iconName = "search";
+                                    break;
                             }
 
                             // You can return any component that you like here!
@@ -66,7 +70,9 @@ const App = () => {
                     })}
                     initialRouteName={constants.tabs.HOME}
                 >
-                    <Tab.Screen name={constants.tabs.HOME} component={MovieScreen /*Home*/} />
+                    <Tab.Screen name={"temp-movie"} component={MovieScreen} />
+                    <Tab.Screen name={constants.tabs.HOME} component={Homepage} />
+                    <Tab.Screen name={constants.tabs.SEARCH} component={Search} />
                     <Tab.Screen name={constants.tabs.MAP} component={Map} />
                     <Tab.Screen name={constants.tabs.SETTINGS} component={Settings} />
                 </Tab.Navigator>
