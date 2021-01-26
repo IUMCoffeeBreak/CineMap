@@ -13,20 +13,33 @@ import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from '@react-navigation/stack';
 import { Homepage } from "./src/components/navbar-tabs/Homepage";
 import { Settings } from "./src/components/navbar-tabs/Settings";
-import constants from "./src/lib/utils/constants";
 import { Map } from "./src/components/navbar-tabs/Map";
+import constants from "./src/lib/utils/constants";
 import Icons from "react-native-vector-icons/FontAwesome";
+import {MovieScreen} from "./src/components/MovieScreen";
 
 declare const global: { HermesInternal: null | {} };
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const App = () => {
     return (
         <>
             <NavigationContainer>
+                {/* <Stack.Navigator>
+                    <Stack.Screen
+                        name="Map"
+                        component={Map}
+                    />
+                    <Stack.Screen
+                        name="Movie"
+                        component={MovieScreen}
+                    />
+                </Stack.Navigator>   */}
                 <Tab.Navigator
                     tabBarOptions={{
                         activeTintColor: "tomato",
@@ -53,7 +66,7 @@ const App = () => {
                     })}
                     initialRouteName={constants.tabs.HOME}
                 >
-                    <Tab.Screen name={constants.tabs.HOME} component={Homepage} />
+                    <Tab.Screen name={constants.tabs.HOME} component={MovieScreen /*Home*/} />
                     <Tab.Screen name={constants.tabs.MAP} component={Map} />
                     <Tab.Screen name={constants.tabs.SETTINGS} component={Settings} />
                 </Tab.Navigator>
