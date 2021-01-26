@@ -3,6 +3,7 @@ import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import MapView from "react-native-maps";
 import { Cast, LocationPin, Preview } from "../../lib/utils/types";
+import { SafeAreaView } from "../../lib/components/SafeAreaView";
 
 export interface MovieScreenProps {
     title: string;
@@ -22,7 +23,7 @@ export function MovieView(props: MovieScreenProps) {
 
     return (
         <>
-            <View style={styles.mainContainer}>
+            <SafeAreaView style={styles.mainContainer}>
                 <View style={styles.headerContainer}>
                     <View style={styles.headerInfoContainer}>
                         <Text style={styles.title}>
@@ -43,22 +44,22 @@ export function MovieView(props: MovieScreenProps) {
                         style={styles.image}
                     />
                 </View>
-                <MapView 
+                <MapView
                     style={styles.mapView}
                     initialRegion={{
                         latitude: romeCoordinates.lat,
                         longitude: romeCoordinates.lon,
                         latitudeDelta: 0.5,
                         longitudeDelta: 0.5
-                    }}    
-                ></MapView>
+                    }}
+                />
                 <Text style={styles.cheatSheet}>
                     {/* {props.descripion} */}
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, repudiandae? Quam facilis
                     corrupti, iure odio ipsum placeat aperiam expedita accusantium, sunt nulla sapiente ullam porro
                     aliquam blanditiis consequuntur architecto delectus!
                 </Text>
-            </View>
+            </SafeAreaView>
         </>
     );
 }

@@ -1,10 +1,10 @@
 export const constants = {
+    appName: "CinePin",
     tabs: {
         HOME: "Home",
         SETTINGS: "Settings",
         MAP: "Map",
         SEARCH: "Search",
-        MOVIE: "MovieView"
     },
     colors: {
         GLOBAL_BACKGROUND_COLOR: "#eeeeee",
@@ -27,6 +27,9 @@ export const constants = {
     },
     borders: {
         RADIUS: 10
+    },
+    views: {
+        MOVIE: "MovieView"
     }
 };
 

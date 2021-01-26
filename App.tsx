@@ -18,25 +18,6 @@ declare const global: { HermesInternal: null | {} };
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const App = () => {
-    return (
-        <>
-            <NavigationContainer>
-                <Stack.Navigator>
-                    <Stack.Screen
-                        name={constants.tabs.HOME}
-                        component={TabNavigation}
-                    />
-                    <Stack.Screen
-                        name={constants.tabs.MOVIE}
-                        component={MovieView}
-                    />
-                </Stack.Navigator> 
-            </NavigationContainer>
-        </>
-    );
-};
-
 const TabNavigation = () => {
     return(
         <Tab.Navigator
@@ -73,6 +54,26 @@ const TabNavigation = () => {
         </Tab.Navigator>
     );
 }
+
+
+const App = () => {
+    return (
+        <>
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen
+                        name={constants.appName}
+                        component={TabNavigation}
+                    />
+                    <Stack.Screen
+                        name={constants.views.MOVIE}
+                        component={MovieView}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </>
+    );
+};
 
 const styles = StyleSheet.create({
     scrollView: {
