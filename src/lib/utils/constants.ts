@@ -32,6 +32,9 @@ export const constants = {
     },
     views: {
         MOVIE: "Scheda Film"
+    },
+    map: {
+        DELTA: 0.5
     }
 };
 

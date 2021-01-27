@@ -40,10 +40,11 @@ export function omitProps(o = {}, excludes) {
 //     }
 // }
 
-export const buildQs = (o = {}) =>
-    Object.keys(o)
-        .map(key => `${key}=${o[key]}`)
+export function buildQs(o = {}) {
+    return Object.keys(o)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(o[key])}`)
         .join("&");
+}
 
 // export function trimArray(array = []) {
 //     for (var i = 0; i < array.length; i++) {
