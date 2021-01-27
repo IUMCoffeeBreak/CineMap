@@ -1,17 +1,19 @@
 export const constants = {
     appName: "CinePin",
+    omdbApiKey: "4766d9c4",
     tabs: {
         HOME: "Home",
         SETTINGS: "Settings",
         MAP: "Map",
-        SEARCH: "Search",
+        SEARCH: "Search"
     },
     colors: {
         GLOBAL_BACKGROUND_COLOR: "#eeeeee",
         TRANSPARENT: "rgba(0, 0, 0, 0)"
     },
     text: {
-        TITLE_FONT: 18
+        TITLE_FONT: 20,
+        BODY_FONT: 14
     },
     cards: {
         RADIUS: 10,

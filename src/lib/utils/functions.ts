@@ -100,3 +100,7 @@ export function uuid(length = 8) {
     if (length <= 1) return id;
     return id + uuid(length - 1);
 }
+
+export function cutStringLength(str: string, length = 24) {
+    return str.length > length ? str.substr(0, length) : str;
+}
