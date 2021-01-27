@@ -43,10 +43,6 @@ export async function fetchMovieTitle(title: string): Promise<Response<Movie>> {
     }
 }
 
-setInterval(()=> {
-    console.log(cache)
-}, 1000)
-
 export class DataLayer {
     data: Schema;
 
