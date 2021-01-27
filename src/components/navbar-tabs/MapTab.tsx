@@ -14,7 +14,7 @@ export const romeCoordinates = {
     lon: 12.4964
 };
 
-export function MapTab({navigation}) {
+export function MapTab({ navigation }) {
     return (
         <>
             <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -23,17 +23,20 @@ export function MapTab({navigation}) {
                     initialRegion={{
                         latitude: romeCoordinates.lat,
                         longitude: romeCoordinates.lon,
-                        latitudeDelta: 0.5,
-                        longitudeDelta: 0.5
+                        latitudeDelta: constants.map.DELTA,
+                        longitudeDelta: constants.map.DELTA
                     }}
                 >
-                    <UrlTile urlTemplate={"http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"} maximumZ={19} flipY={false} />
+                    <UrlTile
+                        urlTemplate={"http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+                        maximumZ={19}
+                        flipY={false}
+                    />
                     <Marker
                         coordinate={{ latitude: romeCoordinates.lat, longitude: romeCoordinates.lon }}
                         title={"Foo Place"}
                         description={"Im your first place"}
-                        onPress={()=>navigation.navigate(constants.views.MOVIE)}
-
+                        onPress={() => navigation.navigate(constants.views.MOVIE)}
                     />
                 </MapView>
             </SafeAreaView>
