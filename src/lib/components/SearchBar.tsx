@@ -1,13 +1,17 @@
 import React from "react";
 import { SearchBar as RNSearchBar, SearchBarProps } from "react-native-elements";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, StyleProp, ViewStyle } from "react-native";
 import constants from "../utils/constants";
 
-export function SearchBar(props: SearchBarProps) {
+export interface CustomSearchProps extends SearchBarProps {
+    safeAreaProps?: StyleProp<ViewStyle>;
+}
+
+export function SearchBar(props: CustomSearchProps) {
     const borderColor = "rgba(0, 0, 0, 0.5)";
     const borderWidth = 0.5;
     return (
-        <SafeAreaView style={{ marginTop: 100 }}>
+        <SafeAreaView style={{ marginTop: 100, ...props.safeAreaProps as any }}>
             <RNSearchBar
                 containerStyle={{
                     backgroundColor: constants.colors.TRANSPARENT,

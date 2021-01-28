@@ -50,6 +50,15 @@ const styles = StyleSheet.create({
         marginRight: constants.spacing.MARGIN_RIGHT,
         paddingBottom: 10,
         fontSize: 15
+    },
+    searchBar: {
+        shadowColor: "#bbbbbb",
+        shadowOffset: {
+            width: 5,
+            height: 5
+        },
+        shadowOpacity: 5,
+        shadowRadius: 10
     }
 });
 
@@ -63,11 +72,11 @@ function Item(props: Partial<Movie>) {
         }).start();
     }, []);
     return (
-      <Animated.View style={{ ...styles.card, opacity: animation }}>
-          <Text style={styles.cardTitleText}>{props.Title}</Text>
-          <View style={styles.separator} />
-          <Text style={styles.cardBodyText}>{props.Plot}</Text>
-      </Animated.View>
+        <Animated.View style={{ ...styles.card, opacity: animation }}>
+            <Text style={styles.cardTitleText}>{props.Title}</Text>
+            <View style={styles.separator} />
+            <Text style={styles.cardBodyText}>{props.Plot}</Text>
+        </Animated.View>
     );
 }
 
@@ -86,12 +95,12 @@ export function SearchTab() {
         setMovie((!err && item) || {});
     };
     return (
-      <SafeAreaView>
-          <SearchBar onChangeText={setSearch} onBlur={() => triggerSearch(search)} value={search} />
-          {(!_.isEmpty(movie) && <Item Title={movie.Title} Plot={movie.Plot} />) || (
-            <Text style={styles.body}>{err}</Text>
-          )}
-      </SafeAreaView>
+        <SafeAreaView>
+            <SearchBar safeAreaProps={styles.searchBar} onChangeText={setSearch} onBlur={() => triggerSearch(search)} value={search} />
+            {(!_.isEmpty(movie) && <Item Title={movie.Title} Plot={movie.Plot} />) || (
+                <Text style={styles.body}>{err}</Text>
+            )}
+        </SafeAreaView>
     );
 }
 

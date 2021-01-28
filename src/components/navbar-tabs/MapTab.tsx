@@ -2,10 +2,21 @@ import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import MapView, { Marker, UrlTile } from "react-native-maps";
 import constants from "../../lib/utils/constants";
+import { SearchBar } from "../../lib/components/SearchBar";
 
 const styles = StyleSheet.create({
     map: {
         ...StyleSheet.absoluteFillObject
+    },
+    searchBar: {
+        marginTop: 30,
+        shadowColor: "#bbbbbb",
+        shadowOffset: {
+            width: 5,
+            height: 5
+        },
+        shadowOpacity: 5,
+        shadowRadius: 10
     }
 });
 
@@ -32,6 +43,7 @@ export function MapTab({ navigation }) {
                         maximumZ={19}
                         flipY={false}
                     />
+                    <SearchBar safeAreaProps={styles.searchBar} />
                     <Marker
                         coordinate={{ latitude: romeCoordinates.lat, longitude: romeCoordinates.lon }}
                         title={"Foo Place"}
