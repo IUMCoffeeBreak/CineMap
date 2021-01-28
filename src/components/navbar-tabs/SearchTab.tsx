@@ -6,6 +6,7 @@ import constants from "../../lib/utils/constants";
 import { db } from "../../db";
 import { Movie } from "../../lib/DataLayer";
 import _ from "lodash";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const styles = StyleSheet.create({
     card: {
@@ -75,7 +76,7 @@ async function submitSearch(text: string) {
     return await db.searchMovieTitle(text);
 }
 
-export function SearchTab() {
+export function SearchTab({navigation}) {
     const [search, setSearch] = useState("");
     const [movie, setMovie] = useState<Partial<Movie>>({});
     const [err, setErr] = useState("");
@@ -86,12 +87,14 @@ export function SearchTab() {
         setMovie((!err && item) || {});
     };
     return (
-      <SafeAreaView>
-          <SearchBar onChangeText={setSearch} onBlur={() => triggerSearch(search)} value={search} />
-          {(!_.isEmpty(movie) && <Item Title={movie.Title} Plot={movie.Plot} />) || (
-            <Text style={styles.body}>{err}</Text>
-          )}
-      </SafeAreaView>
+        <SafeAreaView>
+            <SearchBar onChangeText={setSearch} onBlur={() => triggerSearch(search)} value={search} />
+            <TouchableOpacity onPress={()=>navigation.navigate(constants.views.MOVIE)}>
+                {(!_.isEmpty(movie) && <Item Title={movie.Title} Plot={movie.Plot} />) || (
+                    <Text style={styles.body}>{err}</Text>
+                )}
+            </TouchableOpacity>
+        </SafeAreaView>
     );
 }
 
