@@ -8,7 +8,7 @@ import { Movie } from "../../lib/DataLayer";
 import _ from "lodash";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const styles = StyleSheet.create({
+const searchTabStyles = StyleSheet.create({
     card: {
         backgroundColor: "white",
         borderRadius: 20,
@@ -73,10 +73,10 @@ function Item(props: Partial<Movie>) {
         }).start();
     }, []);
     return (
-        <Animated.View style={{ ...styles.card, opacity: animation }}>
-            <Text style={styles.cardTitleText}>{props.Title}</Text>
-            <View style={styles.separator} />
-            <Text style={styles.cardBodyText}>{props.Plot}</Text>
+        <Animated.View style={{ ...searchTabStyles.card, opacity: animation }}>
+            <Text style={searchTabStyles.cardTitleText}>{props.Title}</Text>
+            <View style={searchTabStyles.separator} />
+            <Text style={searchTabStyles.cardBodyText}>{props.Plot}</Text>
         </Animated.View>
     );
 }
@@ -98,14 +98,14 @@ export function SearchTab({ navigation }) {
     return (
         <SafeAreaView>
             <SearchBar
-                safeAreaProps={styles.searchBar}
+                safeAreaProps={searchTabStyles.searchBar}
                 onChangeText={setSearch}
                 onBlur={() => triggerSearch(search)}
                 value={search}
             />
             <TouchableOpacity onPress={() => navigation.navigate(constants.views.MOVIE)}>
                 {(!_.isEmpty(movie) && <Item Title={movie.Title} Plot={movie.Plot} />) || (
-                    <Text style={styles.body}>{err}</Text>
+                    <Text style={searchTabStyles.body}>{err}</Text>
                 )}
             </TouchableOpacity>
         </SafeAreaView>

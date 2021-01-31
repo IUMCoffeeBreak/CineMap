@@ -1,11 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
-
-const styles = StyleSheet.create({
-    map: {
-        ...StyleSheet.absoluteFillObject
-    }
-});
+import { SafeAreaView, Text } from "react-native";
 
 export function HomepageTab() {
     return (
