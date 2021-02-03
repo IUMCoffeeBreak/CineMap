@@ -47,7 +47,15 @@ export function SearchTab({ navigation }) {
                 onBlur={() => triggerSearch(search)}
                 value={search}
             />
-            <TouchableOpacity onPress={() => navigation.navigate(constants.views.MOVIE)}>
+            <TouchableOpacity onPress={()=>navigation.navigate(constants.views.MOVIE,{
+                filmTitle: movie.Title,
+                filmDirector: movie.Director,
+                filmActor: movie.Actors,
+                filmPlot: movie.Plot,
+                filmPoster: movie.Poster,
+                filmYear: movie.Year,
+                filmRating: movie.imdbRating,
+            })}>
                 {(!_.isEmpty(movie) && <CardItem title={movie.Title as string} body={movie.Plot} />) || (
                     <Text style={searchTabStyles.body}>{err}</Text>
                 )}
