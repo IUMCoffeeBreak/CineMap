@@ -1,6 +1,7 @@
 import { buildQs } from "./utils/functions";
 
 export interface SearchProps {
+    q?: string;
     street?: string;
     city?: string;
     county?: string;
@@ -29,7 +30,11 @@ export async function searchLocation(props: SearchProps): Promise<Geolocation[] 
     props.format = props.format || "json";
     const url = `https://nominatim.openstreetmap.org/search?${buildQs(props)}`;
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: {
+                "accept-language": "it"
+            }
+        });
         const json: Geolocation[] = await response.json();
         return json.map(geo => {
             geo.boundingbox = geo.boundingbox.map(Number);
