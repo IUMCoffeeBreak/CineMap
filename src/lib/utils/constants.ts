@@ -35,7 +35,7 @@ export const constants = {
     },
     map: {
         DELTA: 0.5,
-        IMPORTANCE_FILTER_TRESHOLD: 0.4
+        IMPORTANCE_FILTER_TRESHOLD: 0.3
     }
 };
 
