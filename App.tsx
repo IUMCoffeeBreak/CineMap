@@ -12,14 +12,13 @@ import { MovieView } from "./src/components/views/MovieView";
 import { SearchTab } from "./src/components/navbar-tabs/SearchTab";
 import { createStackNavigator } from "@react-navigation/stack";
 
-
 declare const global: { HermesInternal: null | {} };
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const TabNavigation = () => {
-    return(
+    return (
         <Tab.Navigator
             tabBarOptions={{
                 activeTintColor: "tomato",
@@ -53,29 +52,22 @@ const TabNavigation = () => {
             <Tab.Screen name={constants.tabs.SETTINGS} component={SettingsTab} />
         </Tab.Navigator>
     );
-}
-
+};
 
 const App = () => {
     return (
         <>
             <NavigationContainer>
                 <Stack.Navigator>
-                    <Stack.Screen
-                        name={constants.appName}
-                        component={TabNavigation}
-                    />
-                    <Stack.Screen
-                        name={constants.views.MOVIE}
-                        component={MovieView}
-                    />
+                    <Stack.Screen name={constants.appName} component={TabNavigation} />
+                    <Stack.Screen name={constants.views.MOVIE} component={MovieView} />
                 </Stack.Navigator>
             </NavigationContainer>
         </>
     );
 };
 
-const styles = StyleSheet.create({
+const appStyles = StyleSheet.create({
     scrollView: {
         backgroundColor: Colors.lighter
     },

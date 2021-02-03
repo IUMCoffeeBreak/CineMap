@@ -34,7 +34,8 @@ export const constants = {
         MOVIE: "Scheda Film"
     },
     map: {
-        DELTA: 0.5
+        DELTA: 0.5,
+        IMPORTANCE_FILTER_TRESHOLD: 0.4
     }
 };
 
