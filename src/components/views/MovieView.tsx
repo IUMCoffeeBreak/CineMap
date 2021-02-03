@@ -18,48 +18,46 @@ export const romeCoordinates = {
     lon: 12.4964
 };
 
-export function MovieView(props: MovieScreenProps) {
-    return (
-        <>
-            <SafeAreaView style={movieViewStyles.mainContainer}>
-                <View style={movieViewStyles.headerContainer}>
-                    <View style={movieViewStyles.headerInfoContainer}>
-                        <Text style={movieViewStyles.title}>
-                            {/* {props.title} */}
-                            Title
-                        </Text>
-                        <Text style={movieViewStyles.headerInfo}>
-                            0000 - Diretto da{"\n"}
-                            Regista: {/* {props.director} */}
-                            {"\n"}Cast: {/* {props.cast} */}
-                            Attore0, Attore1, Attore2, Attore3, Attore4, Attore5, Attore6
-                        </Text>
-                    </View>
-                    <Image
-                        // {props.preview}
-                        source={require("../../img/IMG.png")}
-                        resizeMode="contain"
-                        style={movieViewStyles.image}
-                    />
-                </View>
-                <MapView
-                    style={movieViewStyles.mapView}
-                    initialRegion={{
-                        latitude: romeCoordinates.lat,
-                        longitude: romeCoordinates.lon,
-                        latitudeDelta: 0.5,
-                        longitudeDelta: 0.5
-                    }}
-                />
-                <Text style={movieViewStyles.cheatSheet}>
-                    {/* {props.descripion} */}
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, repudiandae? Quam facilis
-                    corrupti, iure odio ipsum placeat aperiam expedita accusantium, sunt nulla sapiente ullam porro
-                    aliquam blanditiis consequuntur architecto delectus!
-                </Text>
-            </SafeAreaView>
-        </>
-    );
+export function MovieView({props: MovieScreenProps, route, navigation}) {
+
+  const {filmTitle, filmActor, filmDirector, filmPlot, filmPoster,
+        filmRating, filmYear}=route.params;
+  return (
+      <>
+          <SafeAreaView style={movieViewStyles.mainContainer}>
+              <View style={movieViewStyles.headerContainer}>
+                  <View style={movieViewStyles.headerInfoContainer}>
+                      <Text style={movieViewStyles.title}>
+                          {filmTitle}
+                      </Text>
+                      <Text style={movieViewStyles.headerInfo}>
+                          {filmYear}{"\n"}
+                          Regista: {filmDirector}
+                          {"\n"}Cast: {filmActor}
+                      </Text>
+                  </View>
+                  <Image
+                      source={{uri: filmPoster}}
+                      resizeMode="contain"
+                      style={movieViewStyles.image}
+                  />
+              </View>
+              <MapView
+                  style={movieViewStyles.mapView}
+                  initialRegion={{
+                      latitude: romeCoordinates.lat,
+                      longitude: romeCoordinates.lon,
+                      latitudeDelta: 0.5,
+                      longitudeDelta: 0.5
+                  }}
+              />
+              <Text style={movieViewStyles.cheatSheet}>
+                Rating: {filmRating}{"\n\n"}  
+                {filmPlot}
+              </Text>
+          </SafeAreaView>
+      </>
+  );
 }
 
 const movieViewStyles = StyleSheet.create({

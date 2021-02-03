@@ -62,5 +62,5 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
-# Java heap profile dumpung
+# Java heap profile dumping
 /Android/*.hprof

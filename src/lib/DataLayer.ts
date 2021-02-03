@@ -8,6 +8,11 @@ interface Response<T> {
 export interface Movie {
     Title: string;
     Plot: string;
+    Actors: string;
+    Director: string;
+    Poster: string;
+    imdbRating: string;
+    Year: string;
 }
 
 export interface Record<T> {
