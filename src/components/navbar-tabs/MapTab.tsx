@@ -11,7 +11,7 @@ const mapTabStyles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject
     },
     searchBar: {
-        marginTop: 20,
+        marginTop: 50,
         zIndex: 1,
         shadowColor: "#bbbbbb",
         shadowOffset: {
@@ -68,11 +68,11 @@ export const romeCoordinates = {
 export function MapTab({ navigation }) {
     const [search, setSearch] = useState("");
     const [pins, setPins] = useState<Geolocation[]>([]);
-    const [map, setMap] = useState(null);
+    const [map, setMap] = useState<MapView>();
     const [visibleModal, setModalVisibility] = useState(false);
     return (
         <>
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView>
                 <Modal visible={visibleModal} transparent={true} animationType={"fade"}>
                     <View style={mapTabStyles.centeredView}>
                         <View style={mapTabStyles.modalView}>
@@ -91,34 +91,44 @@ export function MapTab({ navigation }) {
                 <SearchBar
                     safeAreaProps={mapTabStyles.searchBar}
                     value={search}
-                    onChangeText={setSearch}
+                    onChangeText={text => {
+                        setSearch(text);
+                        setPins([]);
+                    }}
                     onBlur={async () => {
-                        const results = await searchLocation({ q: search });
+                        if (!search) return;
+                        const results = await searchLocation({ q: search.replace(/roma$/i, "") + " roma" });
                         setModalVisibility(!!results && !results.length);
-                        results &&
-                            setPins(results.filter(o => o.importance > constants.map.IMPORTANCE_FILTER_TRESHOLD));
-                        console.debug("location query results", JSON.stringify(results, null, 2));
+                        if (!results || (results && results.length === 0)) return console.log("not found"); // todo handle
+                        const filter = results.filter(o => o.importance > constants.map.IMPORTANCE_FILTER_TRESHOLD);
+                        setPins(filter);
+                        console.debug(
+                            filter.length,
+                            results.map(v => v.display_name)
+                        );
+                        const altitude = 8000;
+                        const zoom = altitude;
+                        const [pin] = results;
+                        map?.animateCamera({
+                            center: { latitude: pin.lat, longitude: pin.lon },
+                            altitude,
+                            zoom
+                        });
                     }}
                 />
                 <MapView
-                  showsCompass={true}
-                    ref={m => setMap(m as any)}
-                    onLayout={() => {
-                        (map as any).fitToCoordinates(
-                            pins.map(o => ({
-                                latitude: o.lat,
-                                longitude: o.lon
-                            })),
-                            { edgePadding: 30, animated: true }
-                        );
-                    }}
+                    showsScale={true}
+                    zoomControlEnabled={true}
+                    showsUserLocation={true}
+                    showsCompass={true}
+                    ref={m => setMap(m as MapView)}
                     style={mapTabStyles.map}
-                    initialRegion={{
-                        latitude: romeCoordinates.lat,
-                        longitude: romeCoordinates.lon,
-                        latitudeDelta: constants.map.DELTA,
-                        longitudeDelta: constants.map.DELTA
-                    }}
+                    // initialRegion={{
+                    //     latitude: romeCoordinates.lat,
+                    //     longitude: romeCoordinates.lon,
+                    //     latitudeDelta: constants.map.DELTA,
+                    //     longitudeDelta: constants.map.DELTA
+                    // }}
                 >
                     <UrlTile
                         urlTemplate={"http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"}
