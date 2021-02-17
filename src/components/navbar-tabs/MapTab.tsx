@@ -123,12 +123,12 @@ export function MapTab({ navigation }) {
                     showsCompass={true}
                     ref={m => setMap(m as MapView)}
                     style={mapTabStyles.map}
-                    // initialRegion={{
-                    //     latitude: romeCoordinates.lat,
-                    //     longitude: romeCoordinates.lon,
-                    //     latitudeDelta: constants.map.DELTA,
-                    //     longitudeDelta: constants.map.DELTA
-                    // }}
+                    initialRegion={{
+                        latitude: romeCoordinates.lat,
+                        longitude: romeCoordinates.lon,
+                        latitudeDelta: constants.map.DELTA,
+                        longitudeDelta: constants.map.DELTA
+                    }}
                 >
                     <UrlTile
                         urlTemplate={"http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"}
