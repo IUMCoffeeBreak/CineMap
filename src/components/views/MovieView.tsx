@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Image, ImageBackground, StyleSheet, Text, View, Animated } from "react-native";
+import { Image, ImageBackground, StyleSheet, Text, View, Animated, FlatList, Dimensions } from "react-native";
 import MapView from "react-native-maps";
+import Carousel from "../../lib/components/Carousel";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 
 export const romeCoordinates = {
     lat: 41.9028,
     lon: 12.4964
-};
+};  
 
 export function MovieView({route, navigation}) {
 
@@ -33,16 +34,8 @@ export function MovieView({route, navigation}) {
                     />
                 </View>
 
-                
-            <MapView
-                style={movieViewStyles.mapView}
-                initialRegion={{
-                    latitude: romeCoordinates.lat,
-                    longitude: romeCoordinates.lon,
-                    latitudeDelta: 0.5,
-                    longitudeDelta: 0.5
-                }}
-            />
+            <Carousel></Carousel>
+
             <View style={movieViewStyles.cheatSheetContainer}>
                 <Text style={movieViewStyles.cheatSheet}> 
                     {filmPlot}
@@ -85,8 +78,7 @@ const movieViewStyles = StyleSheet.create({
         fontStyle: 'italic',
         margin: 15
     },
-
-
+    
     headerInfo: {
         color: 'black',
         height: 100,
@@ -102,7 +94,7 @@ const movieViewStyles = StyleSheet.create({
         marginTop: 1,
     },
 
-    mapView: {
+    CarouselView: {
         width: "93%",
         height: 230,
         borderRadius: 10,
@@ -138,8 +130,5 @@ const movieViewStyles = StyleSheet.create({
         color: "black",
         textAlign: 'center',
         margin: 15
-
-        
-        
-    }
+    },
 });
