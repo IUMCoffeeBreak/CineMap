@@ -183,11 +183,11 @@ export class DataLayer {
                 this.movieLocAssocModel.setData(data.movieLocationAssoc);
                 this.movieModel.setData(data.movie);
                 this.locationModel.setData(data.locations);
-                setInterval(this.writeToDisk.bind(this), writePollInterval || 5000);
             })
             .catch(e => {
                 console.debug("db init error", e.message);
             });
+        setInterval(this.writeToDisk.bind(this), writePollInterval || 5000);
     }
 
     async searchMovieTitle(text: string): Promise<Response<Movie>> {
@@ -223,6 +223,7 @@ export class DataLayer {
     }
 
     protected async writeToDisk() {
+        console.log("writing to disk...")
         await writeFile(fileNames.locations, JSON.stringify(this.locationModel.data));
         await writeFile(fileNames.movie, JSON.stringify(this.movieModel.data));
         await writeFile(fileNames.movieLocationAssoc, JSON.stringify(this.movieLocAssocModel.data));
