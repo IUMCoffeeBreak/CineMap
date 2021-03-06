@@ -7,51 +7,47 @@ import { ComponentProps } from "../routeTypings";
 
 export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
     return (
-      <>
-          <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-              <View style={homeStyle.mainContainer}>
-                  <View style={homeStyle.mapContainer}>
-                      <MapView
-                        showsScale={true}
-                        zoomControlEnabled={true}
-                        showsUserLocation={true}
-                        showsCompass={true}
-                        style={homeStyle.map}
-                        initialRegion={{
-                            latitude: romeCoordinates.lat,
-                            longitude: romeCoordinates.lon,
-                            latitudeDelta: constants.map.DELTA,
-                            longitudeDelta: constants.map.DELTA
-                        }}
-                      />
-                  </View>
-                  <View style={homeStyle.card}>
-                      <Text style={homeStyle.textStyle}>
-                          {"Sei a conoscenza di scene girate a Roma che non sono registrate?"}
-                      </Text>
-                      <View style={homeStyle.buttonContainer}>
-                          <Button
-                            onPress={() => navigation.navigate("Search")}
-                            title="Aggiungi Pin"
-                            color="#577b6d"
-                          />
-                      </View>
-                  </View>
-                  <View style={homeStyle.card}>
-                      <Text style={homeStyle.textStyle}>
-                          {"Vuoi sapere dove sono stati girati i tuoi film e serie TV preferiti?"}
-                      </Text>
-                      <View style={homeStyle.buttonContainer}>
-                          <Button
-                            onPress={() => navigation.navigate("Search")}
-                            title="Cerca Film"
-                            color="#577b6d"
-                          />
-                      </View>
-                  </View>
-              </View>
-          </SafeAreaView>
-      </>
+        <>
+            <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <View style={homeStyle.mainContainer}>
+                    <View style={homeStyle.mapContainer}>
+                        <MapView
+                            showsScale={true}
+                            zoomControlEnabled={true}
+                            showsUserLocation={true}
+                            showsCompass={true}
+                            style={homeStyle.map}
+                            initialRegion={{
+                                latitude: romeCoordinates.lat,
+                                longitude: romeCoordinates.lon,
+                                latitudeDelta: constants.map.DELTA,
+                                longitudeDelta: constants.map.DELTA
+                            }}
+                        />
+                    </View>
+                    <View style={homeStyle.card}>
+                        <Text style={homeStyle.textStyle}>
+                            {"Sei a conoscenza di scene girate a Roma che non sono registrate?"}
+                        </Text>
+                        <View style={homeStyle.buttonContainer}>
+                            <Button
+                                onPress={() => navigation.navigate("Search")}
+                                title="Aggiungi Pin"
+                                color="#577b6d"
+                            />
+                        </View>
+                    </View>
+                    <View style={homeStyle.card}>
+                        <Text style={homeStyle.textStyle}>
+                            {"Vuoi sapere dove sono stati girati i tuoi film e serie TV preferiti?"}
+                        </Text>
+                        <View style={homeStyle.buttonContainer}>
+                            <Button onPress={() => navigation.navigate("Search")} title="Cerca Film" color="#577b6d" />
+                        </View>
+                    </View>
+                </View>
+            </SafeAreaView>
+        </>
     );
 };
 

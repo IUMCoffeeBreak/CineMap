@@ -82,9 +82,7 @@ export function MapTab({ navigation }: ComponentProps<"Map">) {
                             <Text style={mapTabStyles.modalText}>Nessun risultato trovato</Text>
                             <TouchableHighlight
                                 style={{ ...mapTabStyles.openButton, backgroundColor: "#2196F3" }}
-                                onPress={() => {
-                                    setModalVisibility(!visibleModal);
-                                }}
+                                onPress={() => setModalVisibility(!visibleModal)}
                             >
                                 <Text style={mapTabStyles.textStyle}>Nessun risultato</Text>
                             </TouchableHighlight>

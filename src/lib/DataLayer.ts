@@ -223,7 +223,7 @@ export class DataLayer {
     }
 
     protected async writeToDisk() {
-        console.debug("writing to disk...")
+        console.debug("writing to disk...");
         await writeFile(fileNames.locations, JSON.stringify(this.locationModel.data));
         await writeFile(fileNames.movie, JSON.stringify(this.movieModel.data));
         await writeFile(fileNames.movieLocationAssoc, JSON.stringify(this.movieLocAssocModel.data));
