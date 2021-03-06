@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, ImageBackground, StyleSheet, Text, View, Animated, FlatList, Dimensions } from "react-native";
-import MapView from "react-native-maps";
+import  { Image, ImageBackground, StyleSheet, Text, View, Animated, FlatList, Dimensions } from "react-native";
 import Carousel from "../../lib/components/Carousel";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 

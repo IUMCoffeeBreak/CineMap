@@ -6,59 +6,7 @@ import { SearchBar } from "../../lib/components/SearchBar";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { Geolocation, searchLocation } from "../../lib/geolocation";
 
-const mapTabStyles = StyleSheet.create({
-    map: {
-        ...StyleSheet.absoluteFillObject
-    },
-    searchBar: {
-        marginTop: 50,
-        zIndex: 1,
-        shadowColor: "#bbbbbb",
-        shadowOffset: {
-            width: 5,
-            height: 5
-        },
-        shadowOpacity: 5,
-        shadowRadius: 10,
-        elevation: 5
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 22
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-    },
-    openButton: {
-        backgroundColor: "#F194FF",
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center"
-    }
-});
+
 
 export const romeCoordinates = {
     lat: 41.9028,
@@ -135,24 +83,79 @@ export function MapTab({ navigation }) {
                         maximumZ={19}
                         flipY={false}
                     />
-                    {pins.map(pin => {
-                        return (
-                            <Marker
-                                key={pin.display_name + pin.lat}
-                                coordinate={{ latitude: pin.lat, longitude: pin.lon }}
-                                title={pin.display_name}
-                                // onPress={() => navigation.navigate(constants.views.MOVIE)}
-                            />
-                        );
-                    })}
-                    {/*<Marker*/}
-                    {/*    coordinate={{ latitude: romeCoordinates.lat, longitude: romeCoordinates.lon }}*/}
-                    {/*    title={"Foo Place"}*/}
-                    {/*    description={"Im your first place"}*/}
-                    {/*    onPress={() => navigation.navigate(constants.views.MOVIE)}*/}
-                    {/*/>*/}
+                    {
+                        pins.map(pin => {
+                            return (
+                                <Marker
+                                    key={pin.display_name + pin.lat}
+                                    coordinate={{ latitude: pin.lat, longitude: pin.lon }}
+                                    title={pin.display_name}
+                                    onPress={() => navigation.navigate(constants.views.ADDPIN
+                                        //coordinate:  {lat: pin.lat, lon:pin.lon}
+                                        //filmList: array({id:string, Movie: Movie-object, location: geolocation})
+                                    )}
+                                />
+                            );
+                        })
+                    }
+
                 </MapView>
             </SafeAreaView>
         </>
     );
 }
+
+const mapTabStyles = StyleSheet.create({
+    map: {
+        ...StyleSheet.absoluteFillObject
+    },
+    searchBar: {
+        marginTop: 50,
+        zIndex: 1,
+        shadowColor: "#bbbbbb",
+        shadowOffset: {
+            width: 5,
+            height: 5
+        },
+        shadowOpacity: 5,
+        shadowRadius: 10,
+        elevation: 5
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    openButton: {
+        backgroundColor: "#F194FF",
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+    }
+});
+

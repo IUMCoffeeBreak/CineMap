@@ -31,7 +31,8 @@ export const constants = {
         RADIUS: 10
     },
     views: {
-        MOVIE: "Scheda Film"
+        MOVIE: "Scheda Film",
+        ADDPIN: "Aggiunig pin"
     },
     map: {
         DELTA: 0.5,

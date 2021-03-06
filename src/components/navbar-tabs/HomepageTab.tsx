@@ -32,7 +32,7 @@ export const HomepageTab = ({navigation}) => {
                         </Text>
                             <View style={homeStyle.buttonContainer}>
                                 <Button
-                                    onPress={() => Alert.alert('First button pressed')}
+                                    onPress={() => navigation.navigate(constants.tabs.MAP)}
                                     title='Aggiungi Pin'
                                     color="#577b6d"
                                 />
