@@ -11,7 +11,7 @@ export function SearchBar(props: CustomSearchProps) {
     const borderColor = "rgba(0, 0, 0, 0.5)";
     const borderWidth = 0.5;
     return (
-        <SafeAreaView style={{ marginTop: 100, ...props.safeAreaProps as any }}>
+        <SafeAreaView style={{ marginTop: 100, ...(props.safeAreaProps as any) }}>
             <RNSearchBar
                 containerStyle={{
                     backgroundColor: constants.colors.TRANSPARENT,

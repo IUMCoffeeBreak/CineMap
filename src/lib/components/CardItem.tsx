@@ -65,9 +65,7 @@ export function CardItem(props: CardItemProps) {
     return (
         <Animated.View style={{ ...searchTabStyles.card, opacity: animation }}>
             <Text style={searchTabStyles.cardTitleText}>{props.title}</Text>
-            {(!props.separator && props.separator === undefined) ? (
-                <View style={searchTabStyles.separator} />
-            ) : null}
+            {!props.separator && props.separator === undefined ? <View style={searchTabStyles.separator} /> : null}
             <Text style={searchTabStyles.cardBodyText}>{props.body}</Text>
         </Animated.View>
     );

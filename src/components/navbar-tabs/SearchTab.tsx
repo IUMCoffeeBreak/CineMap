@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Animated, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text } from "react-native";
 import { SearchBar } from "../../lib/components/SearchBar";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import constants from "../../lib/utils/constants";
@@ -8,6 +8,7 @@ import { Movie } from "../../lib/DataLayer";
 import _ from "lodash";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { CardItem } from "../../lib/components/CardItem";
+import { ComponentProps } from "../routeTypings";
 
 const searchTabStyles = StyleSheet.create({
     body: {
@@ -29,15 +30,15 @@ async function submitSearch(text: string) {
     return await db.searchMovieTitle(text);
 }
 
-export function SearchTab({ navigation }) {
+export function SearchTab({ navigation, route }: ComponentProps<"Movie">) {
     const [search, setSearch] = useState("");
-    const [movie, setMovie] = useState<Partial<Movie>>({});
+    const [movie, setMovie] = useState<Movie>({} as any);
     const [err, setErr] = useState("");
     const triggerSearch = async text => {
         if (!text) return;
         const { item, err } = await submitSearch(text);
         setErr(err || "");
-        setMovie((!err && item) || {});
+        setMovie(((!err && item) || {}) as any);
     };
     return (
         <SafeAreaView>
@@ -47,15 +48,7 @@ export function SearchTab({ navigation }) {
                 onBlur={() => triggerSearch(search)}
                 value={search}
             />
-            <TouchableOpacity onPress={()=>navigation.navigate(constants.views.MOVIE,{
-                filmTitle: movie.Title,
-                filmDirector: movie.Director,
-                filmActor: movie.Actors,
-                filmPlot: movie.Plot,
-                filmPoster: movie.Poster,
-                filmYear: movie.Year,
-                filmRating: movie.imdbRating,
-            })}>
+            <TouchableOpacity onPress={() => navigation.navigate("Movie", movie)}>
                 {(!_.isEmpty(movie) && <CardItem title={movie.Title as string} body={movie.Plot} />) || (
                     <Text style={searchTabStyles.body}>{err}</Text>
                 )}
