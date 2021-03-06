@@ -6,6 +6,7 @@ import { SearchBar } from "../../lib/components/SearchBar";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { Geolocation, searchLocation } from "../../lib/geolocation";
 import { db } from "../../db";
+import { ComponentProps } from "../routeTypings";
 
 const mapTabStyles = StyleSheet.create({
     map: {
@@ -66,7 +67,7 @@ export const romeCoordinates = {
     lon: 12.4964
 };
 
-export function MapTab({ navigation }) {
+export function MapTab({ navigation }: ComponentProps<"Map">) {
     const [search, setSearch] = useState("");
     const [pins, setPins] = useState<Geolocation[]>([]);
     const [map, setMap] = useState<MapView>();
@@ -148,11 +149,8 @@ export function MapTab({ navigation }) {
                                 coordinate={{ latitude: pin.lat, longitude: pin.lon }}
                                 title={pin.display_name}
                                 onPress={() =>
-                                    navigation.navigate(
-                                        constants.views.ADDPIN
-                                        //coordinate:  {lat: pin.lat, lon:pin.lon}
-                                        //filmList: array({id:string, Movie: Movie-object, location: geolocation})
-                                    )
+                                    // TODO
+                                    navigation.navigate("AddPin", { associations: [] })
                                 }
                             />
                         );
