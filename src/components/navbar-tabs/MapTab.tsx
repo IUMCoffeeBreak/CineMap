@@ -149,8 +149,7 @@ export function MapTab({ navigation }: ComponentProps<"Map">) {
                                 coordinate={{ latitude: pin.lat, longitude: pin.lon }}
                                 title={pin.display_name}
                                 onPress={() =>
-                                    // TODO
-                                    navigation.navigate("AddPin", { associations: [] })
+                                    navigation.navigate("AddPin", { associations: db.getLocationMovies(pin.place_id) })
                                 }
                             />
                         );
