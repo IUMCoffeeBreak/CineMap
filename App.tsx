@@ -11,7 +11,7 @@ import Icons from "react-native-vector-icons/FontAwesome";
 import { MovieView } from "./src/components/views/MovieView";
 import { SearchTab } from "./src/components/navbar-tabs/SearchTab";
 import { createStackNavigator } from "@react-navigation/stack";
-import { NewPin } from "./src/components/views/NewPin";
+import { AssociationsList } from "./src/components/views/AssociationsList";
 import { RootStackParamList } from "./src/components/routeTypings";
 
 declare const global: { HermesInternal: null | {} };
@@ -63,7 +63,7 @@ const App = () => {
                 <Stack.Navigator>
                     <Stack.Screen name={"CinePin"} component={TabNavigation} />
                     <Stack.Screen name={"Movie"} component={MovieView} />
-                    <Stack.Screen name={"AddPin"} component={NewPin} />
+                    <Stack.Screen name={"AddPin"} component={AssociationsList} />
                 </Stack.Navigator>
             </NavigationContainer>
         </>

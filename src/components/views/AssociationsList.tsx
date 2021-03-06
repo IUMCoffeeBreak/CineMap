@@ -3,8 +3,7 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import { FilmCard } from "../../lib/components/FilmCard";
 import { ComponentProps } from "../routeTypings";
 
-//filmList = array({id:string, Movie: Movie-object, location: geolocation})
-export const NewPin = ({ route, navigation }: ComponentProps<"AddPin">) => {
+export const AssociationsList = ({ route, navigation }: ComponentProps<"AddPin">) => {
     const { associations } = route.params;
 
     const titlePage = {
