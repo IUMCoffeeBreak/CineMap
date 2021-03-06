@@ -85,7 +85,7 @@ export function MapTab({ navigation }) {
                                     setModalVisibility(!visibleModal);
                                 }}
                             >
-                                <Text style={mapTabStyles.textStyle}>SIGNORA I LIMONI</Text>
+                                <Text style={mapTabStyles.textStyle}>Nessun risultato</Text>
                             </TouchableHighlight>
                         </View>
                     </View>
