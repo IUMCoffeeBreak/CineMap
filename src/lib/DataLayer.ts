@@ -190,20 +190,20 @@ export class DataLayer {
             });
     }
 
-    async searchMovieTitle(text: string) {
+    async searchMovieTitle(text: string): Promise<Response<Movie>> {
         console.log(`searching ${text} ...`);
         const dbSearch = this.movieModel.searchTitle(text);
-        if (dbSearch) return { item: dbSearch, err: null };
+        if (dbSearch) return { item: dbSearch };
         console.debug("movie not found in internal db...");
         const result = await fetchMovieTitle(text);
         if (!result.item) {
             console.debug("movie not found:", text);
-            return { err: "movie not found", item: null };
+            return { err: "movie not found" };
         }
         // save it in db
         this.movieModel.write(result.item);
         console.debug("movie found");
-        return { item: result.item, err: null };
+        return { item: result.item };
     }
 
     getAssociations(): MovieLocationRelationShipJoin[] {
