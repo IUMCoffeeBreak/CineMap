@@ -1,9 +1,10 @@
 import React from "react";
-import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import MapView from "react-native-maps";
 import constants from "../../lib/utils/constants";
 import { romeCoordinates } from "./MapTab";
 import { ComponentProps } from "../routeTypings";
+import { CinePinButton } from "../../lib/components/CinePinButton";
 
 export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
     return (
@@ -26,24 +27,23 @@ export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
                         />
                     </View>
                     <View style={homeStyle.card}>
-                        <Text style={homeStyle.textStyle}>
-                            {"Sei a conoscenza di scene girate a Roma che non sono registrate?"}
-                        </Text>
-                        <View style={homeStyle.buttonContainer}>
-                            <Button
-                                onPress={() => navigation.navigate("Search")}
-                                title="Aggiungi Pin"
-                                color={constants.colors.MAIN_GREEN}
-                            />
-                        </View>
+                        {/* TODO*/}
+                        <Text style={homeStyle.textStyle}>{"Vuoi cercare un film e leggere la sua scheda tecnica?"}</Text>
+                        <CinePinButton
+                            style={homeStyle.button}
+                            onPress={() => navigation.navigate("Search")}
+                            message="cerca film"
+                        />
                     </View>
                     <View style={homeStyle.card}>
                         <Text style={homeStyle.textStyle}>
-                            {"Vuoi sapere dove sono stati girati i tuoi film e serie TV preferiti?"}
+                            {"Vuoi scoprire quali film sono stati girati in un determinato luogo?"}
                         </Text>
-                        <View style={homeStyle.buttonContainer}>
-                            <Button onPress={() => navigation.navigate("Search")} title="Cerca Film" color="#577b6d" />
-                        </View>
+                        <CinePinButton
+                            style={homeStyle.button}
+                            onPress={() => navigation.navigate("Map")}
+                            message="cerca location"
+                        />
                     </View>
                 </View>
             </SafeAreaView>
@@ -75,8 +75,6 @@ const homeStyle = StyleSheet.create({
         flex: 1
     },
     card: {
-        flex: 1,
-        flexDirection: "row",
         marginTop: 15,
         backgroundColor: "white",
         borderRadius: 5,
@@ -90,12 +88,15 @@ const homeStyle = StyleSheet.create({
         shadowRadius: 2.22
     },
     buttonContainer: {
-        position: "absolute",
+        // position: "absolute",
         marginLeft: "60%",
         marginTop: "25%"
     },
     textStyle: {
         fontSize: 20,
         margin: 10
+    },
+    button: {
+        margin: 20
     }
 });
