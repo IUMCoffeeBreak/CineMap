@@ -1,10 +1,19 @@
 import React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { FilmCard } from "../../lib/components/FilmCard";
 import { ComponentProps } from "../routeTypings";
+import { CinePinButton } from "../../lib/components/CinePinButton";
+import constants from "../../lib/utils/constants";
 
-export const AssociationsList = ({ route, navigation }: ComponentProps<"AddPin">) => {
-    const { associations } = route.params;
+const styles = StyleSheet.create({
+    addButton: {
+        marginRight: constants.spacing.MARGIN_RIGHT,
+        marginLeft: constants.spacing.MARGIN_LEFT
+    }
+});
+
+export function AssociationsList({ route, navigation }: ComponentProps<"Film nel luogo">) {
+    const { associations, pin } = route.params;
 
     const titlePage = {
         empty: "Questa location non compare in nessun film",
@@ -19,12 +28,16 @@ export const AssociationsList = ({ route, navigation }: ComponentProps<"AddPin">
                     {associations.map(association => (
                         <FilmCard title={association.movie!.Title} preview={association.movie!.Poster} />
                     ))}
+                    <CinePinButton
+                        message={"Aggiungi Scena"}
+                        style={styles.addButton}
+                        onPress={() => navigation.navigate("Aggiungi scena", pin)}
+                    />
                 </View>
-                <Button onPress={() => navigation.navigate("Search")} title="Aggiungi Scena" color="#577b6d" />
             </View>
         </>
     );
-};
+}
 
 const canvas = StyleSheet.create({
     mainContainer: {

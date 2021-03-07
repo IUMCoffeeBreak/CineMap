@@ -30,7 +30,7 @@ async function submitSearch(text: string) {
     return await db.searchMovieTitle(text);
 }
 
-export function SearchTab({ navigation, route }: ComponentProps<"Movie">) {
+export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) {
     const [search, setSearch] = useState("");
     const [movie, setMovie] = useState<Movie>({} as any);
     const [err, setErr] = useState("");
@@ -48,7 +48,7 @@ export function SearchTab({ navigation, route }: ComponentProps<"Movie">) {
                 onBlur={() => triggerSearch(search)}
                 value={search}
             />
-            <TouchableOpacity onPress={() => navigation.navigate("Movie", movie)}>
+            <TouchableOpacity onPress={() => navigation.navigate("Scheda film", movie)}>
                 {(!_.isEmpty(movie) && <CardItem title={movie.Title as string} body={movie.Plot} />) || (
                     <Text style={searchTabStyles.body}>{err}</Text>
                 )}

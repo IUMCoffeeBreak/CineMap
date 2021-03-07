@@ -187,7 +187,7 @@ export class DataLayer {
             .catch(e => {
                 console.debug("db init error", e.message);
             });
-        setInterval(this.writeToDisk.bind(this), writePollInterval || 5000);
+        setInterval(this.writeToDisk.bind(this), writePollInterval || 30000);
     }
 
     async searchMovieTitle(text: string): Promise<Response<Movie>> {

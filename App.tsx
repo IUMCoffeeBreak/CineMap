@@ -13,6 +13,7 @@ import { SearchTab } from "./src/components/navbar-tabs/SearchTab";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AssociationsList } from "./src/components/views/AssociationsList";
 import { RootStackParamList } from "./src/components/routeTypings";
+import { CreateNewScene } from "./src/components/views/CreateNewScene";
 
 declare const global: { HermesInternal: null | {} };
 
@@ -62,8 +63,9 @@ const App = () => {
             <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen name={"CinePin"} component={TabNavigation} />
-                    <Stack.Screen name={"Movie"} component={MovieView} />
-                    <Stack.Screen name={"AddPin"} component={AssociationsList} />
+                    <Stack.Screen name={"Scheda film"} component={MovieView} />
+                    <Stack.Screen name={"Film nel luogo"} component={AssociationsList} />
+                    <Stack.Screen name={"Aggiungi scena"} component={CreateNewScene} />
                 </Stack.Navigator>
             </NavigationContainer>
         </>

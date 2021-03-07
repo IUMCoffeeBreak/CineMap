@@ -9,7 +9,8 @@ export const constants = {
     },
     colors: {
         GLOBAL_BACKGROUND_COLOR: "#eeeeee",
-        TRANSPARENT: "rgba(0, 0, 0, 0)"
+        TRANSPARENT: "rgba(0, 0, 0, 0)",
+        MAIN_GREEN: "#577b6d"
     },
     text: {
         TITLE_FONT: 20,

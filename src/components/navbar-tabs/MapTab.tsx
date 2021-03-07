@@ -81,10 +81,10 @@ export function MapTab({ navigation }: ComponentProps<"Map">) {
                         <View style={mapTabStyles.modalView}>
                             <Text style={mapTabStyles.modalText}>Nessun risultato trovato</Text>
                             <TouchableHighlight
-                                style={{ ...mapTabStyles.openButton, backgroundColor: "#2196F3" }}
+                                style={{ ...mapTabStyles.openButton, backgroundColor: constants.colors.MAIN_GREEN }}
                                 onPress={() => setModalVisibility(!visibleModal)}
                             >
-                                <Text style={mapTabStyles.textStyle}>Nessun risultato</Text>
+                                <Text style={mapTabStyles.textStyle}>Chiudi</Text>
                             </TouchableHighlight>
                         </View>
                     </View>
@@ -147,7 +147,10 @@ export function MapTab({ navigation }: ComponentProps<"Map">) {
                                 coordinate={{ latitude: pin.lat, longitude: pin.lon }}
                                 title={pin.display_name}
                                 onPress={() =>
-                                    navigation.navigate("AddPin", { associations: db.getLocationMovies(pin.place_id) })
+                                    navigation.navigate("Film nel luogo", {
+                                        pin,
+                                        associations: db.getLocationMovies(pin.place_id)
+                                    })
                                 }
                             />
                         );

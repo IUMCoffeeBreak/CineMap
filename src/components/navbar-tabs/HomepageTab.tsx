@@ -33,7 +33,7 @@ export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
                             <Button
                                 onPress={() => navigation.navigate("Search")}
                                 title="Aggiungi Pin"
-                                color="#577b6d"
+                                color={constants.colors.MAIN_GREEN}
                             />
                         </View>
                     </View>
