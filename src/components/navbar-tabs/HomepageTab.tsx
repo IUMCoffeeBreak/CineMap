@@ -28,7 +28,9 @@ export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
                     </View>
                     <View style={homeStyle.card}>
                         {/* TODO*/}
-                        <Text style={homeStyle.textStyle}>{"Vuoi cercare un film e leggere la sua scheda tecnica?"}</Text>
+                        <Text style={homeStyle.textStyle}>
+                            {"Vuoi cercare un film e leggere la sua scheda tecnica?"}
+                        </Text>
                         <CinePinButton
                             style={homeStyle.button}
                             onPress={() => navigation.navigate("Search")}

@@ -90,6 +90,7 @@ export function MapTab({ navigation }: ComponentProps<"Map">) {
                     </View>
                 </Modal>
                 <SearchBar
+                    style={{ margin: 20 }}
                     safeAreaProps={mapTabStyles.searchBar}
                     value={search}
                     onChangeText={text => {
