@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import {Image, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 
 export interface filmProps {
     title: string;
@@ -20,16 +20,17 @@ export function FilmCard(props: filmProps) {
 const card = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        padding: "5%",
-        backgroundColor: "grey"
+        justifyContent: "space-around",
+        padding: '1%',
+        flexDirection: 'row',
+        alignItems: "center"
     },
     img: {
         flex: 1,
-        padding: 10
+        padding: '20%'
     },
     text: {
         fontSize: 20,
-        flex: 2,
-        padding: "5%"
+        flex: 4,
     }
 });

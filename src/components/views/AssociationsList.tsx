@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 import { FilmCard } from "../../lib/components/FilmCard";
 import { ComponentProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 });
 
 export function AssociationsList({ route, navigation }: ComponentProps<"Film nel luogo">) {
-    const { associations, pin } = route.params;    
+    const { associations, pin } = route.params;
 
     const titlePage = {
         empty: "Questa location non compare in nessun film",
@@ -22,35 +22,50 @@ export function AssociationsList({ route, navigation }: ComponentProps<"Film nel
 
     return (
         <>
-            <View style={canvas.mainContainer}>
-                <Text style={canvas.title}>{associations.length > 0 ? titlePage.nonEmpty : titlePage.empty}</Text>
-                <View style={canvas.listView}>
-                    {associations.map(association => (
-                        <FilmCard title={association.movie!.Title} preview={association.movie!.Poster} />
-                    ))}
+            <SafeAreaView style={style.mainContainer}>
+                <View style={style.headerContainer}>
+                    <Text style={style.title}>{associations.length > 0 ? titlePage.nonEmpty : titlePage.empty}</Text>
+                </View>
+                <View style={style.bodyContainer}>
+                    <ScrollView >
+                        {
+                            associations.map(association => (
+                                <FilmCard title={association.movie!.Title} preview={association.movie!.Poster} />
+                            ))}
+                    </ScrollView>
+                </View>
+                <View style={style.footerContainer}>
                     <CinePinButton
                         message={"Aggiungi Scena"}
                         style={styles.addButton}
                         onPress={() => navigation.navigate("Aggiungi scena", pin)}
                     />
                 </View>
-            </View>
+
+            </SafeAreaView>
         </>
     );
 }
 
-const canvas = StyleSheet.create({
+const style = StyleSheet.create({
     mainContainer: {
-        flex: 1
-    },
-    title: {
         flex: 1,
-        fontSize: 20,
-        color: "black",
-        padding: "5%",
-        fontWeight: "bold"
+        margin: '3%',
     },
-    listView: {
-        flex: 6
+    headerContainer: {
+        flex: 1,
+        justifyContent: "space-around",
+        padding: '5%'
+    },
+    title:{
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    bodyContainer: {
+        flex: 5,
+    },
+    footerContainer:{
+        flex:1,
+        justifyContent: "space-around"
     }
 });

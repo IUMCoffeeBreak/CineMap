@@ -159,7 +159,7 @@ export class MovieLocationRelationshipModel implements Table<MovieLocationRelati
     }
 
     write(item: Omit<MovieLocationRelationship, "id">): void {
-        this.data.push({ ...item, id: Math.random().toString(16).replace('0.', '')});        
+        this.data.push({ ...item, id: Math.random().toString(16).replace('0.', '')});
     }
 
     setData(data: MovieLocationRelationship[]) {
@@ -214,7 +214,7 @@ export class DataLayer {
             movie: this.movieModel.readById(record.movie_id),
             location: this.locationModel.readById(record.location_id)
         })));
-        
+
         return this.movieLocAssocModel.list().map(record => ({
             id: record.id,
             movie: this.movieModel.readById(record.movie_id),
@@ -241,7 +241,8 @@ export class DataLayer {
         return this.getAssociations().filter(a => a.movie?.Title === title);
     }
 
-    getLocationMovies(id: number) {       
+    getLocationMovies(id: number) {
+        console.log('[dataLayer: getLocationMovies] → ' + this.getAssociations())
         return this.getAssociations().filter(a => a.location?.place_id === id);
     }
 }

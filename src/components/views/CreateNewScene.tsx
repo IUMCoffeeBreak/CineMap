@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         margin: 20
     },
     film:{
-        padding: 8, 
+        padding: 8,
         borderRadius: 10,
         fontSize: constants.text.BODY_FONT *1.2,
         fontWeight: 'bold',
@@ -51,12 +51,12 @@ const styles = StyleSheet.create({
     },
 });
 
-export function CreateNewScene(props: ComponentProps<"Aggiungi scena">) {
-    const pin = props.route.params;
+export function CreateNewScene({navigation},props: ComponentProps<"Aggiungi scena">) {
+    const pin = props;
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");
     const [search, setSearch] = useState("");
-    
+
     const [movie, setMovie] = useState<Movie>({} as any);
     const [err, setErr] = useState("");
     const triggerSearch = async text => {
@@ -107,14 +107,19 @@ export function CreateNewScene(props: ComponentProps<"Aggiungi scena">) {
             <View>
                 <CinePinButton
                     style={styles.submitButton}
-                    onPress={() => 
-                        {  
+                    onPress={() =>
+                        {
                             db.movieLocAssocModel.write({
                                 scene_name: sceneTitle,
                                 scene_video_link: sceneLink,
                                 movie_id: movie.imdbID,
                                 location_id: pin.place_id
                             });
+                            console.log(db.movieLocAssocModel.list());
+                            navigation.navigate('Film nel luogo', {
+                                pin,
+                                associations: db.getLocationMovies(pin.place_id)
+                            })
                         }
                     }
                     message={"Conferma"}
