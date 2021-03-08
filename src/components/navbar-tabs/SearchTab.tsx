@@ -26,7 +26,7 @@ const searchTabStyles = StyleSheet.create({
     }
 });
 
-async function submitSearch(text: string) {
+export async function submitSearch(text: string) {
     return await db.searchMovieTitle(text);
 }
 
@@ -43,6 +43,7 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
     return (
         <SafeAreaView>
             <SearchBar
+                style={searchTabStyles.searchBar}
                 safeAreaProps={searchTabStyles.searchBar}
                 onChangeText={setSearch}
                 onBlur={() => triggerSearch(search)}

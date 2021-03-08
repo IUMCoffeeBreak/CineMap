@@ -1,7 +1,8 @@
 import constants from "./utils/constants";
 import { Geolocation } from "./geolocation";
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from 'uuid';
 import RNFS, { readFile, writeFile } from "react-native-fs";
+import { debug } from "react-native-reanimated";
 
 interface Response<T> {
     err?: string;
@@ -158,11 +159,12 @@ export class MovieLocationRelationshipModel implements Table<MovieLocationRelati
     }
 
     write(item: Omit<MovieLocationRelationship, "id">): void {
-        this.data.push({ ...item, id: uuid() });
+        this.data.push({ ...item, id: Math.random().toString(16).replace('0.', '')});        
     }
 
     setData(data: MovieLocationRelationship[]) {
         this.data = data;
+
     }
 }
 
@@ -173,9 +175,9 @@ const fileNames = {
 };
 
 export class DataLayer {
-    protected locationModel = new LocationModel({});
-    protected movieModel = new MovieModel({});
-    protected movieLocAssocModel = new MovieLocationRelationshipModel([]);
+    public locationModel = new LocationModel({});
+    public movieModel = new MovieModel({});
+    public movieLocAssocModel = new MovieLocationRelationshipModel([]);
 
     constructor(writePollInterval?: number) {
         this.loadDbFromDisk()
@@ -207,6 +209,12 @@ export class DataLayer {
     }
 
     getAssociations(): MovieLocationRelationShipJoin[] {
+        console.log('[dataLayer] → '+ this.movieLocAssocModel.list().map(record => ({
+            id: record.id,
+            movie: this.movieModel.readById(record.movie_id),
+            location: this.locationModel.readById(record.location_id)
+        })));
+        
         return this.movieLocAssocModel.list().map(record => ({
             id: record.id,
             movie: this.movieModel.readById(record.movie_id),
@@ -223,7 +231,7 @@ export class DataLayer {
     }
 
     protected async writeToDisk() {
-        console.debug("writing to disk...");
+        // console.debug("writing to disk...");
         await writeFile(fileNames.locations, JSON.stringify(this.locationModel.data));
         await writeFile(fileNames.movie, JSON.stringify(this.movieModel.data));
         await writeFile(fileNames.movieLocationAssoc, JSON.stringify(this.movieLocAssocModel.data));
@@ -233,7 +241,7 @@ export class DataLayer {
         return this.getAssociations().filter(a => a.movie?.Title === title);
     }
 
-    getLocationMovies(id: number) {
+    getLocationMovies(id: number) {       
         return this.getAssociations().filter(a => a.location?.place_id === id);
     }
 }

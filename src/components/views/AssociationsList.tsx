@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 });
 
 export function AssociationsList({ route, navigation }: ComponentProps<"Film nel luogo">) {
-    const { associations, pin } = route.params;
+    const { associations, pin } = route.params;    
 
     const titlePage = {
         empty: "Questa location non compare in nessun film",

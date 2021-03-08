@@ -3,7 +3,7 @@ export const constants = {
     omdbApiKey: "4766d9c4",
     tabs: {
         HOME: "Home",
-        SETTINGS: "Settings",
+        PROFILE: "Profile",
         MAP: "Map",
         SEARCH: "Search"
     },
@@ -33,7 +33,7 @@ export const constants = {
     },
     views: {
         MOVIE: "Scheda Film",
-        ADDPIN: "Aggiunig pin"
+        ADDPIN: "Aggiungi pin"
     },
     map: {
         DELTA: 0.5,

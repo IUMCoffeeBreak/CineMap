@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { HomepageTab } from "./src/components/navbar-tabs/HomepageTab";
-import { SettingsTab } from "./src/components/navbar-tabs/SettingsTab";
+import { ProfileTab } from "./src/components/navbar-tabs/ProfileTab";
 import { MapTab } from "./src/components/navbar-tabs/MapTab";
 import constants from "./src/lib/utils/constants";
 import Icons from "react-native-vector-icons/FontAwesome";
@@ -37,8 +37,8 @@ const TabNavigation = () => {
                         case constants.tabs.MAP:
                             iconName = "map";
                             break;
-                        case constants.tabs.SETTINGS:
-                            iconName = "cog";
+                        case constants.tabs.PROFILE:
+                            iconName = "user";
                             break;
                         case constants.tabs.SEARCH:
                             iconName = "search";
@@ -52,7 +52,7 @@ const TabNavigation = () => {
             <Tab.Screen name={constants.tabs.HOME} component={HomepageTab} />
             <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} />
             <Tab.Screen name={constants.tabs.MAP} component={MapTab} />
-            <Tab.Screen name={constants.tabs.SETTINGS} component={SettingsTab} />
+            <Tab.Screen name={constants.tabs.PROFILE} component={ProfileTab} />
         </Tab.Navigator>
     );
 };

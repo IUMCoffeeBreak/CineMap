@@ -9,7 +9,7 @@ export const romeCoordinates = {
     lon: 12.4964
 };
 
-export function MovieView({ route, navigation }: ComponentProps<"Movie">) {
+export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) {
     // const { filmTitle, filmActor, filmDirector, filmPlot, filmPoster, filmRating, filmYear } = route.params;
     const movie = route.params;
     return (

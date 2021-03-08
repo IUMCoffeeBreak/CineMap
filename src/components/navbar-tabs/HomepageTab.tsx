@@ -27,17 +27,6 @@ export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
                         />
                     </View>
                     <View style={homeStyle.card}>
-                        {/* TODO*/}
-                        <Text style={homeStyle.textStyle}>
-                            {"Vuoi cercare un film e leggere la sua scheda tecnica?"}
-                        </Text>
-                        <CinePinButton
-                            style={homeStyle.button}
-                            onPress={() => navigation.navigate("Search")}
-                            message="cerca film"
-                        />
-                    </View>
-                    <View style={homeStyle.card}>
                         <Text style={homeStyle.textStyle}>
                             {"Vuoi scoprire quali film sono stati girati in un determinato luogo?"}
                         </Text>
