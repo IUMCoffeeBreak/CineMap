@@ -1,5 +1,5 @@
 import React from "react";
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
+import {SafeAreaView, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View} from "react-native";
 import { FilmCard } from "../../lib/components/FilmCard";
 import { ComponentProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
@@ -24,13 +24,16 @@ export function AssociationsList({ route, navigation }: ComponentProps<"Film nel
         <>
             <SafeAreaView style={style.mainContainer}>
                 <View style={style.headerContainer}>
+                    {console.log(associations)}
                     <Text style={style.title}>{associations.length > 0 ? titlePage.nonEmpty : titlePage.empty}</Text>
                 </View>
                 <View style={style.bodyContainer}>
                     <ScrollView >
                         {
                             associations.map(association => (
-                                <FilmCard title={association.movie!.Title} preview={association.movie!.Poster} />
+                                <TouchableOpacity onPress={() => navigation.navigate("Scheda film", association.movie!)}>
+                                    <FilmCard title={association.movie!.Title} preview={association.movie!.Poster} />
+                                </TouchableOpacity>
                             ))}
                     </ScrollView>
                 </View>

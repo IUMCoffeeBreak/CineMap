@@ -1,8 +1,10 @@
 import React from "react";
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
 import Carousel from "../../lib/components/Carousel";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { ComponentProps } from "../routeTypings";
+import {CinePinButton} from "../../lib/components/CinePinButton";
+import constants from "../../lib/utils/constants";
 
 export const romeCoordinates = {
     lat: 41.9028,
@@ -14,112 +16,105 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
     const movie = route.params;
     return (
         <>
-            <SafeAreaView style={movieViewStyles.mainContainer}>
-                <View style={movieViewStyles.headerContainer}>
-                    <View style={movieViewStyles.headerInfoContainer}>
-                        <Text style={movieViewStyles.title}>{movie.Title}</Text>
-                        <Text style={movieViewStyles.headerInfo}>
+            <SafeAreaView style={style.mainContainer}>
+                <View style={style.headerContainer}>
+                    <View style={style.infoContainer}>
+                        <Text style={style.title}>{movie.Title}</Text>
+                        <Text style={style.info}>
                             {movie.Year} - {movie.imdbRating} / 10 {"\n"}
                             Regista: {movie.Director}
                             {"\n"}
                             Cast: {movie.Actors}
                         </Text>
                     </View>
-                    <ImageBackground
-                        style={movieViewStyles.image}
-                        source={{ uri: movie.Poster }}
-                        resizeMode="contain"
-                    />
+                    <View style={style.imageContainer}>
+                        <Image
+                            style={style.poster}
+                            source={{uri: movie.Poster}}
+                        />
+                    </View>
                 </View>
-                <Carousel />
-                <View style={movieViewStyles.cheatSheetContainer}>
-                    <Text style={movieViewStyles.cheatSheet}>{movie.Plot}</Text>
+                <View style={style.bodyContainer}>
+                    <View style={style.carouselContainer}>
+                        <Carousel></Carousel>
+                    </View>
+                    <View style={style.plotContainer}>
+                        <Text style={style.plot}>{movie.Plot}</Text>
+                    </View>
+                </View>
+                <View style={style.footerContainer}>
+                    <View style={style.buttonContainer}>
+                        <CinePinButton
+                            message={'Location di questo film'}
+                            onPress={()=>navigation.navigate("Map")}
+                        />
+                    </View>
                 </View>
             </SafeAreaView>
         </>
     );
 }
 
-const movieViewStyles = StyleSheet.create({
-    mainContainer: {
-        flex: 1
-    },
-    headerContainer: {
+const style = StyleSheet.create({
+    mainContainer:{
         flex: 1,
-        flexDirection: "row",
-        marginTop: 15,
-        backgroundColor: "white",
-        borderRadius: 5,
-        margin: 15,
-        shadowOffset: {
-            height: 0,
-            width: 1
-        },
-        elevation: 5,
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22
+        justifyContent: "space-between",
     },
-    headerInfoContainer: {
+    headerContainer:{
+        flex: 2,
+        margin: '3%',
+        padding: '3%',
+        justifyContent: 'space-around',
+        borderRadius: 5,
+        backgroundColor: 'white',
+        elevation: 5,
+        flexDirection: 'row'
+    },
+    infoContainer:{
+        flex: 1,
+    },
+    title:{
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginBottom: '3%'
+    },
+    info:{
+        fontSize: 15,
+    },
+    imageContainer:{
+        flex: 1,
+    },
+    poster:{
+        resizeMode: 'contain',
+        width: '80%',
+        height: '100%',
+        marginLeft: '15%',
+        borderRadius: 10,
+    },
+    bodyContainer: {
+        flex: 4,
+    },
+    carouselContainer:{
+        height: '60%',
+        marginTop: '5%'
+    },
+    plotContainer: {
+        margin: '3%',
+        marginTop: '5%',
+        padding: '3%',
+        justifyContent: 'space-around',
+        borderRadius: 5,
+        backgroundColor: 'white',
+        elevation: 5,
+    },
+    plot:{
+        fontSize: 15,
+        textAlign: "center"
+    },
+    footerContainer:{
         flex: 1
     },
-    title: {
-        color: "black",
-        fontSize: 20,
-        maxWidth: "80%",
-        fontWeight: "bold",
-        fontStyle: "italic",
-        margin: 15
-    },
-
-    headerInfo: {
-        color: "black",
-        height: 100,
-        width: 188,
-        margin: 15,
-        marginBottom: 0,
-        fontStyle: "italic"
-    },
-
-    image: {
-        width: 138,
-        height: 200,
-        marginTop: 1
-    },
-
-    CarouselView: {
-        width: "93%",
-        height: 230,
-        borderRadius: 10,
-        backgroundColor: "#E6E6E6",
-        marginLeft: 15,
-        shadowOffset: {
-            height: 0,
-            width: 1
-        },
-        elevation: 5,
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22
-    },
-
-    cheatSheetContainer: {
-        backgroundColor: "white",
-        width: "93%",
-        shadowOffset: {
-            height: 0,
-            width: 1
-        },
-        elevation: 5,
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-        margin: 15,
-        marginBottom: 135,
-        borderRadius: 5
-    },
-    cheatSheet: {
-        fontStyle: "italic",
-        fontSize: 15,
-        color: "black",
-        textAlign: "center",
-        margin: 15
+    buttonContainer:{
+        margin: '3%',
     }
 });

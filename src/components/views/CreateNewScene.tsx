@@ -4,12 +4,10 @@ import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import constants from "../../lib/utils/constants";
 import { TextInput } from "react-native-paper";
 import { CinePinButton } from "../../lib/components/CinePinButton";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { SearchBar } from "../../lib/components/SearchBar";
-import { Movie, MovieLocationRelationshipModel } from "../../lib/DataLayer";
-import {submitSearch} from "./../navbar-tabs/SearchTab";
+import { Movie} from "../../lib/DataLayer";
+import {submitSearch} from "../navbar-tabs/SearchTab";
 import _ from "lodash";
-import { db } from "../../../src/db";
+import { db } from "../../db";
 
 
 const styles = StyleSheet.create({
@@ -56,9 +54,9 @@ export function CreateNewScene({navigation},props: ComponentProps<"Aggiungi scen
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");
     const [search, setSearch] = useState("");
-
     const [movie, setMovie] = useState<Movie>({} as any);
     const [err, setErr] = useState("");
+
     const triggerSearch = async text => {
         if (!text) return;
         const { item, err } = await submitSearch(text);
