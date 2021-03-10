@@ -54,15 +54,13 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
     return (
         <SafeAreaView style={searchTabStyles.mainContainer}>
             <View style={searchTabStyles.headerContainer}>
-                <TextInput
-                    style={searchTabStyles.searchBar}
-                    theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
-                    label={"Search for film"}
-                    mode={"outlined"}
+                <SearchBar
+                    safeAreaProps={searchTabStyles.searchBar}
                     value={search}
-                    onBlur={() => triggerSearch(search)}
                     onChangeText={setSearch}
-                />
+                    onBlur={() => triggerSearch(search)}
+                >
+                </SearchBar>
                 <TouchableOpacity onPress={() => navigation.navigate("Scheda film", movie)}>
                     {(!_.isEmpty(movie) && <CardItem title={movie.Title as string} body={movie.Plot} />) || (
                         <Text style={searchTabStyles.body}>{err}</Text>

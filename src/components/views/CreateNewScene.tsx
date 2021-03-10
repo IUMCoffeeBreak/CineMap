@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export function CreateNewScene({navigation},props: ComponentProps<"Aggiungi scena">) {
-    const pin = props;
+export function CreateNewScene({navigation, route}: ComponentProps<"Aggiungi scena">) {
+    const pin = route.params;
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");
     const [search, setSearch] = useState("");
@@ -113,7 +113,8 @@ export function CreateNewScene({navigation},props: ComponentProps<"Aggiungi scen
                                 movie_id: movie.imdbID,
                                 location_id: pin.place_id
                             });
-                            console.log(db.movieLocAssocModel.list());
+                            db.locationModel.write(pin);
+                            console.log('[from CreateNewScene] → ', db.getLocationMovies(pin.place_id));
                             navigation.navigate('Film nel luogo', {
                                 pin,
                                 associations: db.getLocationMovies(pin.place_id)

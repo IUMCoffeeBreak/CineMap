@@ -24,14 +24,13 @@ export function AssociationsList({ route, navigation }: ComponentProps<"Film nel
         <>
             <SafeAreaView style={style.mainContainer}>
                 <View style={style.headerContainer}>
-                    {console.log(associations)}
                     <Text style={style.title}>{associations.length > 0 ? titlePage.nonEmpty : titlePage.empty}</Text>
                 </View>
                 <View style={style.bodyContainer}>
                     <ScrollView >
                         {
                             associations.map(association => (
-                                <TouchableOpacity onPress={() => navigation.navigate("Scheda film", association.movie!)}>
+                                <TouchableOpacity key={association.id} onPress={() => navigation.navigate("Scheda film", association.movie!)}>
                                     <FilmCard title={association.movie!.Title} preview={association.movie!.Poster} />
                                 </TouchableOpacity>
                             ))}
@@ -58,7 +57,7 @@ const style = StyleSheet.create({
     headerContainer: {
         flex: 1,
         justifyContent: "space-around",
-        padding: '5%'
+        padding: '5%',
     },
     title:{
         fontSize: 20,

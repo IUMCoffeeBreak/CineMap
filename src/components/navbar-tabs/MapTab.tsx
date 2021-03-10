@@ -67,7 +67,7 @@ export const romeCoordinates = {
     lon: 12.4964
 };
 
-export function MapTab({ navigation }: ComponentProps<"Map">) {
+export function MapTab({ navigation, route }: ComponentProps<"Map">) {
     const [search, setSearch] = useState("");
     const [pins, setPins] = useState<Geolocation[]>([]);
     const [map, setMap] = useState<MapView>();
@@ -150,8 +150,8 @@ export function MapTab({ navigation }: ComponentProps<"Map">) {
                                 onPress={() =>
                                     navigation.navigate("Film nel luogo", {
                                         pin,
-                                        associations: db.getLocationMovies(pin.place_id)                                       
-                                    })                                  
+                                        associations: db.getLocationMovies(pin.place_id)
+                                    })
                                 }
                             />
                         );

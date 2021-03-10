@@ -5,6 +5,8 @@ import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { ComponentProps } from "../routeTypings";
 import {CinePinButton} from "../../lib/components/CinePinButton";
 import constants from "../../lib/utils/constants";
+import { db } from "../../db";
+
 
 export const romeCoordinates = {
     lat: 41.9028,
@@ -12,7 +14,6 @@ export const romeCoordinates = {
 };
 
 export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) {
-    // const { filmTitle, filmActor, filmDirector, filmPlot, filmPoster, filmRating, filmYear } = route.params;
     const movie = route.params;
     return (
         <>
@@ -41,12 +42,15 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
                     <View style={style.plotContainer}>
                         <Text style={style.plot}>{movie.Plot}</Text>
                     </View>
+
                 </View>
                 <View style={style.footerContainer}>
                     <View style={style.buttonContainer}>
                         <CinePinButton
                             message={'Location di questo film'}
-                            onPress={()=>navigation.navigate("Map")}
+                            onPress={()=>navigation.navigate("Luoghi nel film",
+                                db.getMovieLocations(movie.Title)
+                            )}
                         />
                     </View>
                 </View>
@@ -63,6 +67,7 @@ const style = StyleSheet.create({
     headerContainer:{
         flex: 2,
         margin: '3%',
+        marginBottom: '1%',
         padding: '3%',
         justifyContent: 'space-around',
         borderRadius: 5,
@@ -96,11 +101,12 @@ const style = StyleSheet.create({
     },
     carouselContainer:{
         height: '60%',
-        marginTop: '5%'
+        marginTop: '3%',
     },
     plotContainer: {
         margin: '3%',
-        marginTop: '5%',
+        marginTop: '4%',
+        marginBottom: '1%',
         padding: '3%',
         justifyContent: 'space-around',
         borderRadius: 5,
@@ -108,7 +114,7 @@ const style = StyleSheet.create({
         elevation: 5,
     },
     plot:{
-        fontSize: 15,
+        fontSize: 17,
         textAlign: "center"
     },
     footerContainer:{
@@ -116,5 +122,6 @@ const style = StyleSheet.create({
     },
     buttonContainer:{
         margin: '3%',
+        marginTop: '7%'
     }
 });

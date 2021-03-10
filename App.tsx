@@ -14,6 +14,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { AssociationsList } from "./src/components/views/AssociationsList";
 import { RootStackParamList } from "./src/components/routeTypings";
 import { CreateNewScene } from "./src/components/views/CreateNewScene";
+import {LocationsMap} from "./src/components/views/MoviewLocationsMap";
 
 declare const global: { HermesInternal: null | {} };
 
@@ -66,6 +67,7 @@ const App = () => {
                     <Stack.Screen name={"Scheda film"} component={MovieView} />
                     <Stack.Screen name={"Film nel luogo"} component={AssociationsList} />
                     <Stack.Screen name={"Aggiungi scena"} component={CreateNewScene} />
+                    <Stack.Screen name={"Luoghi nel film"} component={LocationsMap} />
                 </Stack.Navigator>
             </NavigationContainer>
         </>
