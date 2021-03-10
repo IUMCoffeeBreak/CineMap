@@ -6,7 +6,8 @@ import React from "react";
 import {ComponentProps} from "../routeTypings";
 
 export function LocationsMap({navigation, route}: ComponentProps<"Luoghi nel film">){
-    const associations = route.params;
+    const pins = route.params;
+    console.log('[from MovieLocationMao] → ' ,pins);
     return(
         <>
             <SafeAreaView>
@@ -23,16 +24,17 @@ export function LocationsMap({navigation, route}: ComponentProps<"Luoghi nel fil
                             latitudeDelta: constants.map.DELTA,
                             longitudeDelta: constants.map.DELTA
                         }}
-                    />
-                    {/*{associations.map(pin => {*/}
-                    {/*    return (*/}
-                    {/*        <Marker*/}
-                    {/*            key={pin.location.display_name + pin.location.lat}*/}
-                    {/*            coordinate={{ latitude: pin.location.lat, longitude: pin.location.lon }}*/}
-                    {/*            title={pin.location.display_name}*/}
-                    {/*        />*/}
-                    {/*    );*/}
-                    {/*})}*/}
+                    >
+                    {pins.map(pin => {
+                        return (
+                            <Marker
+                                key={pin.id}
+                                coordinate={{ latitude: pin.location!.lat, longitude: pin.location!.lon }}
+                                title={pin.location!.display_name}
+                            />
+                        );
+                    })}
+                    </MapView>
                 </View>
             </SafeAreaView>
         </>

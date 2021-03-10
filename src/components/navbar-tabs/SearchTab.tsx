@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {Keyboard, StyleSheet, Text, View} from "react-native";
 import { SearchBar } from "../../lib/components/SearchBar";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import constants from "../../lib/utils/constants";

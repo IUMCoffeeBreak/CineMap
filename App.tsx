@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import {Keyboard, StyleSheet} from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { NavigationContainer } from "@react-navigation/native";
@@ -26,7 +26,7 @@ const TabNavigation = () => {
         <Tab.Navigator
             tabBarOptions={{
                 activeTintColor: "tomato",
-                inactiveTintColor: "gray"
+                inactiveTintColor: "gray",
             }}
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
@@ -48,12 +48,37 @@ const TabNavigation = () => {
                     return <Icons name={iconName} size={size} color={color} />;
                 }
             })}
+
             initialRouteName={constants.tabs.HOME}
         >
-            <Tab.Screen name={constants.tabs.HOME} component={HomepageTab} />
-            <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} />
-            <Tab.Screen name={constants.tabs.MAP} component={MapTab} />
-            <Tab.Screen name={constants.tabs.PROFILE} component={ProfileTab} />
+            <Tab.Screen
+                name={constants.tabs.HOME}
+                component={HomepageTab}
+                listeners={{tabPress: e => {
+                    Keyboard.dismiss();
+                    }}}
+            />
+            <Tab.Screen
+                name={constants.tabs.SEARCH}
+                component={SearchTab}
+                listeners={{tabPress: e => {
+                        Keyboard.dismiss();
+                    }}}
+            />
+            <Tab.Screen
+                name={constants.tabs.MAP}
+                component={MapTab}
+                listeners={{tabPress: e => {
+                        Keyboard.dismiss();
+                    }}}
+            />
+            <Tab.Screen
+                name={constants.tabs.PROFILE}
+                component={ProfileTab}
+                listeners={{tabPress: e => {
+                        Keyboard.dismiss();
+                    }}}
+            />
         </Tab.Navigator>
     );
 };
@@ -63,7 +88,7 @@ const App = () => {
         <>
             <NavigationContainer>
                 <Stack.Navigator>
-                    <Stack.Screen name={"CinePin"} component={TabNavigation} />
+                    <Stack.Screen name={"CinePin"} component={TabNavigation}  />
                     <Stack.Screen name={"Scheda film"} component={MovieView} />
                     <Stack.Screen name={"Film nel luogo"} component={AssociationsList} />
                     <Stack.Screen name={"Aggiungi scena"} component={CreateNewScene} />

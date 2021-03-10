@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {Keyboard, SafeAreaView, StyleSheet, Text, View} from "react-native";
 import MapView from "react-native-maps";
 import constants from "../../lib/utils/constants";
 import { romeCoordinates } from "./MapTab";
@@ -9,7 +9,7 @@ import { CinePinButton } from "../../lib/components/CinePinButton";
 export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
     return (
         <>
-            <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center"}}>
                 <View style={homeStyle.mainContainer}>
                     <View style={homeStyle.mapContainer}>
                         <MapView
@@ -45,7 +45,7 @@ export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
 const homeStyle = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        width: "100%"
+        width: "100%",
     },
     mapContainer: {
         flex: 2,
