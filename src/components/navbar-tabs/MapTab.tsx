@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Keyboard, Modal, StyleSheet, Text, TouchableHighlight, View} from "react-native";
+import { Modal, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import MapView, { Marker, UrlTile } from "react-native-maps";
 import constants from "../../lib/utils/constants";
 import { SearchBar } from "../../lib/components/SearchBar";
@@ -93,6 +93,7 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                     style={{ margin: 20 }}
                     safeAreaProps={mapTabStyles.searchBar}
                     value={search}
+                    placeholder={"Cerca luogo"}
                     onChangeText={text => {
                         setSearch(text);
                         setPins([]);

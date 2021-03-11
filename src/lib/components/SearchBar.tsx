@@ -6,7 +6,7 @@ import { Searchbar as PaperSearchBar } from "react-native-paper";
 
 export interface CustomSearchProps extends SearchBarProps {
     safeAreaProps?: StyleProp<ViewStyle>;
-    style: StyleProp<any>;
+    style?: StyleProp<any>;
 }
 
 export function SearchBar(props: CustomSearchProps) {
@@ -17,7 +17,7 @@ export function SearchBar(props: CustomSearchProps) {
             <PaperSearchBar
                 theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
                 {...(props as any)}
-                style={{ marginLeft: 10, marginRight: 10, ...props.style }}
+                style={{ marginLeft: 10, marginRight: 10, ...props?.style }}
             />
         </SafeAreaView>
     );

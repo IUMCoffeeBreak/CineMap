@@ -98,8 +98,8 @@ export class LocationModel implements IModel<Geolocation> {
 
     write(item: Geolocation): void {
         this.data[item.place_id] = item;
-        console.debug('[from write 1 ] → ', this.data[item.place_id]);
-        console.debug('[from write 2] → ', item.place_id);
+        console.debug("[from write 1 ] → ", this.data[item.place_id]);
+        console.debug("[from write 2] → ", item.place_id);
     }
 }
 
@@ -159,12 +159,11 @@ export class MovieLocationRelationshipModel implements Table<MovieLocationRelati
     }
 
     write(item: Omit<MovieLocationRelationship, "id">): void {
-        this.data.push({ ...item, id: Math.random().toString(16).replace('0.', '')});
+        this.data.push({ ...item, id: Math.random().toString(16) });
     }
 
     setData(data: MovieLocationRelationship[]) {
         this.data = data;
-
     }
 }
 
@@ -209,33 +208,29 @@ export class DataLayer {
     }
 
     getAssociations(): MovieLocationRelationShipJoin[] {
-        console.log('[from get Ass] → ', this.movieLocAssocModel.list().map(record => ({
-            id: record.id,
-            movie: this.movieModel.readById(record.movie_id),
-            //return by id
-            location: this.locationModel.readById(record.location_id)
-        })))
-        return this.movieLocAssocModel.list().map(record => ({
+        const list = this.movieLocAssocModel.list().map(record => ({
             id: record.id,
             movie: this.movieModel.readById(record.movie_id),
             location: this.locationModel.readById(record.location_id)
         }));
+        console.log("[dataLayer] associations:", list);
+        return list;
     }
 
     protected async loadDbFromDisk() {
         return {
-            locations: JSON.parse(await readFile(fileNames.locations, 'utf8')),
-            movie: JSON.parse(await readFile(fileNames.movie, 'utf8')),
-            movieLocationAssoc: JSON.parse(await readFile(fileNames.movieLocationAssoc, 'utf8'))
+            locations: JSON.parse(await readFile(fileNames.locations, "utf8")),
+            movie: JSON.parse(await readFile(fileNames.movie, "utf8")),
+            movieLocationAssoc: JSON.parse(await readFile(fileNames.movieLocationAssoc, "utf8"))
         };
     }
 
     protected async writeToDisk() {
         console.debug("writing to disk...");
-        console.debug('[from dataLayer] → ',JSON.stringify( this.movieLocAssocModel.data));
-        await writeFile(fileNames.locations, JSON.stringify(this.locationModel.data), 'utf8');
-        await writeFile(fileNames.movie, JSON.stringify(this.movieModel.data), 'utf8');
-        await writeFile(fileNames.movieLocationAssoc, JSON.stringify(this.movieLocAssocModel.data), 'utf8');
+        console.debug("[from dataLayer] → ", JSON.stringify(this.movieLocAssocModel.data));
+        await writeFile(fileNames.locations, JSON.stringify(this.locationModel.data), "utf8");
+        await writeFile(fileNames.movie, JSON.stringify(this.movieModel.data), "utf8");
+        await writeFile(fileNames.movieLocationAssoc, JSON.stringify(this.movieLocAssocModel.data), "utf8");
     }
 
     getMovieLocations(title: string) {
@@ -243,7 +238,10 @@ export class DataLayer {
     }
 
     getLocationMovies(id: number) {
-        console.log('[from LocationMovies] → ', this.getAssociations().filter(a => a.location?.place_id === id))
-        return this.getAssociations().filter(a => a.location?.place_id === id);
+        const associations = this.getAssociations();
+        const filtered = associations.filter(a => a.location?.place_id === id);
+        console.log("[dataLayer: getLocationMovies]", associations);
+        console.log("[dataLayer: filtered] → ", filtered);
+        return filtered;
     }
 }

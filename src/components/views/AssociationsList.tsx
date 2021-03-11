@@ -1,5 +1,5 @@
 import React from "react";
-import {SafeAreaView, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View} from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FilmCard } from "../../lib/components/FilmCard";
 import { ComponentProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
@@ -27,13 +27,15 @@ export function AssociationsList({ route, navigation }: ComponentProps<"Film nel
                     <Text style={style.title}>{associations.length > 0 ? titlePage.nonEmpty : titlePage.empty}</Text>
                 </View>
                 <View style={style.bodyContainer}>
-                    <ScrollView >
-                        {
-                            associations.map(association => (
-                                <TouchableOpacity key={association.id} onPress={() => navigation.navigate("Scheda film", association.movie!)}>
-                                    <FilmCard title={association.movie!.Title} preview={association.movie!.Poster} />
-                                </TouchableOpacity>
-                            ))}
+                    <ScrollView>
+                        {associations.map(association => (
+                            <TouchableOpacity
+                                key={association.id}
+                                onPress={() => navigation.navigate("Scheda film", association.movie!)}
+                            >
+                                <FilmCard title={association.movie!.Title} preview={association.movie!.Poster} />
+                            </TouchableOpacity>
+                        ))}
                     </ScrollView>
                 </View>
                 <View style={style.footerContainer}>
@@ -43,7 +45,6 @@ export function AssociationsList({ route, navigation }: ComponentProps<"Film nel
                         onPress={() => navigation.navigate("Aggiungi scena", pin)}
                     />
                 </View>
-
             </SafeAreaView>
         </>
     );
@@ -52,22 +53,22 @@ export function AssociationsList({ route, navigation }: ComponentProps<"Film nel
 const style = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        margin: '3%',
+        margin: "3%"
     },
     headerContainer: {
         flex: 1,
         justifyContent: "space-around",
-        padding: '5%',
+        padding: "5%"
     },
-    title:{
+    title: {
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: "bold"
     },
     bodyContainer: {
-        flex: 5,
+        flex: 5
     },
-    footerContainer:{
-        flex:1,
+    footerContainer: {
+        flex: 1,
         justifyContent: "space-around"
     }
 });

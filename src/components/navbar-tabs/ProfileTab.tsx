@@ -1,8 +1,6 @@
 import React from "react";
-import {Keyboard, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
-import {Avatar} from 'react-native-elements';
-import Icons from "react-native-vector-icons/FontAwesome";
-import Carousel from "../../lib/components/Carousel";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Avatar } from "react-native-elements";
 
 export function ProfileTab() {
     return (
@@ -10,12 +8,12 @@ export function ProfileTab() {
             <View style={style.headerContainer}>
                 <View style={style.avatarContainer}>
                     <Avatar
-                            rounded
-                            title='CB'
-                            size={150}
-                            activeOpacity={0.7}
-                            containerStyle={{backgroundColor:'black'}}
-                            titleStyle={{color: 'yellow'}}
+                        rounded
+                        title="CB"
+                        size={150}
+                        activeOpacity={0.7}
+                        containerStyle={{ backgroundColor: "black" }}
+                        titleStyle={{ color: "yellow" }}
                     />
                 </View>
                 <View style={style.infoContainer}>
@@ -26,31 +24,32 @@ export function ProfileTab() {
         </SafeAreaView>
     );
 }
+
 const style = StyleSheet.create({
-    mainContainer:{
-        flex:1,
-        justifyContent: 'space-around',
-        position: "absolute",
-        width: '100%'
-    },
-    headerContainer:{
+    mainContainer: {
         flex: 1,
+        justifyContent: "space-around",
+        position: "absolute",
+        width: "100%"
     },
-    avatarContainer:{
+    headerContainer: {
+        flex: 1
+    },
+    avatarContainer: {
         flex: 1,
         alignItems: "center",
-        marginTop: '50%',
+        marginTop: "50%"
     },
-    infoContainer:{
-        flex: 1,
+    infoContainer: {
+        flex: 1
     },
-    userName:{
+    userName: {
         fontSize: 25,
-        fontWeight: 'bold',
-        textAlign: 'center'
+        fontWeight: "bold",
+        textAlign: "center"
     },
-    userLocation:{
+    userLocation: {
         fontSize: 18,
-        textAlign: 'center'
+        textAlign: "center"
     }
-})
+});

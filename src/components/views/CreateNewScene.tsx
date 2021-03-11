@@ -4,36 +4,35 @@ import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import constants from "../../lib/utils/constants";
 import { TextInput } from "react-native-paper";
 import { CinePinButton } from "../../lib/components/CinePinButton";
-import { Movie} from "../../lib/DataLayer";
-import {submitSearch} from "../navbar-tabs/SearchTab";
+import { Movie } from "../../lib/DataLayer";
+import { submitSearch } from "../navbar-tabs/SearchTab";
 import _ from "lodash";
 import { db } from "../../db";
-
 
 const styles = StyleSheet.create({
     title: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: "bold"
     },
-    filmContainer:{
+    filmContainer: {
         flex: 1,
         justifyContent: "space-around",
         margin: 20
     },
-    film:{
+    film: {
         padding: 8,
         borderRadius: 10,
-        fontSize: constants.text.BODY_FONT *1.2,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        color: 'black'
+        fontSize: constants.text.BODY_FONT * 1.2,
+        fontWeight: "bold",
+        textAlign: "center",
+        color: "black"
     },
     mainContainer: {
         marginLeft: 20,
         marginRight: 20,
         marginTop: "10%",
         flex: 1,
-        justifyContent: 'space-between'
+        justifyContent: "space-between"
     },
     innerContainer: {
         justifyContent: "space-around"
@@ -46,10 +45,10 @@ const styles = StyleSheet.create({
     submitButton: {
         marginTop: 1,
         marginBottom: "10%"
-    },
+    }
 });
 
-export function CreateNewScene({navigation, route}: ComponentProps<"Aggiungi scena">) {
+export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi scena">) {
     const pin = route.params;
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");
@@ -105,22 +104,20 @@ export function CreateNewScene({navigation, route}: ComponentProps<"Aggiungi sce
             <View>
                 <CinePinButton
                     style={styles.submitButton}
-                    onPress={() =>
-                        {
-                            db.movieLocAssocModel.write({
-                                scene_name: sceneTitle,
-                                scene_video_link: sceneLink,
-                                movie_id: movie.imdbID,
-                                location_id: pin.place_id
-                            });
-                            db.locationModel.write(pin);
-                            console.log('[from CreateNewScene] → ', db.getLocationMovies(pin.place_id));
-                            navigation.navigate('Film nel luogo', {
-                                pin,
-                                associations: db.getLocationMovies(pin.place_id)
-                            })
-                        }
-                    }
+                    onPress={() => {
+                        db.movieLocAssocModel.write({
+                            scene_name: sceneTitle,
+                            scene_video_link: sceneLink,
+                            movie_id: movie.imdbID,
+                            location_id: pin.place_id
+                        });
+                        db.locationModel.write(pin);
+                        console.log("[from CreateNewScene] → ", db.getLocationMovies(pin.place_id));
+                        navigation.navigate("Film nel luogo", {
+                            pin,
+                            associations: db.getLocationMovies(pin.place_id)
+                        });
+                    }}
                     message={"Conferma"}
                     disabled={!sceneTitle || !sceneLink || !search}
                 />

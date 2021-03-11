@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Keyboard, StyleSheet, Text, View} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { SearchBar } from "../../lib/components/SearchBar";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import constants from "../../lib/utils/constants";
@@ -9,18 +9,16 @@ import _ from "lodash";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { CardItem } from "../../lib/components/CardItem";
 import { ComponentProps } from "../routeTypings";
-import {TextInput} from "react-native-paper";
 
 const searchTabStyles = StyleSheet.create({
-    mainContainer:{
-        flex:1
+    mainContainer: {
+        flex: 1
     },
     body: {
         paddingLeft: 30,
         fontSize: constants.text.BODY_FONT
     },
     searchBar: {
-        padding: '5%',
         shadowColor: "#bbbbbb",
         shadowOffset: {
             width: 5,
@@ -29,12 +27,10 @@ const searchTabStyles = StyleSheet.create({
         shadowOpacity: 5,
         shadowRadius: 10
     },
-    headerContainer:{
+    headerContainer: {
         flex: 1
     },
-    bodyContainer:{
-
-    }
+    bodyContainer: {}
 });
 
 export async function submitSearch(text: string) {
@@ -56,11 +52,21 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
             <View style={searchTabStyles.headerContainer}>
                 <SearchBar
                     safeAreaProps={searchTabStyles.searchBar}
+                    style={searchTabStyles.searchBar}
+                    placeholder={"Cerca film"}
                     value={search}
                     onChangeText={setSearch}
                     onBlur={() => triggerSearch(search)}
-                >
-                </SearchBar>
+                />
+                {/*<TextInput*/}
+                {/*    style={searchTabStyles.searchBar}*/}
+                {/*    theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}*/}
+                {/*    label={"Search for film"}*/}
+                {/*    mode={"outlined"}*/}
+                {/*    value={search}*/}
+                {/*    onBlur={() => triggerSearch(search)}*/}
+                {/*    onChangeText={setSearch}*/}
+                {/*/>*/}
                 <TouchableOpacity onPress={() => navigation.navigate("Scheda film", movie)}>
                     {(!_.isEmpty(movie) && <CardItem title={movie.Title as string} body={movie.Plot} />) || (
                         <Text style={searchTabStyles.body}>{err}</Text>
