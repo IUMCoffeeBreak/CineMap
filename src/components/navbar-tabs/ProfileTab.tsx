@@ -1,6 +1,21 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Avatar } from "react-native-elements";
+import constants from "../../lib/utils/constants";
+
+const name = "michael scott";
+const extractInitials = (n: string) =>
+    n
+        .split(" ")
+        .map(v => v[0])
+        .slice(0, 2)
+        .join("")
+        .toUpperCase();
+const titlize = (s: string) =>
+    s
+        .split(" ")
+        .map(w => w[0].toUpperCase() + w.slice(1))
+        .join(" ");
 
 export function ProfileTab() {
     return (
@@ -9,17 +24,18 @@ export function ProfileTab() {
                 <View style={style.avatarContainer}>
                     <Avatar
                         rounded
-                        title="CB"
+                        title={extractInitials(name)}
                         size={150}
                         activeOpacity={0.7}
                         containerStyle={{ backgroundColor: "black" }}
-                        titleStyle={{ color: "yellow" }}
+                        titleStyle={{ color: constants.colors.MAIN_GREEN }}
                     />
+                    <View style={style.infoContainer}>
+                        <Text style={style.userName}>{titlize(name)}</Text>
+                        <Text style={style.userLocation}>Roma</Text>
+                    </View>
                 </View>
-                <View style={style.infoContainer}>
-                    <Text style={style.userName}>CoffeeBreak</Text>
-                    <Text style={style.userLocation}>Roma</Text>
-                </View>
+
             </View>
         </SafeAreaView>
     );
@@ -29,7 +45,6 @@ const style = StyleSheet.create({
     mainContainer: {
         flex: 1,
         justifyContent: "space-around",
-        position: "absolute",
         width: "100%"
     },
     headerContainer: {
