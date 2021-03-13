@@ -28,7 +28,8 @@ const searchTabStyles = StyleSheet.create({
         shadowRadius: 10
     },
     headerContainer: {
-        flex: 1
+        flex: 1,
+        marginTop: 60
     },
     bodyContainer: {}
 });
@@ -67,7 +68,7 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
                 {/*    onBlur={() => triggerSearch(search)}*/}
                 {/*    onChangeText={setSearch}*/}
                 {/*/>*/}
-                <TouchableOpacity onPress={() => navigation.navigate("Scheda film", movie)}>
+                <TouchableOpacity onPress={() => navigation.navigate("Scheda film", { movie })}>
                     {(!_.isEmpty(movie) && <CardItem title={movie.Title as string} body={movie.Plot} />) || (
                         <Text style={searchTabStyles.body}>{err}</Text>
                     )}

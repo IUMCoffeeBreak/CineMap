@@ -35,7 +35,6 @@ export function ProfileTab() {
                         <Text style={style.userLocation}>Roma</Text>
                     </View>
                 </View>
-
             </View>
         </SafeAreaView>
     );

@@ -38,6 +38,8 @@ export interface Location {
 }
 
 const notFoundError: Response<any> = { err: "Film non trovato" };
+const encoding = "utf8";
+const randID = () => Math.random().toString(32).slice(2);
 
 export async function fetchMovieTitle(title: string): Promise<Response<Movie>> {
     try {
@@ -98,8 +100,6 @@ export class LocationModel implements IModel<Geolocation> {
 
     write(item: Geolocation): void {
         this.data[item.place_id] = item;
-        console.debug("[from write 1 ] → ", this.data[item.place_id]);
-        console.debug("[from write 2] → ", item.place_id);
     }
 }
 
@@ -159,7 +159,7 @@ export class MovieLocationRelationshipModel implements Table<MovieLocationRelati
     }
 
     write(item: Omit<MovieLocationRelationship, "id">): void {
-        this.data.push({ ...item, id: Math.random().toString(16) });
+        this.data.push({ ...item, id: randID() });
     }
 
     setData(data: MovieLocationRelationship[]) {
@@ -199,7 +199,7 @@ export class DataLayer {
         const result = await fetchMovieTitle(text);
         if (!result.item) {
             console.debug("movie not found:", text);
-            return { err: "movie not found" };
+            return { err: "Film non trovato" };
         }
         // save it in db
         this.movieModel.write(result.item);
@@ -213,24 +213,7 @@ export class DataLayer {
             movie: this.movieModel.readById(record.movie_id),
             location: this.locationModel.readById(record.location_id)
         }));
-        console.log("[dataLayer] associations:", list);
         return list;
-    }
-
-    protected async loadDbFromDisk() {
-        return {
-            locations: JSON.parse(await readFile(fileNames.locations, "utf8")),
-            movie: JSON.parse(await readFile(fileNames.movie, "utf8")),
-            movieLocationAssoc: JSON.parse(await readFile(fileNames.movieLocationAssoc, "utf8"))
-        };
-    }
-
-    protected async writeToDisk() {
-        console.debug("writing to disk...");
-        console.debug("[from dataLayer] → ", JSON.stringify(this.movieLocAssocModel.data));
-        await writeFile(fileNames.locations, JSON.stringify(this.locationModel.data), "utf8");
-        await writeFile(fileNames.movie, JSON.stringify(this.movieModel.data), "utf8");
-        await writeFile(fileNames.movieLocationAssoc, JSON.stringify(this.movieLocAssocModel.data), "utf8");
     }
 
     getMovieLocations(title: string) {
@@ -239,9 +222,36 @@ export class DataLayer {
 
     getLocationMovies(id: number) {
         const associations = this.getAssociations();
-        const filtered = associations.filter(a => a.location?.place_id === id);
-        console.log("[dataLayer: getLocationMovies]", associations);
-        console.log("[dataLayer: filtered] → ", filtered);
-        return filtered;
+        return associations.filter(a => a.location?.place_id === id);
+    }
+
+    protected async loadDbFromDisk() {
+        return {
+            locations: JSON.parse(await readFile(fileNames.locations, encoding)),
+            movie: JSON.parse(await readFile(fileNames.movie, encoding)),
+            movieLocationAssoc: JSON.parse(await readFile(fileNames.movieLocationAssoc, encoding))
+        };
+    }
+
+    protected async writeToDisk() {
+        console.debug("writing to disk...");
+        await writeFile(fileNames.locations, JSON.stringify(this.locationModel.data), encoding);
+        await writeFile(fileNames.movie, JSON.stringify(this.movieModel.data), encoding);
+        await writeFile(fileNames.movieLocationAssoc, JSON.stringify(this.movieLocAssocModel.data), encoding);
+    }
+
+    createMovieLocationAssociation(
+        opts: { movie: Movie; location: Geolocation } & Pick<
+            MovieLocationRelationship,
+            "scene_name" | "scene_video_link"
+        >
+    ) {
+        this.movieLocAssocModel.write({
+            movie_id: opts.movie.imdbID,
+            location_id: opts.location.place_id,
+            scene_video_link: opts.scene_video_link,
+            scene_name: opts.scene_name
+        });
+        this.locationModel.write(opts.location);
     }
 }

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     film: {
         padding: 8,
         borderRadius: 10,
-        fontSize: constants.text.BODY_FONT * 1.2,
+        fontSize: constants.text.TITLE_FONT,
         fontWeight: "bold",
         textAlign: "center",
         color: "black"
@@ -32,13 +32,10 @@ const styles = StyleSheet.create({
         marginRight: 20,
         marginTop: "10%",
         flex: 1,
-        justifyContent: "space-between"
-    },
-    innerContainer: {
         justifyContent: "space-around"
     },
     input: {
-        height: 50,
+        height: 45,
         backgroundColor: "white",
         marginBottom: 20
     },
@@ -65,24 +62,27 @@ export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi s
 
     return (
         <SafeAreaView style={styles.mainContainer}>
-            <View style={styles.innerContainer}>
+            <View>
                 <Text style={styles.title}>Fornisci il nome del film</Text>
                 <TextInput
                     theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
-                    label={"Search film name"}
+                    label={"Cerca nome del film"}
                     mode={"outlined"}
                     style={styles.input}
                     onChangeText={setSearch}
-                    onBlur={() => triggerSearch(search)}
+                    onBlur={() => {
+                        triggerSearch(search);
+                        if (!search) setMovie({} as any);
+                    }}
                     value={search}
                 />
                 <View style={styles.filmContainer}>
-                    {(!_.isEmpty(movie) && <Text style={styles.film}>{movie.Title as string}</Text>) || (
-                        <Text style={styles.film}>{err}</Text>
+                    {(!_.isEmpty(movie) && <Text style={styles.film}>{movie.Title}</Text>) || (
+                        <Text style={{ ...styles.film, color: "#cc0000" }}>{err}</Text>
                     )}
                 </View>
             </View>
-            <View style={styles.innerContainer}>
+            <View>
                 <Text style={styles.title}>Fornisci il titolo della scena e il link al video YouTube</Text>
                 <TextInput
                     theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
@@ -105,21 +105,27 @@ export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi s
                 <CinePinButton
                     style={styles.submitButton}
                     onPress={() => {
-                        db.movieLocAssocModel.write({
+                        db.createMovieLocationAssociation({
+                            movie,
+                            location: pin,
                             scene_name: sceneTitle,
-                            scene_video_link: sceneLink,
-                            movie_id: movie.imdbID,
-                            location_id: pin.place_id
+                            scene_video_link: sceneLink
                         });
-                        db.locationModel.write(pin);
-                        console.log("[from CreateNewScene] → ", db.getLocationMovies(pin.place_id));
+                        // db.movieLocAssocModel.write({
+                        //     scene_name: sceneTitle,
+                        //     scene_video_link: sceneLink,
+                        //     movie_id: movie.imdbID,
+                        //     location_id: pin.place_id
+                        // });
+                        // db.locationModel.write(pin);
+                        console.log("[from CreateNewScene]:", db.getLocationMovies(pin.place_id));
                         navigation.navigate("Film nel luogo", {
                             pin,
                             associations: db.getLocationMovies(pin.place_id)
                         });
                     }}
                     message={"Conferma"}
-                    disabled={!sceneTitle || !sceneLink || !search}
+                    disabled={!sceneTitle || !sceneLink || _.isEmpty(movie)}
                 />
             </View>
         </SafeAreaView>

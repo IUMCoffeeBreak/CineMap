@@ -79,7 +79,7 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                 <Modal visible={visibleModal} transparent={true} animationType={"fade"}>
                     <View style={mapTabStyles.centeredView}>
                         <View style={mapTabStyles.modalView}>
-                            <Text style={mapTabStyles.modalText}>Nessun risultato trovato</Text>
+                            <Text style={mapTabStyles.modalText}>Nessun risultato trovato per "{search}"</Text>
                             <TouchableHighlight
                                 style={{ ...mapTabStyles.openButton, backgroundColor: constants.colors.MAIN_GREEN }}
                                 onPress={() => setModalVisibility(!visibleModal)}
@@ -142,21 +142,19 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                         maximumZ={19}
                         flipY={false}
                     />
-                    {pins.map(pin => {
-                        return (
-                            <Marker
-                                key={pin.display_name + pin.lat}
-                                coordinate={{ latitude: pin.lat, longitude: pin.lon }}
-                                title={pin.display_name}
-                                onPress={() =>
-                                    navigation.navigate("Film nel luogo", {
-                                        pin,
-                                        associations: db.getLocationMovies(pin.place_id)
-                                    })
-                                }
-                            />
-                        );
-                    })}
+                    {pins.map(pin => (
+                        <Marker
+                            key={pin.display_name + pin.lat}
+                            coordinate={{ latitude: pin.lat, longitude: pin.lon }}
+                            title={pin.display_name}
+                            onPress={() =>
+                                navigation.navigate("Film nel luogo", {
+                                    pin,
+                                    associations: db.getLocationMovies(pin.place_id)
+                                })
+                            }
+                        />
+                    ))}
                 </MapView>
             </SafeAreaView>
         </>

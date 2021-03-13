@@ -5,7 +5,7 @@ import { Geolocation } from "../lib/geolocation";
 
 export type RootStackParamList = {
     CinePin: undefined;
-    "Scheda film": Movie;
+    "Scheda film": { movie: Movie };
     "Film nel luogo": { pin: Geolocation; associations: MovieLocationRelationShipJoin[] };
     Search: undefined;
     Home: undefined;

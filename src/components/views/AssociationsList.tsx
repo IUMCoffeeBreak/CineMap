@@ -31,7 +31,7 @@ export function AssociationsList({ route, navigation }: ComponentProps<"Film nel
                         {associations.map(association => (
                             <TouchableOpacity
                                 key={association.id}
-                                onPress={() => navigation.navigate("Scheda film", association.movie!)}
+                                onPress={() => navigation.navigate("Scheda film", { movie: association.movie! })}
                             >
                                 <FilmCard title={association.movie!.Title} preview={association.movie!.Poster} />
                             </TouchableOpacity>

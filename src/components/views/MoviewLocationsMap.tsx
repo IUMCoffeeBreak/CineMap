@@ -26,10 +26,14 @@ export function LocationsMap({ navigation, route }: ComponentProps<"Luoghi nel f
                         }}
                     >
                         {pins.map(pin => {
+                            if (!pin.location) {
+                                console.debug("null location for pin:", pin);
+                                return;
+                            }
                             return (
                                 <Marker
                                     key={pin.id}
-                                    coordinate={{ latitude: pin.location!.lat, longitude: pin.location!.lon }}
+                                    coordinate={{ latitude: pin.location.lat, longitude: pin.location.lon }}
                                     title={pin.location!.display_name}
                                 />
                             );
