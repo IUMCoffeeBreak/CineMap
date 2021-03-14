@@ -19,7 +19,7 @@ const style = StyleSheet.create({
     }
 });
 
-export function MovieCard(props: { movie: Movie , container?: StyleProp<ViewProps>}) {
+export function MovieCard(props: { movie: Movie; container?: StyleProp<ViewProps> }) {
     if (!props || !props?.movie) return null;
     return (
         // <View

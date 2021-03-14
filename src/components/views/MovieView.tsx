@@ -24,7 +24,7 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
     return (
         <>
             <SafeAreaView style={style.mainContainer}>
-                <MovieCard movie={movie}/>
+                <MovieCard movie={movie} />
                 <View style={style.bodyContainer}>
                     <View style={style.carouselContainer}>
                         <CCarousel<number>

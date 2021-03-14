@@ -56,8 +56,16 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
                     style={searchTabStyles.searchBar}
                     placeholder={"Cerca film"}
                     value={search}
-                    onChangeText={setSearch}
-                    onBlur={() => triggerSearch(search)}
+                    onChangeText={text => {
+                        if (!text) {
+                            setErr("");
+                            setMovie({} as any);
+                        }
+                        setSearch(text);
+                    }}
+                    onBlur={() => {
+                        triggerSearch(search);
+                    }}
                 />
 
                 {(!_.isEmpty(movie) && (
