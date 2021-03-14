@@ -6,13 +6,13 @@ import constants from "../../lib/utils/constants";
 import { db } from "../../db";
 import { Movie } from "../../lib/DataLayer";
 import _ from "lodash";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { CardItem } from "../../lib/components/CardItem";
 import { ComponentProps } from "../routeTypings";
+import { MovieCard } from "../../lib/components/MovieCard";
 
 const searchTabStyles = StyleSheet.create({
     mainContainer: {
-        flex: 1
+        borderWidth: 1,
+        borderColor: "blue"
     },
     body: {
         paddingLeft: 30,
@@ -49,7 +49,7 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
         setMovie(((!err && item) || {}) as any);
     };
     return (
-        <SafeAreaView style={searchTabStyles.mainContainer}>
+        <SafeAreaView>
             <View style={searchTabStyles.headerContainer}>
                 <SearchBar
                     safeAreaProps={searchTabStyles.searchBar}
@@ -59,20 +59,17 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
                     onChangeText={setSearch}
                     onBlur={() => triggerSearch(search)}
                 />
-                {/*<TextInput*/}
-                {/*    style={searchTabStyles.searchBar}*/}
-                {/*    theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}*/}
-                {/*    label={"Search for film"}*/}
-                {/*    mode={"outlined"}*/}
-                {/*    value={search}*/}
-                {/*    onBlur={() => triggerSearch(search)}*/}
-                {/*    onChangeText={setSearch}*/}
-                {/*/>*/}
-                <TouchableOpacity onPress={() => navigation.navigate("Scheda film", { movie })}>
-                    {(!_.isEmpty(movie) && <CardItem title={movie.Title as string} body={movie.Plot} />) || (
-                        <Text style={searchTabStyles.body}>{err}</Text>
-                    )}
-                </TouchableOpacity>
+
+                {(!_.isEmpty(movie) && (
+                    <MovieCard
+                        movie={movie}
+                        container={{
+                            onTouchEnd: () => {
+                                navigation.navigate("Scheda film", { movie });
+                            }
+                        }}
+                    />
+                )) || <Text style={searchTabStyles.body}>{err}</Text>}
             </View>
         </SafeAreaView>
     );

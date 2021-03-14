@@ -7,7 +7,6 @@ import { ComponentProps } from "../routeTypings";
 
 export function LocationsMap({ navigation, route }: ComponentProps<"Luoghi nel film">) {
     const pins = route.params;
-    console.log("[from MovieLocationMao] → ", pins);
     return (
         <>
             <SafeAreaView>

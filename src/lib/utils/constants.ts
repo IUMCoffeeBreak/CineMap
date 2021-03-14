@@ -1,3 +1,10 @@
+const borderRadius = 10;
+const margins = {
+    top: 10,
+    left: 10,
+    right: 10,
+    bottom: 10
+};
 export const constants = {
     appName: "CinePin",
     omdbApiKey: "4766d9c4",
@@ -29,7 +36,7 @@ export const constants = {
         MARGIN_RIGHT: 10
     },
     borders: {
-        RADIUS: 10
+        RADIUS: borderRadius
     },
     views: {
         MOVIE: "Scheda Film",
@@ -38,6 +45,25 @@ export const constants = {
     map: {
         DELTA: 0.5,
         IMPORTANCE_FILTER_TRESHOLD: 0.3
+    },
+    componentsStyles: {
+        card: {
+            backgroundColor: "white",
+            borderRadius: borderRadius,
+            marginLeft: margins.left,
+            marginRight: margins.right,
+            marginTop: margins.top,
+            marginBottom: margins.bottom,
+            padding: 10,
+            shadowColor: "#000",
+            shadowOffset: {
+                width: 0,
+                height: 1
+            },
+            shadowOpacity: 0.22,
+            shadowRadius: 2.22,
+            elevation: 3
+        }
     }
 };
 

@@ -6,6 +6,7 @@ import { CinePinButton } from "../../lib/components/CinePinButton";
 import { db } from "../../db";
 import constants from "../../lib/utils/constants";
 import CCarousel from "react-native-snap-carousel";
+import { MovieCard } from "../../lib/components/MovieCard";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -23,21 +24,9 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
     return (
         <>
             <SafeAreaView style={style.mainContainer}>
-                <View style={{ flex: 1, justifyContent: "space-around", flexDirection: "row", ...style.card }}>
-                    <View style={{ flex: 1, flexDirection: "column" }}>
-                        <Text style={style.title}>{movie.Title}</Text>
-                        <Text style={style.info}>Anno: {movie.Year}</Text>
-                        <Text style={style.info}>Rating: {movie.imdbRating} / 10</Text>
-                        <Text style={style.info}>Regista: {movie.Director}</Text>
-                        <Text style={style.info}>Cast: {movie.Actors}</Text>
-                    </View>
-                    <View style={{ flex: 1 }}>
-                        <Image style={style.poster} source={{ uri: movie.Poster }} />
-                    </View>
-                </View>
+                <MovieCard movie={movie}/>
                 <View style={style.bodyContainer}>
                     <View style={style.carouselContainer}>
-                        {/*<Carousel />*/}
                         <CCarousel<number>
                             data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
                             renderItem={item => (
@@ -64,22 +53,6 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
                         onPress={() => navigation.navigate("Luoghi nel film", db.getMovieLocations(movie.Title))}
                     />
                 </View>
-                {/*<View style={style.bodyContainer}>*/}
-                {/*    <View style={style.carouselContainer}>*/}
-                {/*        <Carousel />*/}
-                {/*    </View>*/}
-                {/*    <View style={style.plotContainer}>*/}
-                {/*        <Text style={style.plot}>{movie.Plot}</Text>*/}
-                {/*    </View>*/}
-                {/*</View>*/}
-                {/*<View style={style.footerContainer}>*/}
-                {/*    <View style={style.buttonContainer}>*/}
-                {/*        <CinePinButton*/}
-                {/*            message={"Location di questo film"}*/}
-                {/*            onPress={() => navigation.navigate("Luoghi nel film", db.getMovieLocations(movie.Title))}*/}
-                {/*        />*/}
-                {/*    </View>*/}
-                {/*</View>*/}
             </SafeAreaView>
         </>
     );
