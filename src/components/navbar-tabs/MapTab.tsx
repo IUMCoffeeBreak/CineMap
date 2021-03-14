@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { StyleSheet, Text, Modal, View } from "react-native";
 import MapView, { Marker, UrlTile } from "react-native-maps";
 import constants from "../../lib/utils/constants";
 import { SearchBar } from "../../lib/components/SearchBar";
@@ -7,6 +7,7 @@ import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { Geolocation, searchLocation } from "../../lib/geolocation";
 import { db } from "../../db";
 import { ComponentProps } from "../routeTypings";
+import { CinePinButton } from "../../lib/components/CinePinButton";
 
 const mapTabStyles = StyleSheet.create({
     map: {
@@ -80,12 +81,13 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                     <View style={mapTabStyles.centeredView}>
                         <View style={mapTabStyles.modalView}>
                             <Text style={mapTabStyles.modalText}>Nessun risultato trovato per "{search}"</Text>
-                            <TouchableHighlight
-                                style={{ ...mapTabStyles.openButton, backgroundColor: constants.colors.MAIN_GREEN }}
-                                onPress={() => setModalVisibility(!visibleModal)}
-                            >
-                                <Text style={mapTabStyles.textStyle}>Chiudi</Text>
-                            </TouchableHighlight>
+                            <CinePinButton message={"Chiudi"} onPress={() => setModalVisibility(!visibleModal)}/>
+                            {/*<TouchableHighlight*/}
+                            {/*    style={{ ...mapTabStyles.openButton, backgroundColor: constants.colors.MAIN_GREEN }}*/}
+                            {/*    onPress={() => setModalVisibility(!visibleModal)}*/}
+                            {/*>*/}
+                            {/*    <Text style={mapTabStyles.textStyle}>Chiudi</Text>*/}
+                            {/*</TouchableHighlight>*/}
                         </View>
                     </View>
                 </Modal>

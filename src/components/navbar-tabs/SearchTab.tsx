@@ -18,15 +18,6 @@ const searchTabStyles = StyleSheet.create({
         paddingLeft: 30,
         fontSize: constants.text.BODY_FONT
     },
-    searchBar: {
-        shadowColor: "#bbbbbb",
-        shadowOffset: {
-            width: 5,
-            height: 5
-        },
-        shadowOpacity: 5,
-        shadowRadius: 10
-    },
     headerContainer: {
         flex: 1,
         marginTop: 60
@@ -52,8 +43,8 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
         <SafeAreaView>
             <View style={searchTabStyles.headerContainer}>
                 <SearchBar
-                    safeAreaProps={searchTabStyles.searchBar}
-                    style={searchTabStyles.searchBar}
+                    safeAreaProps={constants.componentsStyles.searchBar}
+                    style={constants.componentsStyles.searchBar}
                     placeholder={"Cerca film"}
                     value={search}
                     onChangeText={text => {

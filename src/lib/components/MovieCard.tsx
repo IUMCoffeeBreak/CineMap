@@ -11,10 +11,7 @@ const style = StyleSheet.create({
         fontSize: constants.text.TITLE_FONT
     },
     poster: {
-        resizeMode: "contain",
-        width: 200,
-        height: 200,
-        // marginLeft: "15%",
+        aspectRatio: 2/3,
         borderRadius: 10
     }
 });

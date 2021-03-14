@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { ComponentProps } from "../routeTypings";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Modal, StyleSheet, Text, View } from "react-native";
 import constants from "../../lib/utils/constants";
 import { TextInput } from "react-native-paper";
 import { CinePinButton } from "../../lib/components/CinePinButton";
 import { Movie } from "../../lib/DataLayer";
-import { submitSearch } from "../navbar-tabs/SearchTab";
 import _ from "lodash";
 import { db } from "../../db";
+import { MovieSearch } from "../../lib/components/MovieSearch";
+import { SafeAreaView } from "../../lib/components/SafeAreaView";
 
 const styles = StyleSheet.create({
     title: {
@@ -30,9 +31,9 @@ const styles = StyleSheet.create({
     mainContainer: {
         marginLeft: 20,
         marginRight: 20,
-        marginTop: "10%",
-        flex: 1,
-        justifyContent: "space-around"
+        marginTop: "10%"
+        // flex: 1,
+        // justifyContent: "space-around"
     },
     input: {
         height: 45,
@@ -49,39 +50,56 @@ export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi s
     const pin = route.params;
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");
-    const [search, setSearch] = useState("");
     const [movie, setMovie] = useState<Movie>({} as any);
     const [err, setErr] = useState("");
+    const [searchModal, setSearchModal] = useState(true);
 
-    const triggerSearch = async text => {
-        if (!text) return;
-        const { item, err } = await submitSearch(text);
-        setErr(err || "");
-        setMovie(((!err && item) || {}) as any);
-    };
+    // const triggerSearch = async text => {
+    //     if (!text) return;
+    //     const { item, err } = await submitSearch(text);
+    //     setErr(err || "");
+    //     setMovie(((!err && item) || {}) as any);
+    // };
 
     return (
-        <SafeAreaView style={styles.mainContainer}>
-            <View>
-                <Text style={styles.title}>Fornisci il nome del film</Text>
-                <TextInput
-                    theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
-                    label={"Cerca nome del film"}
-                    mode={"outlined"}
-                    style={styles.input}
-                    onChangeText={setSearch}
-                    onBlur={() => {
-                        triggerSearch(search);
-                        if (!search) setMovie({} as any);
-                    }}
-                    value={search}
-                />
-                <View style={styles.filmContainer}>
-                    {(!_.isEmpty(movie) && <Text style={styles.film}>{movie.Title}</Text>) || (
-                        <Text style={{ ...styles.film, color: "#cc0000" }}>{err}</Text>
-                    )}
+        <SafeAreaView style={{margin: 30}}>
+            <Modal animated animationType={"slide"} visible={searchModal}>
+                <View style={{ flex: 1 , marginTop: "30%", margin: 30}}>
+                    <MovieSearch />
+                    <CinePinButton
+                        message={"Chiudi"}
+                        onPress={() => {
+                            setSearchModal(false);
+                        }}
+                    />
                 </View>
-            </View>
+            </Modal>
+            <CinePinButton
+                message={"apri"}
+                onPress={() => {
+                    setSearchModal(true);
+                }}
+            />
+            {/*<View>*/}
+            {/*<Text style={styles.title}>Fornisci il nome del film</Text>*/}
+            {/*<TextInput*/}
+            {/*    theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}*/}
+            {/*    label={"Cerca nome del film"}*/}
+            {/*    mode={"outlined"}*/}
+            {/*    style={styles.input}*/}
+            {/*    onChangeText={setSearch}*/}
+            {/*    onBlur={() => {*/}
+            {/*        triggerSearch(search);*/}
+            {/*        if (!search) setMovie({} as any);*/}
+            {/*    }}*/}
+            {/*    value={search}*/}
+            {/*/>*/}
+            {/*<View style={styles.filmContainer}>*/}
+            {/*    {(!_.isEmpty(movie) && <MovieCard movie={movie} />) || (*/}
+            {/*        <Text style={{ ...styles.film, color: "#cc0000" }}>{err}</Text>*/}
+            {/*    )}*/}
+            {/*</View>*/}
+            {/*</View>*/}
             <View>
                 <Text style={styles.title}>Fornisci il titolo della scena e il link al video YouTube</Text>
                 <TextInput
