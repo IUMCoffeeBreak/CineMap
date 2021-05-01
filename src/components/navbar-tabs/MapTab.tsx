@@ -152,7 +152,7 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                             onPress={() =>
                                 navigation.navigate("Film nel luogo", {
                                     pin,
-                                    associations: db.getLocationMovies(pin.place_id)
+                                    associations: db.getAssociations()
                                 })
                             }
                         />

@@ -59,8 +59,8 @@ export function TitleVideoLinkDetailsView({ route, navigation }: ComponentProps<
                             scene_name: sceneTitle,
                             scene_video_link: sceneLink
                         });
-                        const associations = db.getLocationMovies(pin.place_id)
-                        console.log("[from CreateNewScene]: associations",associations);
+                        const associations = db.getAssociations()
+                        // console.log("[from CreateNewScene]: associations",associations);
                         navigation.navigate("Film nel luogo", {
                             pin,
                             associations

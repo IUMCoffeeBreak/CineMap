@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View, ScrollView } from "react-native";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { ComponentProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
@@ -7,6 +7,7 @@ import { db } from "../../db";
 import constants from "../../lib/utils/constants";
 import CCarousel from "react-native-snap-carousel";
 import { MovieCard } from "../../lib/components/MovieCard";
+import { map } from "lodash";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -21,31 +22,39 @@ function randint(max = 100) {
 
 export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) {
     const movie = route.params.movie;
+    const associations = db.getAssociations();
+    for (let v of associations){
+        console.log('--------------',v.scene_name, '-----', v.movie?.Title, '------', v.scene_video_link);
+        
+    }
+    const movieAss = associations.filter(v => v.movie?.Title === movie.Title)
+        .map(association => ({scene: association.scene_name, link: association.scene_video_link}));
+    
     return (
         <>
             <SafeAreaView style={style.mainContainer}>
                 <MovieCard movie={movie} />
-                <View style={style.bodyContainer}>
-                    <View style={style.carouselContainer}>
-                        <CCarousel<number>
-                            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                            renderItem={item => (
-                                <View key={item} style={style.slide}>
-                                    <Image
-                                        source={{ uri: `https://picsum.photos/1440/2842?random=${randint()}` }}
-                                        style={style.slideImage}
-                                    />
-                                </View>
-                            )}
-                            sliderWidth={windowWidth}
-                            itemWidth={windowWidth}
-                            sliderHeight={windowHeight}
-                            windowSize={1}
-                        />
-                    </View>
-                </View>
                 <View style={style.card}>
                     <Text style={style.plot}>{movie.Plot}</Text>
+                </View>
+
+                <View style={style.bodyContainer}>
+
+                    <ScrollView style={style.scrollTabs}>
+                        {   
+                            
+                            
+                            movieAss.
+                            map(movieProps => {
+                                return(
+                                    <Text style={style.sceneLink} key={movieProps.link}>
+                                        {movieProps.scene}
+                                    </Text>
+                                )
+                            })
+                        }
+                    </ScrollView>
+
                 </View>
                 <View style={style.buttonContainer}>
                     <CinePinButton
@@ -111,9 +120,12 @@ const style = StyleSheet.create({
         flex: 1,
         flexDirection: "column"
     },
-    carouselContainer: {
-        flex: 1,
-        marginTop: "3%"
+    scrollTabs: {
+        padding: '2%',
+        textAlign: 'center',
+    },
+    sceneLink: {
+        fontSize: 20,
     },
     card: {
         backgroundColor: "white",
