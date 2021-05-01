@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { StyleProp, Text, View, ViewProps } from "react-native";
+import { StyleProp, Text, TouchableOpacity, View, ViewProps } from "react-native";
 import { fetchMovieTitle, Movie } from "../DataLayer";
 import { SearchBar } from "./SearchBar";
 import { MovieCard } from "./MovieCard";
 import constants from "../utils/constants";
 
-export function MovieSearch(props: { style?: StyleProp<ViewProps>, cb?: (err?: string, movie?: Movie) => void }) {
+export function MovieSearch(props: { style?: StyleProp<ViewProps>, onMovieFound?: (err?: string, movie?: Movie) => void, onMovieClick?:(movie: Movie) =>void}) {
     const [search, setSearch] = useState("");
     const [movie, setMovie] = useState<Movie>(null as any);
     const [err, setErr] = useState("");
@@ -24,10 +24,12 @@ export function MovieSearch(props: { style?: StyleProp<ViewProps>, cb?: (err?: s
                     const { err, item } = await fetchMovieTitle(search);
                     setErr(err || "");
                     setMovie(item || (null as any));
-                    props.cb?.(err, item);
+                    props.onMovieFound?.(err, item);
                 }}
             />
-            {movie && <MovieCard movie={movie} />}
+          {movie && <TouchableOpacity onPress={() => props?.onMovieClick?.(movie)}>
+            <MovieCard movie={movie}  />
+          </TouchableOpacity>}
             <Text> {err || ""} </Text>
         </View>
     );

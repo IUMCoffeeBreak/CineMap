@@ -9,6 +9,7 @@ import _ from "lodash";
 import { db } from "../../db";
 import { MovieSearch } from "../../lib/components/MovieSearch";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
+import { MovieCard } from "../../lib/components/MovieCard";
 
 const styles = StyleSheet.create({
     title: {
@@ -65,7 +66,15 @@ export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi s
         <SafeAreaView style={{margin: 30}}>
             <Modal animated animationType={"slide"} visible={searchModal}>
                 <View style={{ flex: 1 , marginTop: "30%", margin: 30}}>
-                    <MovieSearch />
+                    <MovieSearch onMovieFound={(err, item) => {
+                        if (err) setErr(err);
+                        else if (item) {
+                            setMovie(item);
+                        }
+                    }} onMovieClick={movie=>{
+                        if (movie) setMovie(movie)
+                        setSearchModal(false)
+                    }}/>
                     <CinePinButton
                         message={"Chiudi"}
                         onPress={() => {
@@ -75,11 +84,12 @@ export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi s
                 </View>
             </Modal>
             <CinePinButton
-                message={"apri"}
+                message={movie ? "cambia film" : "apri"}
                 onPress={() => {
                     setSearchModal(true);
                 }}
             />
+            {movie? <MovieCard movie={movie}/> : null}
             {/*<View>*/}
             {/*<Text style={styles.title}>Fornisci il nome del film</Text>*/}
             {/*<TextInput*/}
