@@ -1,6 +1,7 @@
 import constants from "./utils/constants";
 import { Geolocation } from "./geolocation";
 import RNFS, { readFile, writeFile } from "react-native-fs";
+import { db } from "../db";
 
 interface Response<T> {
     err?: string;
@@ -45,8 +46,12 @@ export async function fetchMovieTitle(title: string): Promise<Response<Movie>> {
     try {
         const url = `http://www.omdbapi.com?apikey=${constants.omdbApiKey}&t=${encodeURIComponent(title)}`;
         const resp = await fetch(url);
-        const json = await resp.json();
-        if (!json.Error) return { item: json };
+        const movie = await resp.json() as Movie
+        if (!(movie as any).Error) {
+            if (!db.movieModel.readById(movie.imdbID))
+                db.movieModel.write(movie)
+            return { item: movie };
+        }
     } catch (e) {
         console.error("error feching movie", e);
     }
@@ -210,10 +215,12 @@ export class DataLayer {
     getAssociations(): MovieLocationRelationShipJoin[] {
         const list = this.movieLocAssocModel.list().map(record => ({
             id: record.id,
+            scene_video_link: record.scene_video_link,
+            scene_name: record.scene_name,
             movie: this.movieModel.readById(record.movie_id),
             location: this.locationModel.readById(record.location_id)
         }));
-        return list;
+        return list.filter(item=>item.movie !== null);
     }
 
     getMovieLocations(title: string) {
@@ -246,6 +253,7 @@ export class DataLayer {
             "scene_name" | "scene_video_link"
         >
     ) {
+
         this.movieLocAssocModel.write({
             movie_id: opts.movie.imdbID,
             location_id: opts.location.place_id,
