@@ -31,6 +31,8 @@ export interface MovieLocationRelationShipJoin {
     id: string;
     movie: Movie | null;
     location: Geolocation | null;
+    scene_name: string;
+    scene_video_link: string;
 }
 
 export interface Location {
@@ -46,10 +48,9 @@ export async function fetchMovieTitle(title: string): Promise<Response<Movie>> {
     try {
         const url = `http://www.omdbapi.com?apikey=${constants.omdbApiKey}&t=${encodeURIComponent(title)}`;
         const resp = await fetch(url);
-        const movie = await resp.json() as Movie
+        const movie = (await resp.json()) as Movie;
         if (!(movie as any).Error) {
-            if (!db.movieModel.readById(movie.imdbID))
-                db.movieModel.write(movie)
+            if (!db.movieModel.readById(movie.imdbID)) db.movieModel.write(movie);
             return { item: movie };
         }
     } catch (e) {
@@ -213,14 +214,20 @@ export class DataLayer {
     }
 
     getAssociations(): MovieLocationRelationShipJoin[] {
-        const list = this.movieLocAssocModel.list().map(record => ({
-            id: record.id,
-            scene_video_link: record.scene_video_link,
-            scene_name: record.scene_name,
-            movie: this.movieModel.readById(record.movie_id),
-            location: this.locationModel.readById(record.location_id)
-        }));
-        return list.filter(item=>item.movie !== null);
+        const seenMap = new Set();
+        const list = this.movieLocAssocModel.list().map(record => {
+            const id = `${record.movie_id}:${record.location_id}`
+            if (seenMap.has(id)) return null;
+            seenMap.add(id);
+            return {
+                id: record.id,
+                scene_video_link: record.scene_video_link,
+                scene_name: record.scene_name,
+                movie: this.movieModel.readById(record.movie_id),
+                location: this.locationModel.readById(record.location_id)
+            };
+        });
+        return (list as any[]).filter(item => item !== null && item.movie !== null);
     }
 
     getMovieLocations(title: string) {
@@ -253,7 +260,6 @@ export class DataLayer {
             "scene_name" | "scene_video_link"
         >
     ) {
-
         this.movieLocAssocModel.write({
             movie_id: opts.movie.imdbID,
             location_id: opts.location.place_id,
