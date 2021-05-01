@@ -47,7 +47,13 @@ const styles = StyleSheet.create({
     }
 });
 
-export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi scena">) {
+/**
+ * @deprecated
+ * @param navigation
+ * @param route
+ * @constructor
+ */
+export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
     const pin = route.params;
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");
@@ -66,8 +72,8 @@ export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi s
         <SafeAreaView style={{margin: 30}}>
             <Modal animated animationType={"slide"} visible={searchModal}>
                 <View style={{ flex: 1 , marginTop: "30%", margin: 30}}>
-                    <MovieSearch onMovieFound={(err, item) => {
-                        if (err) setErr(err);
+                    <MovieSearch onMovieFound={(e, item) => {
+                        if (e) setErr(e);
                         else if (item) {
                             setMovie(item);
                         }
@@ -110,52 +116,52 @@ export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi s
             {/*    )}*/}
             {/*</View>*/}
             {/*</View>*/}
-            <View>
-                <Text style={styles.title}>Fornisci il titolo della scena e il link al video YouTube</Text>
-                <TextInput
-                    theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
-                    label={"Titolo"}
-                    mode={"outlined"}
-                    style={styles.input}
-                    value={sceneTitle}
-                    onChangeText={v => setSceneTitle(v)}
-                />
-                <TextInput
-                    theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
-                    label={"Link al video della scena"}
-                    mode={"outlined"}
-                    style={styles.input}
-                    value={sceneLink}
-                    onChangeText={v => setSceneLink(v)}
-                />
-            </View>
-            <View>
-                <CinePinButton
-                    style={styles.submitButton}
-                    onPress={() => {
-                        db.createMovieLocationAssociation({
-                            movie,
-                            location: pin,
-                            scene_name: sceneTitle,
-                            scene_video_link: sceneLink
-                        });
-                        // db.movieLocAssocModel.write({
-                        //     scene_name: sceneTitle,
-                        //     scene_video_link: sceneLink,
-                        //     movie_id: movie.imdbID,
-                        //     location_id: pin.place_id
-                        // });
-                        // db.locationModel.write(pin);
-                        console.log("[from CreateNewScene]:", db.getLocationMovies(pin.place_id));
-                        navigation.navigate("Film nel luogo", {
-                            pin,
-                            associations: db.getLocationMovies(pin.place_id)
-                        });
-                    }}
-                    message={"Conferma"}
-                    disabled={!sceneTitle || !sceneLink || _.isEmpty(movie)}
-                />
-            </View>
+            {/*<View>*/}
+            {/*    <Text style={styles.title}>Fornisci il titolo della scena e il link al video YouTube</Text>*/}
+            {/*    <TextInput*/}
+            {/*        theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}*/}
+            {/*        label={"Titolo"}*/}
+            {/*        mode={"outlined"}*/}
+            {/*        style={styles.input}*/}
+            {/*        value={sceneTitle}*/}
+            {/*        onChangeText={v => setSceneTitle(v)}*/}
+            {/*    />*/}
+            {/*    <TextInput*/}
+            {/*        theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}*/}
+            {/*        label={"Link al video della scena"}*/}
+            {/*        mode={"outlined"}*/}
+            {/*        style={styles.input}*/}
+            {/*        value={sceneLink}*/}
+            {/*        onChangeText={v => setSceneLink(v)}*/}
+            {/*    />*/}
+            {/*</View>*/}
+            {/*<View>*/}
+            {/*    <CinePinButton*/}
+            {/*        style={styles.submitButton}*/}
+            {/*        onPress={() => {*/}
+            {/*            db.createMovieLocationAssociation({*/}
+            {/*                movie,*/}
+            {/*                location: pin,*/}
+            {/*                scene_name: sceneTitle,*/}
+            {/*                scene_video_link: sceneLink*/}
+            {/*            });*/}
+            {/*            // db.movieLocAssocModel.write({*/}
+            {/*            //     scene_name: sceneTitle,*/}
+            {/*            //     scene_video_link: sceneLink,*/}
+            {/*            //     movie_id: movie.imdbID,*/}
+            {/*            //     location_id: pin.place_id*/}
+            {/*            // });*/}
+            {/*            // db.locationModel.write(pin);*/}
+            {/*            console.log("[from CreateNewScene]:", db.getLocationMovies(pin.place_id));*/}
+            {/*            navigation.navigate("Film nel luogo", {*/}
+            {/*                pin,*/}
+            {/*                associations: db.getLocationMovies(pin.place_id)*/}
+            {/*            });*/}
+            {/*        }}*/}
+            {/*        message={"Conferma"}*/}
+            {/*        disabled={!sceneTitle || !sceneLink || _.isEmpty(movie)}*/}
+            {/*    />*/}
+            {/*</View>*/}
         </SafeAreaView>
     );
 }

@@ -15,6 +15,8 @@ import { AssociationsList } from "./src/components/views/AssociationsList";
 import { RootStackParamList } from "./src/components/routeTypings";
 import { CreateNewScene } from "./src/components/views/CreateNewScene";
 import {LocationsMap} from "./src/components/views/MoviewLocationsMap";
+import { TitleVideoLinkDetailsView } from "./src/components/views/TitleVideoLinkDetailsView";
+import { SearchMovieToAssociateView } from "./src/components/views/SearchMovieToAssociateView";
 
 declare const global: { HermesInternal: null | {} };
 
@@ -91,8 +93,10 @@ const App = () => {
                     <Stack.Screen name={"CinePin"} component={TabNavigation}  />
                     <Stack.Screen name={"Scheda film"} component={MovieView} />
                     <Stack.Screen name={"Film nel luogo"} component={AssociationsList} />
-                    <Stack.Screen name={"Aggiungi scena"} component={CreateNewScene} />
+                    {/*<Stack.Screen name={"Aggiungi scena"} component={CreateNewScene} />*/}
                     <Stack.Screen name={"Luoghi nel film"} component={LocationsMap} />
+                    <Stack.Screen name={"Dettagli Scena"} component={TitleVideoLinkDetailsView} />
+                    <Stack.Screen name={"Cerca film"} component={SearchMovieToAssociateView} />
                 </Stack.Navigator>
             </NavigationContainer>
         </>

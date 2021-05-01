@@ -42,7 +42,7 @@ export function AssociationsList({ route, navigation }: ComponentProps<"Film nel
                     <CinePinButton
                         message={"Aggiungi Scena"}
                         style={styles.addButton}
-                        onPress={() => navigation.navigate("Aggiungi scena", pin)}
+                        onPress={() => navigation.navigate("Cerca film", { pin })}
                     />
                 </View>
             </SafeAreaView>

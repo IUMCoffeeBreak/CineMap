@@ -12,6 +12,8 @@ export type RootStackParamList = {
     Map: undefined;
     "Aggiungi scena": Geolocation;
     "Luoghi nel film": MovieLocationRelationShipJoin[];
+    "Dettagli Scena": { pin: Geolocation, movie: Movie };
+    "Cerca film": {pin: Geolocation}
 };
 
 export type ComponentProps<T extends keyof RootStackParamList> = {
