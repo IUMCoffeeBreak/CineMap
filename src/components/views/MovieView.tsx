@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Image, StyleSheet, Text, View, ScrollView } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View, ScrollView , Linking} from "react-native";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { ComponentProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
@@ -8,6 +8,7 @@ import constants from "../../lib/utils/constants";
 import CCarousel from "react-native-snap-carousel";
 import { MovieCard } from "../../lib/components/MovieCard";
 import { map } from "lodash";
+import { Link } from "@react-navigation/native";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -23,10 +24,6 @@ function randint(max = 100) {
 export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) {
     const movie = route.params.movie;
     const associations = db.getAssociations();
-    for (let v of associations){
-        console.log('--------------',v.scene_name, '-----', v.movie?.Title, '------', v.scene_video_link);
-        
-    }
     const movieAss = associations.filter(v => v.movie?.Title === movie.Title)
         .map(association => ({scene: association.scene_name, link: association.scene_video_link}));
     
@@ -42,13 +39,14 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
 
                     <ScrollView style={style.scrollTabs}>
                         {   
-                            
-                            
                             movieAss.
                             map(movieProps => {
                                 return(
-                                    <Text style={style.sceneLink} key={movieProps.link}>
-                                        {movieProps.scene}
+                                    <Text 
+                                        style={style.sceneLink} 
+                                        onPress={()=> Linking.openURL(movieProps.link)} 
+                                        key={movieProps.link}>
+                                            {movieProps.scene}
                                     </Text>
                                 )
                             })
@@ -125,7 +123,8 @@ const style = StyleSheet.create({
         textAlign: 'center',
     },
     sceneLink: {
-        fontSize: 20,
+        fontSize: 25,
+        textAlign: "center"
     },
     card: {
         backgroundColor: "white",
@@ -156,7 +155,7 @@ const style = StyleSheet.create({
     },
     plot: {
         fontSize: 17,
-        textAlign: "center"
+        textAlign: "center",
     },
     footerContainer: {
         flex: 1
