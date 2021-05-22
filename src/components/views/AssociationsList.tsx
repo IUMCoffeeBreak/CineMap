@@ -29,14 +29,18 @@ export function AssociationsList({ route, navigation }: ComponentProps<"Film nel
                 <View style={style.bodyContainer}>
                     <ScrollView>
                         {
-                            associations.map(association =>( 
-                                <TouchableOpacity
-                                    key={association.id}
-                                    onPress={() => navigation.navigate("Scheda film", { movie: association.movie! })}
-                                >
-                                    <FilmCard title={association.movie!.Title} preview={association.movie!.Poster} />
-                                </TouchableOpacity>
-                            ))
+                            associations.map((association) =>{
+                                if(association.location?.place_id === pin.place_id){
+                                    return (
+                                        <TouchableOpacity
+                                            key={association.id}
+                                            onPress={() => navigation.navigate("Scheda film", { movie: association.movie! })}
+                                        >
+                                            <FilmCard title={association.movie!.Title} preview={association.movie!.Poster} />
+                                        </TouchableOpacity>
+                                    )
+                                }}
+                            )
                         }
                     </ScrollView>
                 </View>
