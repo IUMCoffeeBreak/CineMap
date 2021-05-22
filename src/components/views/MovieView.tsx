@@ -9,6 +9,7 @@ import CCarousel from "react-native-snap-carousel";
 import { MovieCard } from "../../lib/components/MovieCard";
 import { map } from "lodash";
 import { Link } from "@react-navigation/native";
+import { color } from "react-native-reanimated";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -123,8 +124,13 @@ const style = StyleSheet.create({
         textAlign: 'center',
     },
     sceneLink: {
+        marginBottom: "2%",
         fontSize: 25,
-        textAlign: "center"
+        color: "white",
+        textAlign: "center",
+        backgroundColor: constants.colors.MAIN_GREEN,
+        borderRadius: 5,
+        padding: "1%"
     },
     card: {
         backgroundColor: "white",

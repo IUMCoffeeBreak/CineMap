@@ -90,13 +90,67 @@ const App = () => {
         <>
             <NavigationContainer>
                 <Stack.Navigator>
-                    <Stack.Screen name={"CinePin"} component={TabNavigation}  />
-                    <Stack.Screen name={"Scheda film"} component={MovieView} />
-                    <Stack.Screen name={"Film nel luogo"} component={AssociationsList} />
-                    {/*<Stack.Screen name={"Aggiungi scena"} component={CreateNewScene} />*/}
-                    <Stack.Screen name={"Luoghi nel film"} component={LocationsMap} />
-                    <Stack.Screen name={"Dettagli Scena"} component={TitleVideoLinkDetailsView} />
-                    <Stack.Screen name={"Cerca film"} component={SearchMovieToAssociateView} />
+                    <Stack.Screen name={"CinePin"} component={TabNavigation}
+                        options={{
+                            title: 'CinePin',
+                            headerTintColor: 'black',
+                            headerTitleAlign: 'center',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                                fontFamily: 'monospace',
+                            }
+                        }} />
+                    <Stack.Screen name={"Scheda film"} component={MovieView} 
+                        options={{
+                            title: 'Movie',
+                            headerTintColor: 'black',
+                            headerTitleAlign: 'center',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                                fontFamily: 'monospace',
+                            }
+                        }} />
+                    <Stack.Screen name={"Film nel luogo"} component={AssociationsList} 
+                        options={{
+                            title: 'Film in Place',
+                            headerTintColor: 'black',
+                            headerTitleAlign: 'center',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                                fontFamily: 'monospace',
+                            }
+                    
+                    }}/>
+                    <Stack.Screen name={"Luoghi nel film"} component={LocationsMap} 
+                        options={{
+                            title: 'Place in Film',
+                            headerTintColor: 'black',
+                            headerTitleAlign: 'center',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                                fontFamily: 'monospace',
+                            }                    
+                    }}/>
+                    <Stack.Screen name={"Dettagli Scena"} component={TitleVideoLinkDetailsView}
+                        options={{
+                            title: 'Scene',
+                            headerTintColor: 'black',
+                            headerTitleAlign: 'center',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                                fontFamily: 'monospace',
+                            }                    
+                    }} />
+                    <Stack.Screen name={"Cerca film"} component={SearchMovieToAssociateView} 
+                        options={{
+                            title: 'Find Film',
+                            headerTintColor: 'black',
+                            headerTitleAlign: 'center',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                                fontFamily: 'monospace',
+                            }                    
+                    }} />
                 </Stack.Navigator>
             </NavigationContainer>
         </>
