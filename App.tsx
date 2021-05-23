@@ -1,5 +1,5 @@
 import React from "react";
-import {Keyboard, StyleSheet} from "react-native";
+import { Keyboard, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { NavigationContainer } from "@react-navigation/native";
@@ -13,8 +13,7 @@ import { SearchTab } from "./src/components/navbar-tabs/SearchTab";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AssociationsList } from "./src/components/views/AssociationsList";
 import { RootStackParamList } from "./src/components/routeTypings";
-import { CreateNewScene } from "./src/components/views/CreateNewScene";
-import {LocationsMap} from "./src/components/views/MoviewLocationsMap";
+import { LocationsMap } from "./src/components/views/MoviewLocationsMap";
 import { TitleVideoLinkDetailsView } from "./src/components/views/TitleVideoLinkDetailsView";
 import { SearchMovieToAssociateView } from "./src/components/views/SearchMovieToAssociateView";
 
@@ -24,11 +23,16 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
 
 const TabNavigation = () => {
+    const listener = {
+        tabPress: e => {
+            Keyboard.dismiss();
+        }
+    };
     return (
         <Tab.Navigator
             tabBarOptions={{
                 activeTintColor: "tomato",
-                inactiveTintColor: "gray",
+                inactiveTintColor: "gray"
             }}
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
@@ -50,107 +54,54 @@ const TabNavigation = () => {
                     return <Icons name={iconName} size={size} color={color} />;
                 }
             })}
-
             initialRouteName={constants.tabs.HOME}
         >
-            <Tab.Screen
-                name={constants.tabs.HOME}
-                component={HomepageTab}
-                listeners={{tabPress: e => {
-                    Keyboard.dismiss();
-                    }}}
-            />
-            <Tab.Screen
-                name={constants.tabs.SEARCH}
-                component={SearchTab}
-                listeners={{tabPress: e => {
-                        Keyboard.dismiss();
-                    }}}
-            />
-            <Tab.Screen
-                name={constants.tabs.MAP}
-                component={MapTab}
-                listeners={{tabPress: e => {
-                        Keyboard.dismiss();
-                    }}}
-            />
-            <Tab.Screen
-                name={constants.tabs.PROFILE}
-                component={ProfileTab}
-                listeners={{tabPress: e => {
-                        Keyboard.dismiss();
-                    }}}
-            />
+            <Tab.Screen name={constants.tabs.HOME} component={HomepageTab} listeners={listener} />
+            <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} listeners={listener} />
+            <Tab.Screen name={constants.tabs.MAP} component={MapTab} listeners={listener} />
+            <Tab.Screen name={constants.tabs.PROFILE} component={ProfileTab} listeners={listener} />
         </Tab.Navigator>
     );
 };
+
+const stackOpts = (title: string) =>
+    ({
+        // title,
+        headerTintColor: constants.colors.MAIN_GREEN,
+        headerTitleAlign: "center",
+        headerTitleStyle: {
+            fontWeight: "bold",
+            fontFamily: "monospace"
+        }
+    } as any);
 
 const App = () => {
     return (
         <>
             <NavigationContainer>
                 <Stack.Navigator>
-                    <Stack.Screen name={"CinePin"} component={TabNavigation}
-                        options={{
-                            title: 'CinePin',
-                            headerTintColor: constants.colors.MAIN_GREEN,
-                            headerTitleAlign: 'center',
-                            headerTitleStyle: {
-                                fontWeight: 'bold',
-                                fontFamily: 'monospace',
-                            }
-                        }} />
-                    <Stack.Screen name={"Scheda film"} component={MovieView} 
-                        options={{
-                            title: 'Movie',
-                            headerTintColor: constants.colors.MAIN_GREEN,
-                            headerTitleAlign: 'center',
-                            headerTitleStyle: {
-                                fontWeight: 'bold',
-                                fontFamily: 'monospace',
-                            }
-                        }} />
-                    <Stack.Screen name={"Film nel luogo"} component={AssociationsList} 
-                        options={{
-                            title: 'Film in Place',
-                            headerTintColor: constants.colors.MAIN_GREEN,
-                            headerTitleAlign: 'center',
-                            headerTitleStyle: {
-                                fontWeight: 'bold',
-                                fontFamily: 'monospace',
-                            }
-                    
-                    }}/>
-                    <Stack.Screen name={"Luoghi nel film"} component={LocationsMap} 
-                        options={{
-                            title: 'Place in Film',
-                            headerTintColor: constants.colors.MAIN_GREEN,
-                            headerTitleAlign: 'center',
-                            headerTitleStyle: {
-                                fontWeight: 'bold',
-                                fontFamily: 'monospace',
-                            }                    
-                    }}/>
-                    <Stack.Screen name={"Dettagli Scena"} component={TitleVideoLinkDetailsView}
-                        options={{
-                            title: 'Scene',
-                            headerTintColor: constants.colors.MAIN_GREEN,
-                            headerTitleAlign: 'center',
-                            headerTitleStyle: {
-                                fontWeight: 'bold',
-                                fontFamily: 'monospace',
-                            }                    
-                    }} />
-                    <Stack.Screen name={"Cerca film"} component={SearchMovieToAssociateView} 
-                        options={{
-                            title: 'Find Film',
-                            headerTintColor: constants.colors.MAIN_GREEN,
-                            headerTitleAlign: 'center',
-                            headerTitleStyle: {
-                                fontWeight: 'bold',
-                                fontFamily: 'monospace',
-                            }                    
-                    }} />
+                    <Stack.Screen name={"CinePin"} component={TabNavigation} options={stackOpts("CinePin")} />
+                    <Stack.Screen name={"Scheda film"} component={MovieView} options={stackOpts("Movie")} />
+                    <Stack.Screen
+                        name={"Film nel luogo"}
+                        component={AssociationsList}
+                        options={stackOpts("Film in Place")}
+                    />
+                    <Stack.Screen
+                        name={"Luoghi nel film"}
+                        component={LocationsMap}
+                        options={stackOpts("Place in Film")}
+                    />
+                    <Stack.Screen
+                        name={"Dettagli Scena"}
+                        component={TitleVideoLinkDetailsView}
+                        options={stackOpts("Scene")}
+                    />
+                    <Stack.Screen
+                        name={"Cerca film"}
+                        component={SearchMovieToAssociateView}
+                        options={stackOpts("Find Film")}
+                    />
                 </Stack.Navigator>
             </NavigationContainer>
         </>
