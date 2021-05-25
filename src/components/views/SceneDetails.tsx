@@ -24,32 +24,32 @@ const styles = StyleSheet.create({
     }
 });
 
-export function TitleVideoLinkDetailsView({ route, navigation }: ComponentProps<"Dettagli Scena">) {
+export function SceneDetails({ route, navigation }: ComponentProps<"Dettagli Scena">) {
     const { pin , movie} = route.params;
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");
     return (
         <SafeAreaView style={{padding: constants.spacing.MARGIN_LEFT}}>
-            <View>
+            <View style={{padding: 20}}>
                 <Text style={styles.title}>Fornisci il titolo della scena e il link al video YouTube</Text>
                 <TextInput
-                    theme={{ colors: { primary: constants.colors.MAIN_BUTTON } }}
-                    label={"Titolo"}
-                    mode={"outlined"}
-                    style={styles.input}
-                    value={sceneTitle}
-                    onChangeText={v => setSceneTitle(v)}
+                  theme={{ colors: { primary: constants.colors.MAIN_BUTTON } }}
+                  label={"Titolo"}
+                  mode={"outlined"}
+                  style={styles.input}
+                  value={sceneTitle}
+                  onChangeText={v => setSceneTitle(v)}
                 />
                 <TextInput
-                    theme={{ colors: { primary: constants.colors.MAIN_BUTTON } }}
-                    label={"Link al video della scena"}
-                    mode={"outlined"}
-                    style={styles.input}
-                    value={sceneLink}
-                    onChangeText={v => setSceneLink(v)}
+                  theme={{ colors: { primary: constants.colors.MAIN_BUTTON } }}
+                  label={"Link al video della scena"}
+                  mode={"outlined"}
+                  style={styles.input}
+                  value={sceneLink}
+                  onChangeText={v => setSceneLink(v)}
                 />
             </View>
-            <View>
+            <View style={{padding: 20}}>
                 <CinePinButton
                     style={styles.submitButton}
                     onPress={() => {
