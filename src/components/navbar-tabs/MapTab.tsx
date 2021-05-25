@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, Modal, View } from "react-native";
+import { Modal, StyleSheet, Text, View } from "react-native";
 import MapView, { Marker, UrlTile } from "react-native-maps";
 import constants from "../../lib/utils/constants";
 import { SearchBar } from "../../lib/components/SearchBar";
@@ -59,7 +59,8 @@ const mapTabStyles = StyleSheet.create({
     },
     modalText: {
         marginBottom: 15,
-        textAlign: "center"
+        textAlign: "center",
+        fontSize: 18
     }
 });
 
@@ -69,11 +70,13 @@ export const romeCoordinates = {
 };
 
 export function MapTab({ navigation, route }: ComponentProps<"Map">) {
+    const { navigatedFromHome } = route.params;
     const [search, setSearch] = useState("");
     const [pins, setPins] = useState<Geolocation[]>([]);
     const [map, setMap] = useState<MapView>();
     const [visibleModal, setModalVisibility] = useState(false);
     const [movieAssociations, setMovieAssociations] = useState<ReturnType<typeof db.getMovieLocations>>([]);
+    const [isNavigatedFromHomeModalVisible, setIsNavigatedFromHomeModalVisible] = useState(!!navigatedFromHome);
     return (
         <>
             <SafeAreaView>
@@ -81,13 +84,20 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                     <View style={mapTabStyles.centeredView}>
                         <View style={mapTabStyles.modalView}>
                             <Text style={mapTabStyles.modalText}>Nessun risultato trovato per "{search}"</Text>
-                            <CinePinButton message={"Chiudi"} onPress={() => setModalVisibility(!visibleModal)}/>
-                            {/*<TouchableHighlight*/}
-                            {/*    style={{ ...mapTabStyles.openButton, backgroundColor: constants.colors.MAIN_GREEN }}*/}
-                            {/*    onPress={() => setModalVisibility(!visibleModal)}*/}
-                            {/*>*/}
-                            {/*    <Text style={mapTabStyles.textStyle}>Chiudi</Text>*/}
-                            {/*</TouchableHighlight>*/}
+                            <CinePinButton message={"Chiudi"} onPress={() => setModalVisibility(!visibleModal)} />
+                        </View>
+                    </View>
+                </Modal>
+                <Modal visible={isNavigatedFromHomeModalVisible} transparent={true} animationType={"fade"}>
+                    <View style={mapTabStyles.centeredView}>
+                        <View style={mapTabStyles.modalView}>
+                            <Text style={mapTabStyles.modalText}>
+                                Cerca il luogo in cui si è svolta la scena che vuoi inserire
+                            </Text>
+                            <CinePinButton
+                                message={"chiudi"}
+                                onPress={() => setIsNavigatedFromHomeModalVisible(false)}
+                            />
                         </View>
                     </View>
                 </Modal>
@@ -152,7 +162,7 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                             onPress={() =>
                                 navigation.navigate("Film nel luogo", {
                                     pin,
-                                    associations: db.getAssociations()
+                                    movies: db.getMoviesByLocation(pin.place_id)
                                 })
                             }
                         />

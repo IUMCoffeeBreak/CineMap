@@ -9,13 +9,13 @@ import { MapTab } from "./src/components/navbar-tabs/MapTab";
 import constants from "./src/lib/utils/constants";
 import Icons from "react-native-vector-icons/FontAwesome";
 import { MovieView } from "./src/components/views/MovieView";
-import { SearchTab } from "./src/components/navbar-tabs/SearchTab";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AssociationsList } from "./src/components/views/AssociationsList";
 import { RootStackParamList } from "./src/components/routeTypings";
 import { LocationsMap } from "./src/components/views/MoviewLocationsMap";
 import { TitleVideoLinkDetailsView } from "./src/components/views/TitleVideoLinkDetailsView";
 import { SearchMovieToAssociateView } from "./src/components/views/SearchMovieToAssociateView";
+import SearchTab from "./src/components/navbar-tabs/SearchTab";
 
 declare const global: { HermesInternal: null | {} };
 
@@ -57,21 +57,22 @@ const TabNavigation = () => {
             initialRouteName={constants.tabs.HOME}
         >
             <Tab.Screen name={constants.tabs.HOME} component={HomepageTab} listeners={listener} />
-            <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} listeners={listener} />
-            <Tab.Screen name={constants.tabs.MAP} component={MapTab} listeners={listener} />
+            {/*<Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} listeners={listener} />*/}
+            {/*<Tab.Screen name={constants.tabs.MAP} component={MapTab} listeners={listener} />*/}
             <Tab.Screen name={constants.tabs.PROFILE} component={ProfileTab} listeners={listener} />
         </Tab.Navigator>
     );
 };
 
-const stackOpts = (title: string) =>
+const stackOpts = (title?: string) =>
     ({
-        // title,
-        headerTintColor: constants.colors.MAIN_GREEN,
+        title,
+        headerTintColor: constants.colors.MAIN_BUTTON,
         headerTitleAlign: "center",
         headerTitleStyle: {
-            fontWeight: "bold",
-            fontFamily: "monospace"
+            fontWeight: "bold"
+            // todo: ios doesnt support monospace
+            // fontFamily: "monospace"
         }
     } as any);
 
@@ -80,17 +81,17 @@ const App = () => {
         <>
             <NavigationContainer>
                 <Stack.Navigator>
-                    <Stack.Screen name={"CinePin"} component={TabNavigation} options={stackOpts("CinePin")} />
-                    <Stack.Screen name={"Scheda film"} component={MovieView} options={stackOpts("Movie")} />
+                    <Stack.Screen name={"CineMap"} component={TabNavigation} options={stackOpts("CineMap")} />
+                    <Stack.Screen name={"Scheda film"} component={MovieView} options={stackOpts("Film")} />
                     <Stack.Screen
                         name={"Film nel luogo"}
                         component={AssociationsList}
-                        options={stackOpts("Film in Place")}
+                        options={stackOpts("Film nel luogo")}
                     />
                     <Stack.Screen
                         name={"Luoghi nel film"}
                         component={LocationsMap}
-                        options={stackOpts("Place in Film")}
+                        options={stackOpts("Luoghi nel film")}
                     />
                     <Stack.Screen
                         name={"Dettagli Scena"}
@@ -102,6 +103,8 @@ const App = () => {
                         component={SearchMovieToAssociateView}
                         options={stackOpts("Find Film")}
                     />
+                    <Stack.Screen name={"Search"} component={SearchTab} options={stackOpts("Cerca film")}/>
+                    <Stack.Screen name={"Map"} component={MapTab} options={stackOpts("Mappa")} />
                 </Stack.Navigator>
             </NavigationContainer>
         </>

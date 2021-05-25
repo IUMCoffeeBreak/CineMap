@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 });
 
 export function AssociationsList({ route, navigation }: ComponentProps<"Film nel luogo">) {
-    const { associations, pin } = route.params;
+    const { movies, pin } = route.params;
 
     const titlePage = {
         empty: "Questa location non compare in nessun film",
@@ -24,24 +24,20 @@ export function AssociationsList({ route, navigation }: ComponentProps<"Film nel
         <>
             <SafeAreaView style={style.mainContainer}>
                 <View style={style.headerContainer}>
-                    <Text style={style.title}>{associations.length > 0 ? titlePage.nonEmpty : titlePage.empty}</Text>
+                    <Text style={style.title}>{movies.length > 0 ? titlePage.nonEmpty : titlePage.empty}</Text>
                 </View>
                 <View style={style.bodyContainer}>
                     <ScrollView>
-                        {
-                            associations.map((association) =>{
-                                if(association.location?.place_id === pin.place_id){
-                                    return (
-                                        <TouchableOpacity
-                                            key={association.id}
-                                            onPress={() => navigation.navigate("Scheda film", { movie: association.movie! })}
-                                        >
-                                            <FilmCard title={association.movie!.Title} preview={association.movie!.Poster} />
-                                        </TouchableOpacity>
-                                    )
-                                }}
-                            )
-                        }
+                        {movies.map((movie, id) => {
+                            return (
+                                <TouchableOpacity
+                                    key={id}
+                                    onPress={() => navigation.navigate("Scheda film", { movie })}
+                                >
+                                    <FilmCard title={movie.Title} preview={movie.Poster} />
+                                </TouchableOpacity>
+                            );
+                        })}
                     </ScrollView>
                 </View>
                 <View style={style.footerContainer}>

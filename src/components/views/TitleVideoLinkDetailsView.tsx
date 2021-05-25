@@ -33,7 +33,7 @@ export function TitleVideoLinkDetailsView({ route, navigation }: ComponentProps<
             <View>
                 <Text style={styles.title}>Fornisci il titolo della scena e il link al video YouTube</Text>
                 <TextInput
-                    theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
+                    theme={{ colors: { primary: constants.colors.MAIN_BUTTON } }}
                     label={"Titolo"}
                     mode={"outlined"}
                     style={styles.input}
@@ -41,7 +41,7 @@ export function TitleVideoLinkDetailsView({ route, navigation }: ComponentProps<
                     onChangeText={v => setSceneTitle(v)}
                 />
                 <TextInput
-                    theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
+                    theme={{ colors: { primary: constants.colors.MAIN_BUTTON } }}
                     label={"Link al video della scena"}
                     mode={"outlined"}
                     style={styles.input}
@@ -59,11 +59,9 @@ export function TitleVideoLinkDetailsView({ route, navigation }: ComponentProps<
                             scene_name: sceneTitle,
                             scene_video_link: sceneLink
                         });
-                        const associations = db.getAssociations()
-                        // console.log("[from CreateNewScene]: associations",associations);
                         navigation.navigate("Film nel luogo", {
                             pin,
-                            associations
+                            movies: db.getMoviesByLocation(pin.place_id)
                         });
                     }}
                     message={"Conferma"}

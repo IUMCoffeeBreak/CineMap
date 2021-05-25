@@ -11,29 +11,48 @@ export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
         <>
             <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                 <View style={homeStyle.mainContainer}>
-                    <View style={homeStyle.mapContainer}>
-                        <MapView
-                            showsScale={true}
-                            zoomControlEnabled={true}
-                            showsUserLocation={true}
-                            showsCompass={true}
-                            style={homeStyle.map}
-                            initialRegion={{
-                                latitude: romeCoordinates.lat,
-                                longitude: romeCoordinates.lon,
-                                latitudeDelta: constants.map.DELTA,
-                                longitudeDelta: constants.map.DELTA
-                            }}
+                    <View style={{ ...homeStyle.card, flex: 2 }}>
+                        <View style={homeStyle.mapContainer}>
+                            <MapView
+                                showsScale={true}
+                                zoomControlEnabled={true}
+                                showsUserLocation={true}
+                                showsCompass={true}
+                                style={homeStyle.map}
+                                initialRegion={{
+                                    latitude: romeCoordinates.lat,
+                                    longitude: romeCoordinates.lon,
+                                    latitudeDelta: constants.map.DELTA,
+                                    longitudeDelta: constants.map.DELTA
+                                }}
+                            />
+                        </View>
+                        <View>
+                            <CinePinButton
+                                message={"cerca luogo"}
+                                style={{ marginLeft: 20, marginRight: 20, marginBottom: 20 }}
+                                onPress={() => navigation.navigate("Map", {})}
+                            />
+                        </View>
+                    </View>
+                    <View style={homeStyle.card}>
+                        <Text style={homeStyle.textStyle}>
+                            {"Vuoi sapere dove sono stati gitati i tuoi film e serie tv preferiti?"}
+                        </Text>
+                        <CinePinButton
+                            style={homeStyle.button}
+                            onPress={() => navigation.navigate("Search")}
+                            message="cerca film"
                         />
                     </View>
                     <View style={homeStyle.card}>
                         <Text style={homeStyle.textStyle}>
-                            {"Vuoi scoprire quali film sono stati girati in un determinato luogo?"}
+                            {"Sei a conoscenza di scene girate a Roma che non sono state registrate?"}
                         </Text>
                         <CinePinButton
                             style={homeStyle.button}
-                            onPress={() => navigation.navigate("Map")}
-                            message="cerca location"
+                            onPress={() => navigation.navigate("Map", { navigatedFromHome: true })}
+                            message="aggiungi scena"
                         />
                     </View>
                 </View>

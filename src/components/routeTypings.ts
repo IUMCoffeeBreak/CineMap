@@ -4,16 +4,16 @@ import { RouteProp } from "@react-navigation/native";
 import { Geolocation } from "../lib/geolocation";
 
 export type RootStackParamList = {
-    CinePin: undefined;
+    CineMap: undefined;
     "Scheda film": { movie: Movie };
-    "Film nel luogo": { pin: Geolocation; associations: MovieLocationRelationShipJoin[] };
+    "Film nel luogo": { pin: Geolocation; movies: Movie[] };
     Search: undefined;
     Home: undefined;
-    Map: undefined;
+    Map: { navigatedFromHome?: boolean };
     "Aggiungi scena": Geolocation;
     "Luoghi nel film": MovieLocationRelationShipJoin[];
-    "Dettagli Scena": { pin: Geolocation, movie: Movie };
-    "Cerca film": {pin: Geolocation}
+    "Dettagli Scena": { pin: Geolocation; movie: Movie };
+    "Cerca film": { pin: Geolocation };
 };
 
 export type ComponentProps<T extends keyof RootStackParamList> = {

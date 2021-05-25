@@ -24,10 +24,7 @@ function randint(max = 100) {
 
 export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) {
     const movie = route.params.movie;
-    const associations = db.getAssociations();
-    const movieAss = associations.filter(v => v.movie?.Title === movie.Title)
-        .map(association => ({scene: association.scene_name, link: association.scene_video_link}));
-    
+    const associations = db.getScenesFromMovie(movie.imdbID).map((association, id) => ({id, scene: association.scene_name, link: association.scene_video_link}));
     return (
         <>
             <SafeAreaView style={style.mainContainer}>
@@ -37,16 +34,16 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
                 </View>
 
                 <View style={style.bodyContainer}>
-
                     <ScrollView style={style.scrollTabs}>
-                        {   
-                            movieAss.
+                        {
+                            associations.
                             map(movieProps => {
                                 return(
-                                    <Text 
-                                        style={style.sceneLink} 
-                                        onPress={()=> Linking.openURL(movieProps.link)} 
-                                        key={movieProps.link}>
+                                    <Text
+                                        style={style.sceneLink}
+                                        onPress={()=> Linking.openURL(movieProps.link)}
+                                        key={movieProps.id}
+                                    >
                                             {movieProps.scene}
                                     </Text>
                                 )
@@ -128,7 +125,7 @@ const style = StyleSheet.create({
         fontSize: 25,
         color: "white",
         textAlign: "center",
-        backgroundColor: constants.colors.MAIN_GREEN,
+        backgroundColor: constants.colors.MAIN_BUTTON,
         borderRadius: 5,
         padding: "1%"
     },
