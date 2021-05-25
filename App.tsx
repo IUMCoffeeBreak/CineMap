@@ -13,7 +13,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { AssociationsList } from "./src/components/views/AssociationsList";
 import { RootStackParamList } from "./src/components/routeTypings";
 import { LocationsMap } from "./src/components/views/MoviewLocationsMap";
-import { TitleVideoLinkDetailsView } from "./src/components/views/TitleVideoLinkDetailsView";
+import { SceneDetails } from "./src/components/views/SceneDetails";
 import { SearchMovieToAssociateView } from "./src/components/views/SearchMovieToAssociateView";
 import SearchTab from "./src/components/navbar-tabs/SearchTab";
 
@@ -95,13 +95,13 @@ const App = () => {
                     />
                     <Stack.Screen
                         name={"Dettagli Scena"}
-                        component={TitleVideoLinkDetailsView}
-                        options={stackOpts("Scene")}
+                        component={SceneDetails}
+                        options={stackOpts("Dettagli Scena")}
                     />
                     <Stack.Screen
                         name={"Cerca film"}
                         component={SearchMovieToAssociateView}
-                        options={stackOpts("Find Film")}
+                        options={stackOpts("Cerca film")}
                     />
                     <Stack.Screen name={"Search"} component={SearchTab} options={stackOpts("Cerca film")}/>
                     <Stack.Screen name={"Map"} component={MapTab} options={stackOpts("Mappa")} />
