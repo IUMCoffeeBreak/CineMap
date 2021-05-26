@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Image, StyleSheet, Text, View, ScrollView , Linking} from "react-native";
+import { Dimensions, Image, Linking, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { ComponentProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
@@ -7,11 +7,21 @@ import { db } from "../../db";
 import constants from "../../lib/utils/constants";
 import CCarousel from "react-native-snap-carousel";
 import { MovieCard } from "../../lib/components/MovieCard";
-import { map } from "lodash";
-import { Link } from "@react-navigation/native";
-import { color } from "react-native-reanimated";
+import { MovieLocationRelationShipJoin } from "../../lib/DataLayer";
 
-const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
+function wp (percentage) {
+    const value = (percentage * viewportWidth) / 100;
+    return Math.round(value);
+}
+
+const slideHeight = viewportHeight * 0.36;
+const slideWidth = wp(75);
+const itemHorizontalMargin = wp(2);
+
+export const sliderWidth = viewportWidth;
+export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 export const romeCoordinates = {
     lat: 41.9028,
@@ -21,10 +31,11 @@ export const romeCoordinates = {
 function randint(max = 100) {
     return Math.floor(Math.random() * Math.floor(max));
 }
-
+const { height, width } = Dimensions.get('window');
 export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) {
     const movie = route.params.movie;
-    const associations = db.getScenesFromMovie(movie.imdbID).map((association, id) => ({id, scene: association.scene_name, link: association.scene_video_link}));
+    const associations = db.getScenesFromMovie(movie.imdbID);
+    // console.log(associations.length);
     return (
         <>
             <SafeAreaView style={style.mainContainer}>
@@ -34,23 +45,29 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
                 </View>
 
                 <View style={style.bodyContainer}>
-                    <ScrollView style={style.scrollTabs}>
-                        {
-                            associations.
-                            map(movieProps => {
-                                return(
-                                    <Text
-                                        style={style.sceneLink}
-                                        onPress={()=> Linking.openURL(movieProps.link)}
-                                        key={movieProps.id}
-                                    >
-                                            {movieProps.scene}
-                                    </Text>
-                                )
-                            })
-                        }
-                    </ScrollView>
-
+                    <CCarousel<MovieLocationRelationShipJoin>
+                        data={associations}
+                        renderItem={ass => <Image source={{uri: ass.item.thumbnail}} />}
+                        sliderWidth={width}
+                        itemWidth={itemWidth}
+                        sliderHeight={height}
+                        // windowSize={1}
+                        // inactiveSlideScale={0.94}
+                        // inactiveSlideOpacity={0.7}
+                    />
+                    {/*<ScrollView style={style.scrollTabs}>*/}
+                    {/*    {associations.map(movieProps => {*/}
+                    {/*        return (*/}
+                    {/*            <Text*/}
+                    {/*                style={style.sceneLink}*/}
+                    {/*                onPress={() => Linking.openURL(movieProps.scene_video_link)}*/}
+                    {/*                key={movieProps.id}*/}
+                    {/*            >*/}
+                    {/*                {movieProps.scene_name}*/}
+                    {/*            </Text>*/}
+                    {/*        );*/}
+                    {/*    })}*/}
+                    {/*</ScrollView>*/}
                 </View>
                 <View style={style.buttonContainer}>
                     <CinePinButton
@@ -81,16 +98,6 @@ const style = StyleSheet.create({
         elevation: 5,
         flexDirection: "row"
     },
-    slide: {
-        height: windowHeight,
-        width: windowWidth,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    slideImage: {
-        width: windowWidth * 0.9,
-        height: "100%"
-    },
     infoContainer: {
         flex: 1
     },
@@ -117,8 +124,8 @@ const style = StyleSheet.create({
         flexDirection: "column"
     },
     scrollTabs: {
-        padding: '2%',
-        textAlign: 'center',
+        padding: "2%",
+        textAlign: "center"
     },
     sceneLink: {
         marginBottom: "2%",
@@ -158,7 +165,7 @@ const style = StyleSheet.create({
     },
     plot: {
         fontSize: 17,
-        textAlign: "center",
+        textAlign: "center"
     },
     footerContainer: {
         flex: 1
