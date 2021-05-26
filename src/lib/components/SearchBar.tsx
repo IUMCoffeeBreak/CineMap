@@ -15,7 +15,7 @@ export function SearchBar(props: CustomSearchProps) {
     return (
         <SafeAreaView style={{ marginTop: 0, ...(props.safeAreaProps as any) }}>
             <PaperSearchBar
-                theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
+                theme={{ colors: { primary: constants.colors.MAIN_BUTTON } }}
                 {...(props as any)}
                 style={{ marginLeft: 10, marginRight: 10, ...props?.style }}
             />

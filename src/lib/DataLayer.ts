@@ -23,6 +23,7 @@ export interface MovieLocationRelationship {
     id: string;
     scene_name: string;
     scene_video_link: string;
+    thumbnail?: string
     movie_id: string;
     location_id: number;
 }
@@ -33,6 +34,7 @@ export interface MovieLocationRelationShipJoin {
     location: Geolocation | null;
     scene_name: string;
     scene_video_link: string;
+    thumbnail?: string;
 }
 
 export interface Location {
@@ -194,7 +196,7 @@ export class DataLayer {
             .catch(e => {
                 console.debug("db init error", e.message);
             });
-        setInterval(this.writeToDisk.bind(this), writePollInterval || 30000);
+        setInterval(this.writeToDisk.bind(this), writePollInterval || 60000);
     }
 
     async searchMovieTitle(text: string): Promise<Response<Movie>> {
@@ -214,29 +216,35 @@ export class DataLayer {
     }
 
     getAssociations(): MovieLocationRelationShipJoin[] {
-        const seenMap = new Set();
         const list = this.movieLocAssocModel.list().map(record => {
-            const id = `${record.movie_id}:${record.location_id}`
-            if (seenMap.has(id)) return null;
-            seenMap.add(id);
             return {
                 id: record.id,
                 scene_video_link: record.scene_video_link,
                 scene_name: record.scene_name,
+                thumbnail: record.thumbnail,
                 movie: this.movieModel.readById(record.movie_id),
                 location: this.locationModel.readById(record.location_id)
             };
-        });
-        return (list as any[]).filter(item => item !== null && item.movie !== null);
+        })
+        return list.filter(item => item.movie !== null);
+    }
+
+    getScenesFromMovie(movie_id: string) {
+        return this.getAssociations().filter(a => a.movie?.imdbID === movie_id);
     }
 
     getMovieLocations(title: string) {
         return this.getAssociations().filter(a => a.movie?.Title === title);
     }
 
-    getLocationMovies(id: number) {
+    getMoviesByLocation(place_id: number) {
         const associations = this.getAssociations();
-        return associations.filter(a => a.location?.place_id === id);
+        const map = new Map()
+        return associations.filter(a => a.location?.place_id === place_id).map(v=>{
+            if (map.has(v.movie?.imdbID)) return null
+            map.set(v.movie?.imdbID, true)
+            return v.movie
+        }).filter(Boolean) as Movie[]
     }
 
     protected async loadDbFromDisk() {
@@ -257,7 +265,7 @@ export class DataLayer {
     createMovieLocationAssociation(
         opts: { movie: Movie; location: Geolocation } & Pick<
             MovieLocationRelationship,
-            "scene_name" | "scene_video_link"
+            "scene_name" | "scene_video_link" | "thumbnail"
         >
     ) {
         this.movieLocAssocModel.write({
