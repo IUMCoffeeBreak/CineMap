@@ -62,7 +62,7 @@ const TabNavigation = () => {
         >
             <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} listeners={listener} />
             <Tab.Screen name={constants.tabs.HOME} component={HomepageTab} listeners={listener} />
-            <Tab.Screen name={constants.tabs.FILMLIST} component={AssociationsList} listeners={listener} />
+            <Tab.Screen name={"Film nel luogo"} component={AssociationsList} listeners={listener} />
             <Tab.Screen name={constants.tabs.PROFILE} component={ProfileTab} listeners={listener} />
             <Tab.Screen name={constants.tabs.MAP} component={MapTab} listeners={listener} />
         </Tab.Navigator>

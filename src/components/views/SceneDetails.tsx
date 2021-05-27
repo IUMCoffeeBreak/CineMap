@@ -33,7 +33,7 @@ export function SceneDetails({ route, navigation }: ComponentProps<"Dettagli Sce
             <View style={{padding: 20}}>
                 <Text style={styles.title}>Fornisci il titolo della scena e il link al video YouTube</Text>
                 <TextInput
-                  theme={{ colors: { primary: constants.colors.MAIN_BUTTON } }}
+                  theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
                   label={"Titolo"}
                   mode={"outlined"}
                   style={styles.input}
@@ -41,7 +41,7 @@ export function SceneDetails({ route, navigation }: ComponentProps<"Dettagli Sce
                   onChangeText={v => setSceneTitle(v)}
                 />
                 <TextInput
-                  theme={{ colors: { primary: constants.colors.MAIN_BUTTON } }}
+                  theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
                   label={"Link al video della scena"}
                   mode={"outlined"}
                   style={styles.input}

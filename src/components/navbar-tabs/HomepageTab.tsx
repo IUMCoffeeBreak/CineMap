@@ -1,12 +1,16 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import constants from "../../lib/utils/constants";
 import { romeCoordinates } from "./MapTab";
 import { ComponentProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
+import {db} from './../../db';
 
 export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
+
+    const movies = db.getAssociations();
+
     return (
         <>
             <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -17,7 +21,6 @@ export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
                                 showsScale={true}
                                 zoomControlEnabled={true}
                                 showsUserLocation={true}
-                                showsCompass={true}
                                 style={homeStyle.map}
                                 initialRegion={{
                                     latitude: romeCoordinates.lat,
@@ -25,7 +28,23 @@ export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
                                     latitudeDelta: constants.map.DELTA,
                                     longitudeDelta: constants.map.DELTA
                                 }}
-                            />
+                            >   
+                            {
+                                movies.map(pin => {
+                                    if(!pin.location){
+                                        console.log("null location on pin: ", pin)
+                                        return;
+                                    }
+                                    return(
+                                        <Marker 
+                                            key={`${pin.id}${Date.now().toPrecision}`}
+                                            coordinate={{latitude: pin.location.lat, longitude: pin.location.lon}}
+                                            title={pin.movie?.Title}
+                                        />
+                                    )
+                                })
+                            }
+                            </MapView>
                         </View>
                         <View>
                             <CinePinButton

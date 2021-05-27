@@ -125,7 +125,7 @@ const style = StyleSheet.create({
         fontSize: 25,
         color: "white",
         textAlign: "center",
-        backgroundColor: constants.colors.MAIN_BUTTON,
+        backgroundColor: constants.colors.MAIN_GREEN,
         borderRadius: 5,
         padding: "1%"
     },
