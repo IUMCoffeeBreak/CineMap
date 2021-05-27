@@ -16,6 +16,7 @@ import { LocationsMap } from "./src/components/views/MoviewLocationsMap";
 import { SceneDetails } from "./src/components/views/SceneDetails";
 import { SearchMovieToAssociateView } from "./src/components/views/SearchMovieToAssociateView";
 import SearchTab from "./src/components/navbar-tabs/SearchTab";
+import { Screen } from "react-native-screens";
 
 declare const global: { HermesInternal: null | {} };
 
@@ -26,13 +27,16 @@ const TabNavigation = () => {
     const listener = {
         tabPress: e => {
             Keyboard.dismiss();
+            if (e.target.includes('Map') || e.target.includes('Search') || e.target.includes('Film')) e.preventDefault();
         }
     };
     return (
         <Tab.Navigator
             tabBarOptions={{
                 activeTintColor: "tomato",
-                inactiveTintColor: "gray"
+                inactiveTintColor: "gray",
+                showLabel: false,
+                keyboardHidesTabBar: true,
             }}
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
@@ -42,13 +46,13 @@ const TabNavigation = () => {
                             iconName = "home";
                             break;
                         case constants.tabs.MAP:
-                            iconName = "map";
+                            // iconName = "map";
                             break;
                         case constants.tabs.PROFILE:
                             iconName = "user";
                             break;
                         case constants.tabs.SEARCH:
-                            iconName = "search";
+                            // iconName = "search";
                             break;
                     }
                     return <Icons name={iconName} size={size} color={color} />;
@@ -56,10 +60,11 @@ const TabNavigation = () => {
             })}
             initialRouteName={constants.tabs.HOME}
         >
+            <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} listeners={listener} />
             <Tab.Screen name={constants.tabs.HOME} component={HomepageTab} listeners={listener} />
-            {/*<Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} listeners={listener} />*/}
-            {/*<Tab.Screen name={constants.tabs.MAP} component={MapTab} listeners={listener} />*/}
+            <Tab.Screen name={constants.tabs.FILMLIST} component={AssociationsList} listeners={listener} />
             <Tab.Screen name={constants.tabs.PROFILE} component={ProfileTab} listeners={listener} />
+            <Tab.Screen name={constants.tabs.MAP} component={MapTab} listeners={listener} />
         </Tab.Navigator>
     );
 };
@@ -67,7 +72,7 @@ const TabNavigation = () => {
 const stackOpts = (title?: string) =>
     ({
         title,
-        headerTintColor: constants.colors.MAIN_BUTTON,
+        headerTintColor: constants.colors.MAIN_GREEN,
         headerTitleAlign: "center",
         headerTitleStyle: {
             fontWeight: "bold"
