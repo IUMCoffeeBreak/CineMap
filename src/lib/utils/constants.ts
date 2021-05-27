@@ -12,7 +12,8 @@ export const constants = {
         HOME: "Home",
         PROFILE: "Profile",
         MAP: "Map",
-        SEARCH: "Search"
+        SEARCH: "Search",
+        FILMLIST: "Film nel luogo"
     },
     colors: {
         GLOBAL_BACKGROUND_COLOR: "#eeeeee",

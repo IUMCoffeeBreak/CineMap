@@ -28,7 +28,7 @@ export function ProfileTab() {
                         size={150}
                         activeOpacity={0.7}
                         containerStyle={{ backgroundColor: "black" }}
-                        titleStyle={{ color: constants.colors.MAIN_BUTTON }}
+                        titleStyle={{ color: constants.colors.MAIN_GREEN }}
                     />
                     <View style={style.infoContainer}>
                         <Text style={style.userName}>{titlize(name)}</Text>
