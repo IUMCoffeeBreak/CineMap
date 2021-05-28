@@ -2,6 +2,7 @@ import constants from "./utils/constants";
 import { Geolocation } from "./geolocation";
 import RNFS, { readFile, writeFile } from "react-native-fs";
 import { db } from "../db";
+import EventEmitter from "events";
 
 interface Response<T> {
     err?: string;
@@ -181,22 +182,31 @@ const fileNames = {
     movieLocationAssoc: `${RNFS.DocumentDirectoryPath}/movieLocAssoc.json`
 };
 
-export class DataLayer {
+export class DataLayer extends EventEmitter {
     public locationModel = new LocationModel({});
     public movieModel = new MovieModel({});
     public movieLocAssocModel = new MovieLocationRelationshipModel([]);
+    protected ready = false;
 
     constructor(writePollInterval?: number) {
+        super();
         this.loadDbFromDisk()
-          .then(data => {
-              this.movieLocAssocModel.setData(data.movieLocationAssoc);
-              this.movieModel.setData(data.movie);
-              this.locationModel.setData(data.locations);
-          })
-          .catch(e => {
-              console.debug("db init error", e.message);
-          });
+            .then(data => {
+                this.movieLocAssocModel.setData(data.movieLocationAssoc);
+                this.movieModel.setData(data.movie);
+                this.locationModel.setData(data.locations);
+                this.ready = false;
+                this.emit("ready");
+            })
+            .catch(e => {
+                console.debug("db init error", e.message);
+            });
         setInterval(this.writeToDisk.bind(this), writePollInterval || 60000);
+    }
+
+    async onReady() {
+        if (this.ready) return;
+        return new Promise<void>(res => this.once("ready", res));
     }
 
     async searchMovieTitle(text: string): Promise<Response<Movie>> {

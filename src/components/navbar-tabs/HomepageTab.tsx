@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import constants from "../../lib/utils/constants";
 import { romeCoordinates } from "./MapTab";
 import { ComponentProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
-import {db} from './../../db';
+import { db } from "./../../db";
+import { Geolocation } from "../../lib/geolocation";
 
-export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
-
-    const movies = db.getAssociations();
+export function HomepageTab({ navigation }: ComponentProps<"Home">) {
+    const [associations, setAssociations] = useState<Geolocation[]>(Object.values(db.locationModel.list()));
+    useEffect(() => {
+        db.onReady().then(() => setAssociations(Object.values(db.locationModel.list())));
+    }, []);
 
     return (
         <>
@@ -28,22 +31,16 @@ export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
                                     latitudeDelta: constants.map.DELTA,
                                     longitudeDelta: constants.map.DELTA
                                 }}
-                            >   
-                            {
-                                movies.map(pin => {
-                                    if(!pin.location){
-                                        console.log("null location on pin: ", pin)
-                                        return;
-                                    }
-                                    return(
-                                        <Marker 
-                                            key={`${pin.id}${Date.now().toPrecision}`}
-                                            coordinate={{latitude: pin.location.lat, longitude: pin.location.lon}}
-                                            title={pin.movie?.Title}
+                            >
+                                {associations.map((pin, i) => {
+                                    return (
+                                        <Marker
+                                            key={`${pin.place_id}`}
+                                            coordinate={{ latitude: pin.lat, longitude: pin.lon }}
+                                            title={pin.display_name}
                                         />
-                                    )
-                                })
-                            }
+                                    );
+                                })}
                             </MapView>
                         </View>
                         <View>
@@ -78,7 +75,7 @@ export const HomepageTab = ({ navigation }: ComponentProps<"Home">) => {
             </SafeAreaView>
         </>
     );
-};
+}
 
 const homeStyle = StyleSheet.create({
     mainContainer: {
