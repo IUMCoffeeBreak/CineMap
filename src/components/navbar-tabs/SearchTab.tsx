@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Modal, StyleSheet, Text, View } from "react-native";
 import { SearchBar } from "../../lib/components/SearchBar";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import constants from "../../lib/utils/constants";
@@ -8,6 +8,7 @@ import { Movie } from "../../lib/DataLayer";
 import _ from "lodash";
 import { ComponentProps } from "../routeTypings";
 import { MovieCard } from "../../lib/components/MovieCard";
+import { CinePinButton } from "../../lib/components/CinePinButton";
 
 const searchTabStyles = StyleSheet.create({
     mainContainer: {
@@ -22,7 +23,60 @@ const searchTabStyles = StyleSheet.create({
         flex: 1,
         marginTop: 60
     },
-    bodyContainer: {}
+    bodyContainer: {},
+
+    map: {
+        ...StyleSheet.absoluteFillObject
+    },
+    searchBar: {
+        marginTop: 50,
+        zIndex: 1,
+        shadowColor: "#bbbbbb",
+        shadowOffset: {
+            width: 5,
+            height: 5
+        },
+        shadowOpacity: 5,
+        shadowRadius: 10,
+        elevation: 5
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    openButton: {
+        backgroundColor: "#F194FF",
+        borderRadius: constants.borders.RADIUS,
+        padding: 10,
+        elevation: 2
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center",
+        fontSize: 18
+    }
 });
 
 export async function submitSearch(text: string) {
@@ -41,6 +95,14 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
     };
     return (
         <SafeAreaView>
+            <Modal visible={!!err} transparent={true} animationType={"fade"}>
+                <View style={searchTabStyles.centeredView}>
+                    <View style={searchTabStyles.modalView}>
+                        <Text style={searchTabStyles.modalText}>Nessun film trovato per "{search}"</Text>
+                        <CinePinButton message={"chiudi"} onPress={() => setErr("")} />
+                    </View>
+                </View>
+            </Modal>
             <View style={searchTabStyles.headerContainer}>
                 <SearchBar
                     safeAreaProps={constants.componentsStyles.searchBar}
@@ -59,7 +121,7 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
                     }}
                 />
 
-                {(!_.isEmpty(movie) && (
+                {!_.isEmpty(movie) ? (
                     <MovieCard
                         movie={movie}
                         container={{
@@ -68,7 +130,7 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
                             }
                         }}
                     />
-                )) || <Text style={searchTabStyles.body}>{err}</Text>}
+                ) : null}
             </View>
         </SafeAreaView>
     );
