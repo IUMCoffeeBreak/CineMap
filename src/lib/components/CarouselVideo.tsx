@@ -1,16 +1,16 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Platform, Dimensions } from 'react-native';
-import MediaControls, { PLAYER_STATES } from 'react-native-media-controls';
-import Video from 'react-native-video';
-import Orientation from 'react-native-orientation-locker';
+import React, { useState, useRef } from "react";
+import { StyleSheet, View, Platform, Dimensions } from "react-native";
+import MediaControls, { PLAYER_STATES } from "react-native-media-controls";
+import Video from "react-native-video";
+import Orientation from "react-native-orientation-locker";
 
-const screenHeight = Dimensions.get('screen').height;
-const screenWidth = Dimensions.get('screen').width;
+const screenHeight = Dimensions.get("screen").height;
+const screenWidth = Dimensions.get("screen").width;
 
 const VideoPlayer = () => {
-    const video = require('https://www.youtube.com/watch?v=tzQCxLXtpwM');
+    const video = require("https://www.youtube.com/watch?v=tzQCxLXtpwM");
     const videoPlayer = useRef(null);
     const [duration, setDuration] = useState(0);
     const [paused, setPaused] = useState(true);
@@ -20,15 +20,15 @@ const VideoPlayer = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     //triggered when the user released the player slider.
-    const onSeek = (seek) => {
+    const onSeek = seek => {
         videoPlayer?.current.seek(seek);
     };
 
     //triggered when the user interact with the player slider.
-    const onSeeking = (currentVideoTime) => setCurrentTime(currentVideoTime);
+    const onSeeking = currentVideoTime => setCurrentTime(currentVideoTime);
 
     //triggered when the play/pause button is pressed.
-    const onPaused = (newState) => {
+    const onPaused = newState => {
         setPaused(!paused);
         setPlayerState(newState);
     };
@@ -36,7 +36,7 @@ const VideoPlayer = () => {
     const onReplay = () => {
         videoPlayer?.current.seek(0);
         setCurrentTime(0);
-        if (Platform.OS === 'android') {
+        if (Platform.OS === "android") {
             setPlayerState(PLAYER_STATES.PAUSED);
             setPaused(true);
         } else {
@@ -46,14 +46,14 @@ const VideoPlayer = () => {
     };
 
     //triggered while the video is playing.
-    const onProgress = (data) => {
+    const onProgress = data => {
         if (!isLoading) {
             setCurrentTime(data.currentTime);
         }
     };
 
     //allow doing something while the video is loading.
-    const onLoad = (data) => {
+    const onLoad = data => {
         setDuration(Math.round(data.duration));
         setIsLoading(false);
     };
@@ -72,7 +72,7 @@ const VideoPlayer = () => {
         if (!isFullScreen) {
             Orientation.lockToLandscape();
         } else {
-            if (Platform.OS === 'ios') {
+            if (Platform.OS === "ios") {
                 Orientation.lockToPortrait();
             }
             Orientation.lockToPortrait();
@@ -86,11 +86,11 @@ const VideoPlayer = () => {
                 onEnd={onEnd}
                 onLoad={onLoad}
                 onLoadStart={onLoadStart}
-                posterResizeMode={'cover'}
+                posterResizeMode={"cover"}
                 onProgress={onProgress}
                 paused={paused}
-                ref={(ref) => (videoPlayer.current = ref)}
-                resizeMode={'cover'}
+                ref={ref => (videoPlayer.current = ref)}
+                resizeMode={"cover"}
                 source={video}
                 style={styles.backgroundVideo}
             />
@@ -104,31 +104,34 @@ const VideoPlayer = () => {
                 onReplay={onReplay}
                 onSeek={onSeek}
                 onSeeking={onSeeking}
-                mainColor={'red'}
+                mainColor={"red"}
                 playerState={playerState}
                 style={isFullScreen ? styles.backgroundVideoFullScreen : styles.backgroundVideo}
-                sliderStyle={isFullScreen ? { containerStyle: styles.mediaControls, thumbStyle: {}, trackStyle: {} } : { containerStyle: {}, thumbStyle: {}, trackStyle: {} }}
+                sliderStyle={
+                    isFullScreen
+                        ? { containerStyle: styles.mediaControls, thumbStyle: {}, trackStyle: {} }
+                        : { containerStyle: {}, thumbStyle: {}, trackStyle: {} }
+                }
             />
         </View>
-
     );
 };
 
 const styles = StyleSheet.create({
     backgroundVideo: {
         height: 250,
-        width: '100%',
+        width: "100%"
     },
     mediaControls: {
         width: screenHeight - 170,
-        height: '100%',
+        height: "100%",
         flex: 1,
-        alignSelf: Platform.OS === 'android' ? screenHeight < 800 ? 'center' : 'flex-start' : 'center',
+        alignSelf: Platform.OS === "android" ? (screenHeight < 800 ? "center" : "flex-start") : "center"
     },
     backgroundVideoFullScreen: {
         height: screenHeight,
-        width: screenWidth,
-    },
+        width: screenWidth
+    }
 });
 
 export default VideoPlayer;

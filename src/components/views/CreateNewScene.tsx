@@ -69,18 +69,21 @@ export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
     // };
 
     return (
-        <SafeAreaView style={{margin: 30}}>
+        <SafeAreaView style={{ margin: 30 }}>
             <Modal animated animationType={"slide"} visible={searchModal}>
-                <View style={{ flex: 1 , marginTop: "30%", margin: 30}}>
-                    <MovieSearch onMovieFound={(e, item) => {
-                        if (e) setErr(e);
-                        else if (item) {
-                            setMovie(item);
-                        }
-                    }} onMovieClick={movie=>{
-                        if (movie) setMovie(movie)
-                        setSearchModal(false)
-                    }}/>
+                <View style={{ flex: 1, marginTop: "30%", margin: 30 }}>
+                    <MovieSearch
+                        onMovieFound={(e, item) => {
+                            if (e) setErr(e);
+                            else if (item) {
+                                setMovie(item);
+                            }
+                        }}
+                        onMovieClick={movie => {
+                            if (movie) setMovie(movie);
+                            setSearchModal(false);
+                        }}
+                    />
                     <CinePinButton
                         message={"Chiudi"}
                         onPress={() => {
@@ -95,7 +98,7 @@ export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
                     setSearchModal(true);
                 }}
             />
-            {movie? <MovieCard movie={movie}/> : null}
+            {movie ? <MovieCard movie={movie} /> : null}
             {/*<View>*/}
             {/*<Text style={styles.title}>Fornisci il nome del film</Text>*/}
             {/*<TextInput*/}

@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     input: {
         height: 45,
         backgroundColor: "white",
-        marginBottom: 20,
+        marginBottom: 20
     },
     submitButton: {
         marginTop: 1,
@@ -25,31 +25,31 @@ const styles = StyleSheet.create({
 });
 
 export function SceneDetails({ route, navigation }: ComponentProps<"Dettagli Scena">) {
-    const { pin , movie} = route.params;
+    const { pin, movie } = route.params;
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");
     return (
-        <SafeAreaView style={{padding: constants.spacing.MARGIN_LEFT}}>
-            <View style={{padding: 20}}>
+        <SafeAreaView style={{ padding: constants.spacing.MARGIN_LEFT }}>
+            <View style={{ padding: 20 }}>
                 <Text style={styles.title}>Fornisci il titolo della scena e il link al video YouTube</Text>
                 <TextInput
-                  theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
-                  label={"Titolo"}
-                  mode={"outlined"}
-                  style={styles.input}
-                  value={sceneTitle}
-                  onChangeText={v => setSceneTitle(v)}
+                    theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
+                    label={"Titolo"}
+                    mode={"outlined"}
+                    style={styles.input}
+                    value={sceneTitle}
+                    onChangeText={v => setSceneTitle(v)}
                 />
                 <TextInput
-                  theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
-                  label={"Link al video della scena"}
-                  mode={"outlined"}
-                  style={styles.input}
-                  value={sceneLink}
-                  onChangeText={v => setSceneLink(v)}
+                    theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
+                    label={"Link al video della scena"}
+                    mode={"outlined"}
+                    style={styles.input}
+                    value={sceneLink}
+                    onChangeText={v => setSceneLink(v)}
                 />
             </View>
-            <View style={{padding: 20}}>
+            <View style={{ padding: 20 }}>
                 <CinePinButton
                     style={styles.submitButton}
                     onPress={() => {

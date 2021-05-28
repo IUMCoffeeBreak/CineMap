@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Image, StyleSheet, Text, View, ScrollView , Linking} from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View, ScrollView, Linking } from "react-native";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { ComponentProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
@@ -24,7 +24,9 @@ function randint(max = 100) {
 
 export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) {
     const movie = route.params.movie;
-    const associations = db.getScenesFromMovie(movie.imdbID).map((association, id) => ({id, scene: association.scene_name, link: association.scene_video_link}));
+    const associations = db
+        .getScenesFromMovie(movie.imdbID)
+        .map((association, id) => ({ id, scene: association.scene_name, link: association.scene_video_link }));
     return (
         <>
             <SafeAreaView style={style.mainContainer}>
@@ -35,22 +37,18 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
 
                 <View style={style.bodyContainer}>
                     <ScrollView style={style.scrollTabs}>
-                        {
-                            associations.
-                            map(movieProps => {
-                                return(
-                                    <Text
-                                        style={style.sceneLink}
-                                        onPress={()=> Linking.openURL(movieProps.link)}
-                                        key={movieProps.id}
-                                    >
-                                            {movieProps.scene}
-                                    </Text>
-                                )
-                            })
-                        }
+                        {associations.map(movieProps => {
+                            return (
+                                <Text
+                                    style={style.sceneLink}
+                                    onPress={() => Linking.openURL(movieProps.link)}
+                                    key={movieProps.id}
+                                >
+                                    {movieProps.scene}
+                                </Text>
+                            );
+                        })}
                     </ScrollView>
-
                 </View>
                 <View style={style.buttonContainer}>
                     <CinePinButton
@@ -117,8 +115,8 @@ const style = StyleSheet.create({
         flexDirection: "column"
     },
     scrollTabs: {
-        padding: '2%',
-        textAlign: 'center',
+        padding: "2%",
+        textAlign: "center"
     },
     sceneLink: {
         marginBottom: "2%",
@@ -158,7 +156,7 @@ const style = StyleSheet.create({
     },
     plot: {
         fontSize: 17,
-        textAlign: "center",
+        textAlign: "center"
     },
     footerContainer: {
         flex: 1

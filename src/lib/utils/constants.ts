@@ -73,7 +73,7 @@ export const constants = {
             },
             shadowOpacity: 5,
             shadowRadius: 10
-        },
+        }
     }
 };
 

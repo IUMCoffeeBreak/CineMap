@@ -58,9 +58,7 @@ export function SearchMovieToAssociateView({ route, navigation }: ComponentProps
             <Modal visible={!!err} transparent={true} animationType={"fade"}>
                 <View style={style.centeredView}>
                     <View style={style.modalView}>
-                        <Text style={style.modalText}>
-                          {err}
-                        </Text>
+                        <Text style={style.modalText}>{err}</Text>
                         <CinePinButton message={"chiudi"} onPress={() => setErr("")} />
                     </View>
                 </View>

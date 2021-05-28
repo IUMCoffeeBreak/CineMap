@@ -11,7 +11,7 @@ const style = StyleSheet.create({
         fontSize: constants.text.TITLE_FONT
     },
     poster: {
-        aspectRatio: 2/3,
+        aspectRatio: 2 / 3,
         borderRadius: 10
     }
 });

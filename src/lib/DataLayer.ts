@@ -24,7 +24,7 @@ export interface MovieLocationRelationship {
     id: string;
     scene_name: string;
     scene_video_link: string;
-    thumbnail?: string
+    thumbnail?: string;
     movie_id: string;
     location_id: number;
 }
@@ -137,9 +137,9 @@ export class MovieModel implements IModel<Movie> {
 
     searchTitle(text: string) {
         return (
-          Object.entries(this.data)
-            .map(([, v]) => v)
-            .find(v => v.Title.match(new RegExp(text, "gi"))) || null
+            Object.entries(this.data)
+                .map(([, v]) => v)
+                .find(v => v.Title.match(new RegExp(text, "gi"))) || null
         );
     }
 }
@@ -235,7 +235,7 @@ export class DataLayer extends EventEmitter {
                 movie: this.movieModel.readById(record.movie_id),
                 location: this.locationModel.readById(record.location_id)
             };
-        })
+        });
         return list.filter(item => item.movie !== null);
     }
 
@@ -249,12 +249,15 @@ export class DataLayer extends EventEmitter {
 
     getMoviesByLocation(place_id: number) {
         const associations = this.getAssociations();
-        const map = new Map()
-        return associations.filter(a => a.location?.place_id === place_id).map(v=>{
-            if (map.has(v.movie?.imdbID)) return null
-            map.set(v.movie?.imdbID, true)
-            return v.movie
-        }).filter(Boolean) as Movie[]
+        const map = new Map();
+        return associations
+            .filter(a => a.location?.place_id === place_id)
+            .map(v => {
+                if (map.has(v.movie?.imdbID)) return null;
+                map.set(v.movie?.imdbID, true);
+                return v.movie;
+            })
+            .filter(Boolean) as Movie[];
     }
 
     protected async loadDbFromDisk() {
@@ -273,9 +276,9 @@ export class DataLayer extends EventEmitter {
     }
 
     createMovieLocationAssociation(
-      opts: { movie: Movie; location: Geolocation } & Pick<
-        MovieLocationRelationship,
-        "scene_name" | "scene_video_link" | "thumbnail"
+        opts: { movie: Movie; location: Geolocation } & Pick<
+            MovieLocationRelationship,
+            "scene_name" | "scene_video_link" | "thumbnail"
         >
     ) {
         this.movieLocAssocModel.write({

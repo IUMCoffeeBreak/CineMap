@@ -5,7 +5,11 @@ import { SearchBar } from "./SearchBar";
 import { MovieCard } from "./MovieCard";
 import constants from "../utils/constants";
 
-export function MovieSearch(props: { style?: StyleProp<ViewProps>, onMovieFound?: (err?: string, movie?: Movie) => void, onMovieClick?:(movie: Movie) =>void}) {
+export function MovieSearch(props: {
+    style?: StyleProp<ViewProps>;
+    onMovieFound?: (err?: string, movie?: Movie) => void;
+    onMovieClick?: (movie: Movie) => void;
+}) {
     const [search, setSearch] = useState("");
     const [movie, setMovie] = useState<Movie>(null as any);
     const [err, setErr] = useState("");
@@ -27,9 +31,11 @@ export function MovieSearch(props: { style?: StyleProp<ViewProps>, onMovieFound?
                     props.onMovieFound?.(err, item);
                 }}
             />
-          {movie && <TouchableOpacity onPress={() => props?.onMovieClick?.(movie)}>
-            <MovieCard movie={movie}  />
-          </TouchableOpacity>}
+            {movie && (
+                <TouchableOpacity onPress={() => props?.onMovieClick?.(movie)}>
+                    <MovieCard movie={movie} />
+                </TouchableOpacity>
+            )}
             <Text> {err || ""} </Text>
         </View>
     );
