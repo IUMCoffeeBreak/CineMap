@@ -99,7 +99,13 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
                 <View style={searchTabStyles.centeredView}>
                     <View style={searchTabStyles.modalView}>
                         <Text style={searchTabStyles.modalText}>Nessun film trovato per "{search}"</Text>
-                        <CinePinButton message={"chiudi"} onPress={() => setErr("")} />
+                        <CinePinButton
+                            message={"chiudi"}
+                            onPress={() => {
+                                setErr("");
+                                setMovie({} as any)
+                            }}
+                        />
                     </View>
                 </View>
             </Modal>
