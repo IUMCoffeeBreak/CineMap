@@ -103,7 +103,7 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
                             message={"chiudi"}
                             onPress={() => {
                                 setErr("");
-                                setMovie({} as any)
+                                setMovie({} as any);
                             }}
                         />
                     </View>

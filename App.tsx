@@ -58,10 +58,10 @@ const TabNavigation = () => {
                     return <Icons name={iconName} size={size} color={color} />;
                 }
             })}
-            initialRouteName={constants.tabs.HOME}
+            initialRouteName={constants.tabs.MAP}
         >
             <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} listeners={listener} />
-            <Tab.Screen name={constants.tabs.HOME} component={HomepageTab} listeners={listener} />
+            <Tab.Screen name={constants.tabs.HOME} component={MapTab} listeners={listener} />
             <Tab.Screen name={"Film nel luogo"} component={AssociationsList} listeners={listener} />
             <Tab.Screen name={constants.tabs.PROFILE} component={ProfileTab} listeners={listener} />
             <Tab.Screen name={constants.tabs.MAP} component={MapTab} listeners={listener} />

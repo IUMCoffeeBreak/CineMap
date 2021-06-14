@@ -52,6 +52,11 @@ const mapTabStyles = StyleSheet.create({
         padding: 10,
         elevation: 2
     },
+    filterButton: {
+        zIndex: 1,
+        height: 40,
+        width: 140
+    },
     textStyle: {
         color: "white",
         fontWeight: "bold",
@@ -70,13 +75,13 @@ export const romeCoordinates = {
 };
 
 export function MapTab({ navigation, route }: ComponentProps<"Map">) {
-    const { navigatedFromHome } = route.params;
     const [search, setSearch] = useState("");
     const [pins, setPins] = useState<Geolocation[]>([]);
     const [map, setMap] = useState<MapView>();
     const [visibleModal, setModalVisibility] = useState(false);
     const [movieAssociations, setMovieAssociations] = useState<ReturnType<typeof db.getMovieLocations>>([]);
-    const [isNavigatedFromHomeModalVisible, setIsNavigatedFromHomeModalVisible] = useState(!!navigatedFromHome);
+    const [filterByMovie, setFilter] = useState<boolean>(false);
+    const [showFilterButtons, setShowFilterButtons] = useState(false);
     return (
         <>
             <SafeAreaView>
@@ -88,29 +93,20 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                         </View>
                     </View>
                 </Modal>
-                <Modal visible={isNavigatedFromHomeModalVisible} transparent={true} animationType={"fade"}>
-                    <View style={mapTabStyles.centeredView}>
-                        <View style={mapTabStyles.modalView}>
-                            <Text style={mapTabStyles.modalText}>
-                                Cerca il luogo in cui si è svolta la scena che vuoi inserire
-                            </Text>
-                            <CinePinButton
-                                message={"chiudi"}
-                                onPress={() => setIsNavigatedFromHomeModalVisible(false)}
-                            />
-                        </View>
-                    </View>
-                </Modal>
                 <SearchBar
                     style={{ margin: 20 }}
                     safeAreaProps={mapTabStyles.searchBar}
                     value={search}
-                    placeholder={"Cerca luogo"}
+                    placeholder={showFilterButtons ? `Cerca ${filterByMovie ? "luogo" : "film"}` : `Cerca film o luogo`}
                     onChangeText={text => {
                         setSearch(text);
                         setPins([]);
                     }}
+                    onFocus={() => {
+                        setShowFilterButtons(true);
+                    }}
                     onBlur={async () => {
+                        setShowFilterButtons(false);
                         if (!search) return;
                         const results = await searchLocation({ q: search.replace(/roma$/i, "") + " roma" });
                         setModalVisibility(!!results && !results.length);
@@ -135,6 +131,22 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                         });
                     }}
                 />
+                {showFilterButtons ? (
+                    <SafeAreaView style={{ zIndex: 1, flex: 2, flexDirection: "row", justifyContent: "space-around" }}>
+                        <CinePinButton
+                            style={mapTabStyles.filterButton}
+                            message={"film"}
+                            disabled={!filterByMovie}
+                            onPress={() => setFilter(false)}
+                        />
+                        <CinePinButton
+                            style={mapTabStyles.filterButton}
+                            message={"luogo"}
+                            disabled={filterByMovie}
+                            onPress={() => setFilter(true)}
+                        />
+                    </SafeAreaView>
+                ) : null}
                 <MapView
                     showsScale={true}
                     zoomControlEnabled={true}
