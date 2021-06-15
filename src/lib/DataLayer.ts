@@ -1,7 +1,6 @@
 import constants from "./utils/constants";
 import { Geolocation } from "./geolocation";
 import RNFS, { readFile, writeFile } from "react-native-fs";
-import { db } from "../db";
 import EventEmitter from "events";
 
 interface Response<T> {
@@ -47,7 +46,7 @@ const notFoundError: Response<any> = { err: "Film non trovato" };
 const encoding = "utf8";
 const randID = () => Math.random().toString(32).slice(2);
 
-export async function fetchMovieTitle(title: string): Promise<Response<Movie>> {
+export async function fetchMovieTitle(db: DataLayer, title: string): Promise<Response<Movie>> {
     try {
         const url = `http://www.omdbapi.com?apikey=${constants.omdbApiKey}&t=${encodeURIComponent(title)}`;
         const resp = await fetch(url);
@@ -214,7 +213,7 @@ export class DataLayer extends EventEmitter {
         const dbSearch = this.movieModel.searchTitle(text);
         if (dbSearch) return { item: dbSearch };
         console.debug("movie not found in internal db...");
-        const result = await fetchMovieTitle(text);
+        const result = await fetchMovieTitle(this, text);
         if (!result.item) {
             console.debug("movie not found:", text);
             return { err: "Film non trovato" };

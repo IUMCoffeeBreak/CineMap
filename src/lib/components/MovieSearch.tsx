@@ -4,6 +4,7 @@ import { fetchMovieTitle, Movie } from "../DataLayer";
 import { SearchBar } from "./SearchBar";
 import { MovieCard } from "./MovieCard";
 import constants from "../utils/constants";
+import { db } from "../../db";
 
 export function MovieSearch(props: {
     style?: StyleProp<ViewProps>;
@@ -25,7 +26,7 @@ export function MovieSearch(props: {
                     setSearch(text);
                 }}
                 onBlur={async () => {
-                    const { err, item } = await fetchMovieTitle(search);
+                    const { err, item } = await fetchMovieTitle(db, search);
                     setErr(err || "");
                     setMovie(item || (null as any));
                     props.onMovieFound?.(err, item);
