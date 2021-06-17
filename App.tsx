@@ -60,7 +60,7 @@ const TabNavigation = () => {
                     return <Icons name={iconName} size={size} color={color} />;
                 }
             })}
-            initialRouteName={constants.tabs.MAP}
+            initialRouteName={constants.tabs.HOME}
         >
             <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} listeners={listener} />
             <Tab.Screen name={constants.tabs.HOME} component={MapTab} listeners={listener} />
