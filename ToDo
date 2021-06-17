@@ -1,0 +1,19 @@
+Home : deve essere solo una mappa
+	Barra di ricerca over Map → doppia ricerca (film, location)
+	if search by film
+		return Array<Associated location>
+			case Array empty:
+				View addScene to film{
+						SearchBar Film
+						Title Scene
+						Link Scene
+					}
+			case Array not empty
+				show Marker
+				show Button to add scene to filml
+	if search by location:
+		return Array<pin>
+
+AddScene: solo una view
+	Title Scene
+	Link Scene
