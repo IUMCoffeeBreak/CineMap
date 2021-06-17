@@ -64,7 +64,7 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
                 <View style={style.buttonContainer}>
                     <CinePinButton
                         message={"Location di questo film"}
-                        onPress={() => navigation.navigate("Luoghi nel film", db.getMovieLocations(movie.Title))}
+                        onPress={() => navigation.navigate("Luoghi nel film", db.getLocationsFromMovieTitle(movie.Title))}
                     />
                 </View>
             </SafeAreaView>

@@ -130,11 +130,7 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
                 {!_.isEmpty(movie) ? (
                     <MovieCard
                         movie={movie}
-                        container={{
-                            onTouchEnd: () => {
-                                navigation.navigate("Scheda film", { movie });
-                            }
-                        }}
+                        onPress={() => navigation.navigate("Scheda film", { movie })}
                     />
                 ) : null}
             </View>

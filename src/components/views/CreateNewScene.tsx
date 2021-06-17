@@ -12,21 +12,17 @@ import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { MovieCard } from "../../lib/components/MovieCard";
 import { Geolocation } from "../../lib/geolocation";
 
-export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
+export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi scena">) {
     const routeData = route.params;
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");
-    const [movie, setMovie] = useState<Movie>({} as any);
+    const [movie, setMovie] = useState<Movie | null>(routeData?.movie || null);
     const [err, setErr] = useState("");
     const [searchModal, setSearchModal] = useState(true);
-    const [selectedMovie, setSelectedMovie] = useState(false);
+    const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
     const [movieFromRoute, setFromRoute] = useState(false);
 
-    const pin: Geolocation = routeData?.pin
-    if(routeData?.movie){
-        setMovie(routeData?.movie);
-        setSelectedMovie(true)
-    }
+    const pin = routeData?.pin as Geolocation
 
     return (
         <SafeAreaView style={styles.mainContainer}>
@@ -102,7 +98,7 @@ export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
                         message={"Conferma"}
                         onPress={() => {
                             db.createMovieLocationAssociation({
-                                movie,
+                                movie: movie as Movie,
                                 location: pin,
                                 scene_name: sceneTitle,
                                 scene_video_link: sceneLink,

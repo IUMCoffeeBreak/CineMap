@@ -17,10 +17,10 @@ const style = StyleSheet.create({
     }
 });
 
-export function MovieCard(props: { movie?: Movie | null; container?: ViewStyle }) {
+export function MovieCard(props: { movie?: Movie | null; container?: ViewStyle, onPress?: ()=>void | Promise<void> }) {
     if (!props || !props?.movie) return null;
     return (
-        <View style={{ ...constants.componentsStyles.card, flexDirection: "row" }} {...props.container}>
+        <View onTouchEnd={props?.onPress} style={{ ...constants.componentsStyles.card, flexDirection: "row"}}>
             <View style={{ flex: 1, marginLeft: '3%' }}>
                 <Image style={style.poster} source={{ uri: props.movie.Poster }} />
             </View>
