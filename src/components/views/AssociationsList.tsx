@@ -16,8 +16,8 @@ export function AssociationsList({ route, navigation }: ComponentProps<"Film nel
     const { movies, pin } = route.params;
 
     const titlePage = {
-        empty: "Questa location non compare in nessun film",
-        nonEmpty: "Questa location compare nei seguenti film"
+        empty: "Questo luogo non compare in nessun film",
+        nonEmpty: "Questo luogo compare nei seguenti film"
     };
 
     return (
