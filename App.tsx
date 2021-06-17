@@ -28,7 +28,8 @@ const TabNavigation = () => {
     const listener = {
         tabPress: e => {
             Keyboard.dismiss();
-            if (e.target.includes('Map') || e.target.includes('Search') || e.target.includes('Film')) e.preventDefault();
+            if (e.target.includes("Map") || e.target.includes("Search") || e.target.includes("Film"))
+                e.preventDefault();
         }
     };
     return (
@@ -37,7 +38,7 @@ const TabNavigation = () => {
                 activeTintColor: "tomato",
                 inactiveTintColor: "gray",
                 showLabel: false,
-                keyboardHidesTabBar: true,
+                keyboardHidesTabBar: true
             }}
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
@@ -47,13 +48,13 @@ const TabNavigation = () => {
                             iconName = "home";
                             break;
                         case constants.tabs.MAP:
-                            // iconName = "map";
+                            iconName = "map";
                             break;
                         case constants.tabs.PROFILE:
                             iconName = "user";
                             break;
                         case constants.tabs.SEARCH:
-                            // iconName = "search";
+                            iconName = "search";
                             break;
                     }
                     return <Icons name={iconName} size={size} color={color} />;
@@ -64,7 +65,6 @@ const TabNavigation = () => {
             <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} listeners={listener} />
             <Tab.Screen name={constants.tabs.HOME} component={MapTab} listeners={listener} />
             <Tab.Screen name={"Film nel luogo"} component={AssociationsList} listeners={listener} />
-            <Tab.Screen name={'Aggiungi scena'} component={CreateNewScene} listeners={listener}/>
             <Tab.Screen name={constants.tabs.PROFILE} component={ProfileTab} listeners={listener} />
             <Tab.Screen name={constants.tabs.MAP} component={MapTab} listeners={listener} />
         </Tab.Navigator>
@@ -106,11 +106,16 @@ const App = () => {
                         options={stackOpts("Dettagli Scena")}
                     />
                     <Stack.Screen
+                        name={"Aggiungi scena"}
+                        component={CreateNewScene}
+                        options={stackOpts("Aggiungi scena")}
+                    />
+                    <Stack.Screen
                         name={"Cerca film"}
                         component={SearchMovieToAssociateView}
                         options={stackOpts("Cerca film")}
                     />
-                    <Stack.Screen name={"Search"} component={SearchTab} options={stackOpts("Cerca film")}/>
+                    <Stack.Screen name={"Search"} component={SearchTab} options={stackOpts("Cerca film")} />
                     <Stack.Screen name={"Map"} component={MapTab} options={stackOpts("Mappa")} />
                 </Stack.Navigator>
             </NavigationContainer>

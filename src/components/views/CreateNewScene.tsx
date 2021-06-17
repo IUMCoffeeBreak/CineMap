@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ComponentProps } from "../routeTypings";
-import { StyleSheet, Text, View, Image, KeyboardAvoidingView, Platform } from "react-native";
+import { StyleSheet, Text, View, Image, KeyboardAvoidingView, Platform} from "react-native";
 import constants from "../../lib/utils/constants";
 import { TextInput } from "react-native-paper";
 import { CinePinButton } from "../../lib/components/CinePinButton";
