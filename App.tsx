@@ -17,6 +17,7 @@ import { SceneDetails } from "./src/components/views/SceneDetails";
 import { SearchMovieToAssociateView } from "./src/components/views/SearchMovieToAssociateView";
 import SearchTab from "./src/components/navbar-tabs/SearchTab";
 import { Screen } from "react-native-screens";
+import { CreateNewScene } from "./src/components/views/CreateNewScene";
 
 declare const global: { HermesInternal: null | {} };
 
@@ -63,6 +64,7 @@ const TabNavigation = () => {
             <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} listeners={listener} />
             <Tab.Screen name={constants.tabs.HOME} component={MapTab} listeners={listener} />
             <Tab.Screen name={"Film nel luogo"} component={AssociationsList} listeners={listener} />
+            <Tab.Screen name={'Aggiungi scena'} component={CreateNewScene} listeners={listener}/>
             <Tab.Screen name={constants.tabs.PROFILE} component={ProfileTab} listeners={listener} />
             <Tab.Screen name={constants.tabs.MAP} component={MapTab} listeners={listener} />
         </Tab.Navigator>

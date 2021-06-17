@@ -10,9 +10,9 @@ export type RootStackParamList = {
     Search: undefined;
     Home: undefined;
     Map: { navigatedFromHome?: boolean };
-    "Aggiungi scena": Geolocation;
+    "Aggiungi scena": {pin?: Geolocation, movie?: Movie};
     "Luoghi nel film": MovieLocationRelationShipJoin[];
-    "Dettagli Scena": { pin: Geolocation; movie: Movie };
+    "Dettagli Scena": { pin?: Geolocation; movie?: Movie };
     "Cerca film": { pin: Geolocation };
 };
 

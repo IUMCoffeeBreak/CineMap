@@ -30,7 +30,18 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
     return (
         <>
             <SafeAreaView style={style.mainContainer}>
-                <MovieCard movie={movie} />
+                <View style={{ ...constants.componentsStyles.card, flexDirection: "row" }}>
+                    <View style={{ flex: 2, marginRight: '2%' }}>
+                        <Text style={style.title}>{movie.Title}</Text>
+                        <Text style={style.info}>Anno: {movie.Year}</Text>
+                        <Text style={style.info}>Rating: {movie.imdbRating} / 10</Text>
+                        <Text style={style.info}>Regista: {movie.Director}</Text>
+                        <Text style={style.info}>Cast: {movie.Actors}</Text>
+                    </View>
+                    <View style={{ flex: 1, marginLeft: '3%' }}>
+                        <Image style={style.poster} source={{ uri: movie.Poster }} />
+                    </View>
+                </View>
                 <View style={style.card}>
                     <Text style={style.plot}>{movie.Plot}</Text>
                 </View>
@@ -92,23 +103,8 @@ const style = StyleSheet.create({
     infoContainer: {
         flex: 1
     },
-    title: {
-        fontWeight: "bold",
-        fontSize: 20,
-        marginBottom: "3%"
-    },
-    info: {
-        fontSize: 15
-    },
     imageContainer: {
         flex: 1
-    },
-    poster: {
-        resizeMode: "contain",
-        width: "80%",
-        height: "100%",
-        marginLeft: "15%",
-        borderRadius: 10
     },
     bodyContainer: {
         flex: 1,
@@ -164,5 +160,15 @@ const style = StyleSheet.create({
     buttonContainer: {
         margin: "3%",
         marginTop: "7%"
+    },
+    info: {
+        fontSize: constants.text.BODY_FONT
+    },
+    title: {
+        fontSize: constants.text.TITLE_FONT
+    },
+    poster: {
+        aspectRatio: 2 / 3,
+        borderRadius: 10,
     }
 });
