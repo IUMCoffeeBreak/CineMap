@@ -48,13 +48,13 @@ const TabNavigation = () => {
                             iconName = "home";
                             break;
                         case constants.tabs.MAP:
-                            iconName = "map";
+                            // iconName = "map";
                             break;
                         case constants.tabs.PROFILE:
                             iconName = "user";
                             break;
                         case constants.tabs.SEARCH:
-                            iconName = "search";
+                            // iconName = "search";
                             break;
                     }
                     return <Icons name={iconName} size={size} color={color} />;

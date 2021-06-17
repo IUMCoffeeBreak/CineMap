@@ -248,7 +248,7 @@ export class DataLayer extends EventEmitter {
 
     getLocationsFromMovieId(id: string) {
         return this.getAssociations().filter(ass => {
-            ass.movie?.imdbID === id
+            return ass.movie?.imdbID === id
         }).map(ass => ass.location).filter(Boolean) as Geolocation[]
     }
 

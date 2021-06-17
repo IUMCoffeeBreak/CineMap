@@ -76,6 +76,22 @@ export const romeCoordinates = {
     lon: 12.4964
 };
 
+function renderMarkers(locations: Geolocation[], navigation: any) {
+    return locations.map((pin, i) => (
+        <Marker
+            key={`${i}-${pin.display_name}`}
+            coordinate={{ latitude: pin.lat, longitude: pin.lon }}
+            title={pin.display_name}
+            onPress={() =>
+                navigation.navigate("Film nel luogo", {
+                    pin,
+                    movies: db.getMoviesByLocation(pin.place_id)
+                })
+            }
+        />
+    ));
+}
+
 export function MapTab({ navigation, route }: ComponentProps<"Map">) {
     const [search, setSearch] = useState("");
     const [map, setMap] = useState<MapView>();
@@ -136,7 +152,7 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                     </View>
                 </Modal>
                 <SearchBar
-                    style={{ margin: 20 }}
+                    style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
                     safeAreaProps={mapTabStyles.searchBar}
                     value={search}
                     placeholder={`Cerca ${filterByLocation ? "luogo" : "film"}`}
@@ -148,9 +164,9 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                             setShowFilterButtons(true);
                             setShowAllLocations(true);
                         } else {
-                            setShowAllLocations(false)
-                            setShowFilterButtons(false)
-                            setShowSearchedMovieLocations(false)
+                            setShowAllLocations(false);
+                            setShowFilterButtons(false);
+                            setShowSearchedMovieLocations(false);
                         }
                         setSearchedLocations([]);
                     }}
@@ -160,10 +176,10 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                     onBlur={async () => {
                         setShowFilterButtons(false);
                         if (!search) return;
-                        setShowMovieCard(false);
+                        // todo: should hide after clicking on it? prototype doesn't
+                        // setShowMovieCard(false);
                         const altitude = 8000;
                         const zoom = altitude;
-                        setShowAllLocations(false);
                         if (filterByLocation) {
                             const locations =
                                 (await searchLocation({ q: search.replace(/roma$/i, "") + " roma" })) || [];
@@ -219,11 +235,11 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                 {showMovieCard && movie ? (
                     <MovieCard
                         onPress={() => {
-                            setShowMovieCard(false);
                             const locations = db.getLocationsFromMovieId(movie.imdbID);
                             setSearchedMovieLocations(locations);
                             setShowSearchedMovieLocations(true);
-                            if (!locations.length) setShowUnassociatedMoviesModal(true);
+                            if (!locations.length) return setShowUnassociatedMoviesModal(true);
+                            setShowMovieCard(false);
                         }}
                         container={{ zIndex: 1 }}
                         movie={movie}
@@ -248,34 +264,9 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                         maximumZ={19}
                         flipY={false}
                     />
-                    {searchedLocation.map(pin => (
-                        <Marker
-                            key={pin.display_name + pin.lat}
-                            coordinate={{ latitude: pin.lat, longitude: pin.lon }}
-                            title={pin.display_name}
-                            onPress={() =>
-                                navigation.navigate("Film nel luogo", {
-                                    pin,
-                                    movies: db.getMoviesByLocation(pin.place_id)
-                                })
-                            }
-                        />
-                    ))}
-                    {showAllLocations
-                        ? allLocations.map(pin => (
-                              <Marker
-                                  key={pin.display_name + pin.lat}
-                                  coordinate={{ latitude: pin.lat, longitude: pin.lon }}
-                                  title={pin.display_name}
-                                  onPress={() =>
-                                      navigation.navigate("Film nel luogo", {
-                                          pin,
-                                          movies: db.getMoviesByLocation(pin.place_id)
-                                      })
-                                  }
-                              />
-                          ))
-                        : null}
+                    {renderMarkers(searchedLocation, navigation)}
+                    {showSearchedMovieLocations ? renderMarkers(searchedMovieLocations, navigation) : null}
+                    {showAllLocations ? renderMarkers(allLocations, navigation) : null}
                 </MapView>
             </SafeAreaView>
         </>
