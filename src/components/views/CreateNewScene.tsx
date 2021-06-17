@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ComponentProps } from "../routeTypings";
-import { Modal, StyleSheet, Text, View, Image, KeyboardAvoidingView, Platform } from "react-native";
+import { StyleSheet, Text, View, Image, KeyboardAvoidingView, Platform } from "react-native";
 import constants from "../../lib/utils/constants";
 import { TextInput } from "react-native-paper";
 import { CinePinButton } from "../../lib/components/CinePinButton";
@@ -16,12 +16,17 @@ export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
     const routeData = route.params;
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");
-    const [film, setMovie] = useState<Movie>({} as any);
+    const [movie, setMovie] = useState<Movie>({} as any);
     const [err, setErr] = useState("");
     const [searchModal, setSearchModal] = useState(true);
+    const [selectedMovie, setSelectedMovie] = useState(false);
+    const [movieFromRoute, setFromRoute] = useState(false);
 
-    const pin: Geolocation = routeData?.pin;
-    const movie: Movie = routeData?.movie;
+    const pin: Geolocation = routeData?.pin
+    if(routeData?.movie){
+        setMovie(routeData?.movie);
+        setSelectedMovie(true)
+    }
 
     return (
         <SafeAreaView style={styles.mainContainer}>
@@ -30,27 +35,45 @@ export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
                     <Text style={styles.text}>Dove si è svolta la scena che vuoi inserire?</Text>
                     <View style={styles.locationLabel}>
                         <Image style={styles.pinIcon} source={{ uri: "./../../assets/mapMarker.png" }} />
-                        <Text style={styles.textLabel}>{pin.display_name}</Text>
+                        <Text style={styles.textLabel}>{pin && pin.display_name}</Text>
                     </View>
-                    <CinePinButton message={"Cambia luogo"} onPress={() => {}} style={styles.button} />
+                    <CinePinButton
+                        message={"Cambia luogo"}
+                        onPress={() => {
+                            navigation.navigate("Map", {});
+                        }}
+                        style={styles.button}
+                    />
                 </View>
                 <View style={styles.filmContainer}>
                     <Text style={styles.text}>Da quale film è tratta la scena che vuoi inserire?</Text>
                     <View style={styles.movieSearch}>
-                        <MovieSearch
-                            onMovieFound={(e, item) => {
-                                if (e) setErr(e);
-                                else if (item) {
-                                    setMovie(item);
-                                }
-                            }}
-                            onMovieClick={movie => {
-                                if (movie) setMovie(movie);
-                                setSearchModal(false);
-                            }}
-                        />
+                        {!selectedMovie && (
+                            <MovieSearch
+                                onMovieFound={(e, item) => {
+                                    if (e) setErr(e);
+                                    else if (item) {
+                                        setMovie(item);
+                                    }
+                                }}
+                                onMovieClick={movie => {
+                                    if (movie) setMovie(movie);
+                                    setSearchModal(false);
+                                    setSelectedMovie(true);
+                                }}
+                            />
+                        )}
                     </View>
-                    <CinePinButton message={"Cambia Film"} onPress={() => {}} style={styles.button} />
+                    {selectedMovie && <MovieCard movie={movie}/>}
+                    {selectedMovie && (
+                        <CinePinButton
+                            message={"Cambia Film"}
+                            onPress={() => {
+                                setSelectedMovie(false);
+                            }}
+                            style={styles.button}
+                        />
+                    )}
                 </View>
                 <View style={styles.sceneInputContainer}>
                     <Text style={styles.text}>Inserisci un titolo per la scena che vuoi inserire</Text>
@@ -60,7 +83,7 @@ export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
                         mode={"outlined"}
                         style={styles.input}
                         value={sceneTitle}
-                        onChangeText={v => setSceneLink(v)}
+                        onChangeText={v => setSceneTitle(v)}
                     />
                 </View>
                 <View style={styles.sceneInputContainer}>
@@ -74,8 +97,24 @@ export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
                         onChangeText={v => setSceneLink(v)}
                     />
                 </View>
-                <View style={{flex: 2}}>
-                    <CinePinButton message={"Conferma"} onPress={() => {}} style={styles.mainButton} />
+                <View style={{ flex: 2 }}>
+                    <CinePinButton
+                        message={"Conferma"}
+                        onPress={() => {
+                            db.createMovieLocationAssociation({
+                                movie,
+                                location: pin,
+                                scene_name: sceneTitle,
+                                scene_video_link: sceneLink,
+                            });
+                            navigation.navigate("Film nel luogo", {
+                                pin,
+                                movies: db.getMoviesByLocation(pin.place_id)
+                            });
+                        }}
+                        style={styles.mainButton}
+                        disabled={!sceneTitle || !sceneLink || _.isEmpty(movie)}
+                    />
                 </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
@@ -102,11 +141,13 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(171, 160, 159, 0.1)",
         borderRadius: 5,
         marginTop: "3%",
+        padding: "3%",
         flexDirection: "row"
     },
     filmContainer: {
-        flex: 5,
-        paddingTop: "5%"
+        flex: 6,
+        paddingTop: "5%",
+        marginBottom: "20%"
     },
     movieSearch: {
         paddingTop: "5%"
@@ -131,7 +172,7 @@ const styles = StyleSheet.create({
     button: {
         color: constants.colors.MAIN_GREEN,
         width: "75%",
-        marginTop: "5%",
+        marginTop: "4%",
         alignSelf: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -161,6 +202,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.41,
         shadowRadius: 9.11,
 
-        elevation: 14
+        // elevation: 14
     }
 });
