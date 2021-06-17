@@ -86,7 +86,6 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
     const [showMovieCard, setShowMovieCard] = useState(false);
     const [showUnassociatedMoviesModal, setShowUnassociatedMoviesModal] = useState(false);
     const [showFilterButtons, setShowFilterButtons] = useState(false);
-    // const [selectedLocation, setSelectedLocation] = useState<Geolocation | null>(null)
     const [searchedMovieLocations, setSearchedMovieLocations] = useState<Geolocation[]>([]);
     const [showSearchedMovieLocations, setShowSearchedMovieLocations] = useState(false);
     const [filterByLocation, setFilterByLocation] = useState<boolean>(false);
@@ -112,7 +111,7 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                 </Modal>
                 <Modal visible={showUnassociatedMoviesModal} transparent={true} animationType={"fade"}>
                     <View style={mapTabStyles.centeredView}>
-                        <View style={{ ...mapTabStyles.modalView }}>
+                        <View style={mapTabStyles.modalView}>
                             <View>
                                 <Text style={mapTabStyles.modalText}>
                                     Questo film non è acora stato inserito sulla mappa
@@ -148,6 +147,10 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                             setSearchErr("");
                             setShowFilterButtons(true);
                             setShowAllLocations(true);
+                        } else {
+                            setShowAllLocations(false)
+                            setShowFilterButtons(false)
+                            setShowSearchedMovieLocations(false)
                         }
                         setSearchedLocations([]);
                     }}
@@ -156,8 +159,8 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                     }}
                     onBlur={async () => {
                         setShowFilterButtons(false);
-                        setShowMovieCard(false);
                         if (!search) return;
+                        setShowMovieCard(false);
                         const altitude = 8000;
                         const zoom = altitude;
                         setShowAllLocations(false);
