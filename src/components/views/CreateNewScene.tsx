@@ -26,19 +26,24 @@ export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
     const [sceneLink, setSceneLink] = useState("");
     const [err, setErr] = useState("");
     const [searchModal, setSearchModal] = useState(true);
-    const [movie, setMovie] = useState<Movie |null>(routeData?.movie || null);
+    const [movie, setMovie] = useState<Movie>(routeData?.movie);
     const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
 
-    const [pin, setPin] = useState<Geolocation |null>(routeData?.pin || null);
-    
-    const [isModalVisible, setModalVisible] = useState(false);
+    const [pin, setPin] = useState<Geolocation | null>(routeData?.pin || null);
+
+    const [isModalPinVisible, setModalPinVisible] = useState(false);
+    const [isModalMovieVisible, setModalMovieVisible] = useState(false);
     const [search, setSearch] = useState("");
     const [pins, setPins] = useState<Geolocation[]>([]);
     const [movieAssociations, setMovieAssociations] = useState<ReturnType<typeof db.getMovieLocations>>([]);
     const [map, setMap] = useState<MapView>();
 
     const toggleModal = () => {
-        setModalVisible(!isModalVisible);
+        setModalPinVisible(!isModalPinVisible);
+    };
+
+    const toggleModalMovie = () => {
+        setModalMovieVisible(!isModalMovieVisible);
     };
 
     return (
@@ -46,9 +51,9 @@ export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}>
                     <Modal
-                        isVisible={isModalVisible}
-                        onBackdropPress={() => setModalVisible(false)}
-                        style={{ backgroundColor: "white" }}
+                        isVisible={isModalPinVisible}
+                        onBackdropPress={() => setModalPinVisible(false)}
+                        style={{ backgroundColor: "white", borderRadius: 10 }}
                     >
                         <KeyboardAvoidingView
                             behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -110,28 +115,23 @@ export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
                                     key={pin.display_name + pin.lat}
                                     coordinate={{ latitude: pin.lat, longitude: pin.lon }}
                                     title={pin.display_name}
-                                    onPress={() =>{
-                                        setPin(pin)
-                                        setModalVisible(false)
+                                    onPress={() => {
+                                        setPin(pin);
+                                        setModalPinVisible(false);
                                     }}
                                 />
                             ))}
                         </MapView>
+                        <CinePinButton
+                            message={"chiudi"}
+                            onPress={toggleModal}
+                            style={{ ...styles.button, width: "100%" }}
+                        />
                         <KeyboardAvoidingView />
                     </Modal>
-                </View>
-                <View style={styles.locationContainer}>
-                    <Text style={styles.text}>Dove si è svolta la scena che vuoi inserire?</Text>
-                    <View style={styles.locationLabel}>
-                        <Image style={styles.pinIcon} source={{ uri: "./../../assets/mapMarker.png" }} />
-                        <Text style={styles.textLabel}>{pin?.display_name}</Text>
-                    </View>
-                    <CinePinButton message={"Cambia luogo"} onPress={toggleModal} style={styles.button} />
-                </View>
-                <View style={styles.filmContainer}>
-                    <Text style={styles.text}>Da quale film è tratta la scena che vuoi inserire?</Text>
-                    <View style={styles.movieSearch}>
-                        {!selectedMovie && (
+
+                    <Modal isVisible={isModalMovieVisible}>
+                        <View style={{ backgroundColor: "white", padding: "5%", borderRadius: 10 }}>
                             <MovieSearch
                                 onMovieFound={(e, item) => {
                                     if (e) setErr(e);
@@ -145,18 +145,32 @@ export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
                                     setSelectedMovie(true);
                                 }}
                             />
-                        )}
+                            <CinePinButton
+                                message={"chiudi"}
+                                onPress={toggleModalMovie}
+                                style={{ ...styles.button, width: "100%" }}
+                            />
+                        </View>
+                    </Modal>
+                </View>
+                <View style={styles.locationContainer}>
+                    <Text style={styles.text}>Dove si è svolta la scena che vuoi inserire?</Text>
+                    <View style={styles.locationLabel}>
+                        <Image style={styles.pinIcon} source={{ uri: "./../../assets/mapMarker.png" }} />
+                        <Text style={styles.textLabel}>{pin?.display_name}</Text>
                     </View>
-                    {movie && <MovieCard movie={movie} />}
-                    {selectedMovie && (
+                    <CinePinButton message={"Cambia luogo"} onPress={toggleModal} style={styles.button} />
+                </View>
+                <View style={styles.filmContainer}>
+                    <Text style={styles.text}>Da quale film è tratta la scena che vuoi inserire?</Text>
+                    <View style={styles.movieSearch}>
+                        {selectedMovie && <MovieCard movie={movie} />}
                         <CinePinButton
-                            message={"Cambia Film"}
-                            onPress={() => {
-                                setSelectedMovie(false);
-                            }}
-                            style={styles.button}
+                            message={!selectedMovie ? "Cerca film" : "cambia film"}
+                            onPress={toggleModalMovie}
+                            style={{ ...styles.button, marginTop: "10%" }}
                         />
-                    )}
+                    </View>
                 </View>
                 <View style={styles.sceneInputContainer}>
                     <Text style={styles.text}>Inserisci un titolo per la scena che vuoi inserire</Text>
@@ -184,7 +198,7 @@ export function CreateNewScene({ navigation, route }: ComponentProps<any>) {
                     <CinePinButton
                         message={"Conferma"}
                         onPress={() => {
-                            if(pin && movie){
+                            if (pin && movie) {
                                 db.createMovieLocationAssociation({
                                     movie,
                                     location: pin,
