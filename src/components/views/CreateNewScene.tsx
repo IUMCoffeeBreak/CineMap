@@ -262,6 +262,7 @@ const styles = StyleSheet.create({
     button: {
         color: constants.colors.MAIN_GREEN,
         width: "75%",
+        margin: 10,
         alignSelf: "center",
         shadowColor: "#000",
         shadowOffset: {
