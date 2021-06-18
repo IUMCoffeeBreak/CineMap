@@ -76,22 +76,6 @@ export const romeCoordinates = {
     lon: 12.4964
 };
 
-function renderMarkers(locations: Geolocation[], navigation: any) {
-    return locations.map((pin, i) => (
-        <Marker
-            key={`${i}-${pin.display_name}`}
-            coordinate={{ latitude: pin.lat, longitude: pin.lon }}
-            title={pin.display_name}
-            onPress={() =>
-                navigation.navigate("Film nel luogo", {
-                    pin,
-                    movies: db.getMoviesByLocation(pin.place_id)
-                })
-            }
-        />
-    ));
-}
-
 export function MapTab({ navigation, route }: ComponentProps<"Map">) {
     const [search, setSearch] = useState("");
     const [map, setMap] = useState<MapView>();
@@ -101,11 +85,32 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
     const [showAllLocations, setShowAllLocations] = useState(true);
     const [showMovieCard, setShowMovieCard] = useState(false);
     const [showUnassociatedMoviesModal, setShowUnassociatedMoviesModal] = useState(false);
+    const [showUnassociatedPinModal, setShowUnassociatedPinModal] = useState(false);
+    const [selectedLocation, setSelectedLocation] = useState<Geolocation | null>(null);
     const [showFilterButtons, setShowFilterButtons] = useState(false);
     const [searchedMovieLocations, setSearchedMovieLocations] = useState<Geolocation[]>([]);
     const [showSearchedMovieLocations, setShowSearchedMovieLocations] = useState(false);
     const [filterByLocation, setFilterByLocation] = useState<boolean>(false);
     const [movie, setMovie] = useState<Movie | null>(null);
+
+    function renderMarkers(locations: Geolocation[], navigation: any, cb?: (movies: Movie[]) => boolean) {
+        return locations.map((pin, i) => (
+            <Marker
+                key={`${i}-${pin.display_name}`}
+                coordinate={{ latitude: pin.lat, longitude: pin.lon }}
+                title={pin.display_name}
+                onPress={() => {
+                    setSelectedLocation(pin);
+                    const moviesInLocation = db.getMoviesByLocation(pin.place_id);
+                    if (cb && !cb(moviesInLocation)) return;
+                    navigation.navigate("Film nel luogo", {
+                        pin,
+                        movies: moviesInLocation
+                    });
+                }}
+            />
+        ));
+    }
 
     useEffect(() => {
         db.onReady().then(() => {
@@ -122,6 +127,32 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                         <View style={mapTabStyles.modalView}>
                             <Text style={mapTabStyles.modalText}>{searchErr}</Text>
                             <CinePinButton message={"Chiudi"} onPress={() => setSearchErr("")} />
+                        </View>
+                    </View>
+                </Modal>
+                <Modal visible={showUnassociatedPinModal} transparent={true} animationType={"fade"}>
+                    <View style={mapTabStyles.centeredView}>
+                        <View style={mapTabStyles.modalView}>
+                            <View>
+                                <Text style={mapTabStyles.modalText}>
+                                    Questo luogo non è ancora stato associato ad un film
+                                </Text>
+                                <View style={{ flexDirection: "row" }}>
+                                    <CinePinButton
+                                        message={"Aggiungi scena"}
+                                        style={{ margin: 10 }}
+                                        onPress={() => {
+                                            setShowUnassociatedPinModal(false);
+                                            navigation.push("Aggiungi scena", { pin: selectedLocation });
+                                        }}
+                                    />
+                                    <CinePinButton
+                                        style={{ margin: 10 }}
+                                        message={"Chiudi"}
+                                        onPress={() => setShowUnassociatedPinModal(false)}
+                                    />
+                                </View>
+                            </View>
                         </View>
                     </View>
                 </Modal>
@@ -266,7 +297,13 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                         maximumZ={19}
                         flipY={false}
                     />
-                    {renderMarkers(searchedLocation, navigation)}
+                    {renderMarkers(searchedLocation, navigation, movies => {
+                        if (!movies.length) {
+                            setShowUnassociatedPinModal(true);
+                            return false;
+                        }
+                        return true;
+                    })}
                     {showSearchedMovieLocations ? renderMarkers(searchedMovieLocations, navigation) : null}
                     {showAllLocations ? renderMarkers(allLocations, navigation) : null}
                 </MapView>
