@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ComponentProps } from "../routeTypings";
-import { StyleSheet, Text, View, Image, KeyboardAvoidingView, Platform, Button } from "react-native";
+import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from "react-native";
 import constants from "../../lib/utils/constants";
 import { TextInput } from "react-native-paper";
 import { CinePinButton } from "../../lib/components/CinePinButton";
@@ -28,8 +28,8 @@ export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi s
 
     const [err, setErr] = useState("");
     const [searchModal, setSearchModal] = useState(true);
-const [movie, setMovie] = useState<Movie | null>(routeData?.movie || null);
-const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
+    const [movie, setMovie] = useState<Movie | null>(routeData?.movie || null);
+    const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
 
     const [pin, setPin] = useState<Geolocation>(routeData?.pin as any);
 
@@ -54,39 +54,14 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
                 <View>
                     <Modal
                         isVisible={isModalPinVisible}
+                        avoidKeyboard={true}
                         onBackdropPress={() => setModalPinVisible(false)}
-                        style={{ backgroundColor: "white", borderRadius: 10 }}
+                        style={{ backgroundColor: "white", borderRadius: 10, justifyContent: "space-between" }}
                     >
-                        <KeyboardAvoidingView
-                            behavior={Platform.OS === "ios" ? "padding" : "height"}
-                            style={{}}
-                        ></KeyboardAvoidingView>
-                        <SearchBar
-                            safeAreaProps={styles.searchBar}
-                            value={search}
-                            placeholder={"Cerca luogo"}
-                            onChangeText={text => {
-                                setSearch(text);
-                                setPins([]);
-                            }}
-                            onBlur={async () => {
-                                if (!search) return;
-                                const results = await searchLocation({ q: search.replace(/roma$/i, "") + " roma" });
-                                if (!results || (results && results.length === 0)) return console.log("not found"); // todo handle
-                                const filteredGeolocations = results.filter(
-                                    o => o.importance > constants.map.IMPORTANCE_FILTER_TRESHOLD
-                                );
-                                setPins(filteredGeolocations);
-                                const altitude = 8000;
-                                const zoom = altitude;
-                                const [pin] = results;
-                                map?.animateCamera({
-                                    center: { latitude: pin.lat, longitude: pin.lon },
-                                    altitude,
-                                    zoom
-                                });
-                            }}
-                        />
+                        {/*<KeyboardAvoidingView*/}
+                        {/*    behavior={Platform.OS === "ios" ? "padding" : "height"}*/}
+                        {/*    style={{ flex: 1, justifyContent: "space-between" }}*/}
+                        {/*/>*/}
                         <MapView
                             showsScale={true}
                             zoomControlEnabled={true}
@@ -118,12 +93,43 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
                                 />
                             ))}
                         </MapView>
-                        <CinePinButton
-                            message={"chiudi"}
-                            onPress={toggleModal}
-                            style={{ ...styles.button, width: "100%" }}
+                        <SearchBar
+                            safeAreaProps={styles.searchBar}
+                            value={search}
+                            style={{ margin: 20 }}
+                            placeholder={"Cerca luogo"}
+                            onChangeText={text => {
+                                setSearch(text);
+                                setPins([]);
+                            }}
+                            onBlur={async () => {
+                                if (!search) return;
+                                const results = await searchLocation({ q: search.replace(/roma$/i, "") + " roma" });
+                                if (!results || (results && results.length === 0)) return console.log("not found"); // todo handle
+                                const filteredGeolocations = results.filter(
+                                    o => o.importance > constants.map.IMPORTANCE_FILTER_TRESHOLD
+                                );
+                                setPins(filteredGeolocations);
+                                const altitude = 8000;
+                                const zoom = altitude;
+                                const [pin] = results;
+                                map?.animateCamera({
+                                    center: { latitude: pin.lat, longitude: pin.lon },
+                                    altitude,
+                                    zoom
+                                });
+                            }}
                         />
-                        <KeyboardAvoidingView />
+                        <View>
+                            <CinePinButton
+                                message={"chiudi"}
+                                onPress={toggleModal}
+                                style={{ margin: 20 }}
+                                // style={{ ...styles.button, width: "100%" }}
+                            />
+                        </View>
+
+                        {/*<KeyboardAvoidingView />*/}
                     </Modal>
 
                     <Modal isVisible={isModalMovieVisible}>
@@ -138,7 +144,7 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
                                 onMovieClick={movie => {
                                     if (movie) setMovie(movie);
                                     setSearchModal(false);
-                                    setModalMovieVisible(false)
+                                    setModalMovieVisible(false);
                                     setSelectedMovie(true);
                                 }}
                             />
@@ -179,7 +185,7 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
                         onChangeText={v => setSceneTitle(v)}
                     />
                 </View>
-                <View style={{...styles.sceneInputContainer}}>
+                <View style={{ ...styles.sceneInputContainer }}>
                     <Text style={styles.text}>Inserisci il link della scena che vuoi aggiungere</Text>
                     <TextInput
                         theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
@@ -230,7 +236,7 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(171, 160, 159, 0.1)",
         borderRadius: 5,
         marginTop: "3%",
-        padding: "2%",
+        padding: "2%"
     },
     filmContainer: {
         marginTop: "5%",
@@ -256,7 +262,6 @@ const styles = StyleSheet.create({
     button: {
         color: constants.colors.MAIN_GREEN,
         width: "75%",
-        marginTop: "3%",
         alignSelf: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -296,7 +301,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 5,
         shadowRadius: 10,
-        elevation: 5,
+        elevation: 5
         // marginBottom: "100%"
     },
     map: {
