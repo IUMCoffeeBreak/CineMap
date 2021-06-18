@@ -161,7 +161,7 @@ export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi s
                     <View style={styles.locationLabel}>
                         <Text style={styles.textLabel}>{pin?.display_name}</Text>
                     </View>
-                    <CinePinButton message={"Cambia luogo"} onPress={toggleModal} style={styles.button} />
+                    <CinePinButton message={pin ? "Cambia luogo" : 'aggiungi luogo'} onPress={toggleModal} style={styles.button} />
                 </View>
                 <View style={styles.filmContainer}>
                     <Text style={styles.text}>Da quale film è tratta la scena che vuoi inserire?</Text>
@@ -270,7 +270,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.41,
         shadowRadius: 9.11,
-        elevation: 14
+        elevation: 14,
+        marginTop: '3%'
     },
     input: {
         height: 40,
