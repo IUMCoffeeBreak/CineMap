@@ -50,8 +50,8 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
 
     return (
         <SafeAreaView style={styles.mainContainer}>
-            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
-                <View style={{ flex: 1 }}>
+            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{}}>
+                <View style={{}}>
                     <Modal
                         isVisible={isModalPinVisible}
                         onBackdropPress={() => setModalPinVisible(false)}
@@ -59,7 +59,7 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
                     >
                         <KeyboardAvoidingView
                             behavior={Platform.OS === "ios" ? "padding" : "height"}
-                            style={{ flex: 1 }}
+                            style={{}}
                         ></KeyboardAvoidingView>
                         <SearchBar
                             safeAreaProps={styles.searchBar}
@@ -152,7 +152,6 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
                 <View style={styles.locationContainer}>
                     <Text style={styles.text}>Dove si è svolta la scena che vuoi inserire?</Text>
                     <View style={styles.locationLabel}>
-                        <Image style={styles.pinIcon} source={{ uri: "./../../assets/mapMarker.png" }} />
                         <Text style={styles.textLabel}>{pin?.display_name}</Text>
                     </View>
                     <CinePinButton message={"Cambia luogo"} onPress={toggleModal} style={styles.button} />
@@ -164,7 +163,7 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
                         <CinePinButton
                             message={!selectedMovie ? "Cerca film" : "cambia film"}
                             onPress={toggleModalMovie}
-                            style={{ ...styles.button, marginTop: "10%" }}
+                            style={styles.button}
                         />
                     </View>
                 </View>
@@ -179,7 +178,7 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
                         onChangeText={v => setSceneTitle(v)}
                     />
                 </View>
-                <View style={styles.sceneInputContainer}>
+                <View style={{...styles.sceneInputContainer}}>
                     <Text style={styles.text}>Inserisci il link della scena che vuoi aggiungere</Text>
                     <TextInput
                         theme={{ colors: { primary: constants.colors.MAIN_GREEN } }}
@@ -190,7 +189,7 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
                         onChangeText={v => setSceneLink(v)}
                     />
                 </View>
-                <View style={{ flex: 2 }}>
+                <View style={{}}>
                     <CinePinButton
                         message={"Conferma"}
                         onPress={() => {
@@ -218,38 +217,31 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
 
 const styles = StyleSheet.create({
     mainContainer: {
-        margin: "0%",
-        padding: "5%",
-        display: "flex",
-        height: "100%",
-        flexDirection: "column",
+        margin: "3%",
+        // padding: "5%",
         justifyContent: "space-around"
     },
     locationContainer: {
-        display: "flex",
-        flex: 5,
         justifyContent: "center"
     },
     locationLabel: {
-        display: "flex",
         justifyContent: "space-around",
         backgroundColor: "rgba(171, 160, 159, 0.1)",
         borderRadius: 5,
         marginTop: "3%",
-        padding: "3%",
-        flexDirection: "row"
+        padding: "2%",
     },
     filmContainer: {
-        flex: 6,
-        paddingTop: "5%",
-        marginBottom: "20%"
+        marginTop: "5%",
+        height: 245
+        // marginBottom: "20%"
     },
     movieSearch: {
-        paddingTop: "5%"
+        // paddingTop: "5%"
     },
     sceneInputContainer: {
-        flex: 3,
-        paddingTop: "5%"
+        // paddingTop: "5%",
+        marginTop: "3%"
     },
     text: {
         alignSelf: "center",
@@ -260,14 +252,10 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontSize: 15
     },
-    pinIcon: {
-        width: "auto",
-        height: "100%"
-    },
     button: {
         color: constants.colors.MAIN_GREEN,
         width: "75%",
-        marginTop: "4%",
+        marginTop: "3%",
         alignSelf: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -276,13 +264,12 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.41,
         shadowRadius: 9.11,
-
         elevation: 14
     },
     input: {
         height: 40,
         backgroundColor: "white",
-        marginTop: "5%"
+        marginTop: "3%"
     },
     mainButton: {
         color: constants.colors.MAIN_GREEN,
@@ -309,7 +296,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 5,
         shadowRadius: 10,
         elevation: 5,
-        marginBottom: "100%"
+        // marginBottom: "100%"
     },
     map: {
         ...StyleSheet.absoluteFillObject

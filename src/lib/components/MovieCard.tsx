@@ -13,7 +13,7 @@ const style = StyleSheet.create({
     poster: {
         aspectRatio: 2 / 3,
         borderRadius: 10,
-        width: "70%"
+        width: "63%"
     }
 });
 

@@ -21,8 +21,8 @@ export const constants = {
         MAIN_GREEN: "#577b6d"
     },
     text: {
-        TITLE_FONT: 20,
-        BODY_FONT: 14
+        TITLE_FONT: 18,
+        BODY_FONT: 12
     },
     cards: {
         RADIUS: 10,
