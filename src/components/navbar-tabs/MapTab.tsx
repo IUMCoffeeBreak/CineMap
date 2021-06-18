@@ -98,7 +98,7 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
     const [searchErr, setSearchErr] = useState("");
     const [allLocations, setAllLocations] = useState<Geolocation[]>([]);
     const [searchedLocation, setSearchedLocations] = useState<Geolocation[]>([]);
-    const [showAllLocations, setShowAllLocations] = useState(false);
+    const [showAllLocations, setShowAllLocations] = useState(true);
     const [showMovieCard, setShowMovieCard] = useState(false);
     const [showUnassociatedMoviesModal, setShowUnassociatedMoviesModal] = useState(false);
     const [showFilterButtons, setShowFilterButtons] = useState(false);
@@ -109,8 +109,8 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
 
     useEffect(() => {
         db.onReady().then(() => {
-            setAllLocations(db.getAllRegisteredLocations());
-            setShowAllLocations(true);
+            const locations = db.getAllRegisteredLocations()
+            setAllLocations(locations);
         });
     }, []);
 
@@ -130,7 +130,7 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                         <View style={mapTabStyles.modalView}>
                             <View>
                                 <Text style={mapTabStyles.modalText}>
-                                    Questo film non è acora stato inserito sulla mappa
+                                    Questo film non è ancora stato inserito sulla mappa
                                 </Text>
                                 <View style={{ flexDirection: "row" }}>
                                     <CinePinButton
@@ -155,7 +155,7 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                     style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
                     safeAreaProps={mapTabStyles.searchBar}
                     value={search}
-                    placeholder={`Cerca ${filterByLocation ? "luogo" : "film"}`}
+                    placeholder={showFilterButtons ? `Cerca ${filterByLocation ? "luogo" : "film"}` : "Cerca luogo o film"}
                     onChangeText={text => {
                         setSearch(text);
                         if (!text) {
