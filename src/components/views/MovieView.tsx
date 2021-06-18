@@ -31,14 +31,14 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
         <>
             <SafeAreaView style={style.mainContainer}>
                 <View style={{ ...constants.componentsStyles.card, flexDirection: "row" }}>
-                    <View style={{ flex: 2, marginRight: '2%' }}>
+                    <View style={{ flex: 2, marginRight: "2%" }}>
                         <Text style={style.title}>{movie.Title}</Text>
                         <Text style={style.info}>Anno: {movie.Year}</Text>
                         <Text style={style.info}>Rating: {movie.imdbRating} / 10</Text>
                         <Text style={style.info}>Regista: {movie.Director}</Text>
                         <Text style={style.info}>Cast: {movie.Actors}</Text>
                     </View>
-                    <View style={{ flex: 1, marginLeft: '3%' }}>
+                    <View style={{ flex: 1, marginLeft: "3%" }}>
                         <Image style={style.poster} source={{ uri: movie.Poster }} />
                     </View>
                 </View>
@@ -64,7 +64,9 @@ export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) 
                 <View style={style.buttonContainer}>
                     <CinePinButton
                         message={"Luoghi di questo film"}
-                        onPress={() => navigation.navigate("Luoghi nel film", db.getLocationsFromMovieTitle(movie.Title))}
+                        onPress={() =>
+                            navigation.navigate("Luoghi nel film", db.getLocationsFromMovieTitle(movie.Title))
+                        }
                     />
                 </View>
             </SafeAreaView>
@@ -169,6 +171,6 @@ const style = StyleSheet.create({
     },
     poster: {
         aspectRatio: 2 / 3,
-        borderRadius: 10,
+        borderRadius: 10
     }
 });

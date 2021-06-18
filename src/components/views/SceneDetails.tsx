@@ -10,7 +10,6 @@ import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { MovieSearch } from "../../lib/components/MovieSearch";
 import { Movie } from "../../lib/DataLayer";
 
-
 export function SceneDetails({ route, navigation }: ComponentProps<"Dettagli Scena">) {
     const { pin, movie } = route.params;
     const [sceneTitle, setSceneTitle] = useState("");
@@ -22,17 +21,13 @@ export function SceneDetails({ route, navigation }: ComponentProps<"Dettagli Sce
     return (
         <SafeAreaView style={styles.mainContainer}>
             <View style={styles.locationContainer}>
-                <Text style={styles.text}>
-                    Dove si è svolta la scena che vuoi inserire?
-                </Text>
+                <Text style={styles.text}>Dove si è svolta la scena che vuoi inserire?</Text>
                 <View style={styles.locationLabel}>
                     {/* <Image 
                         style={styles.pinIcon}
                         source={require('./../../assets/')}
                     /> */}
-                    <Text style={styles.text}>
-                        Location
-                    </Text>
+                    <Text style={styles.text}>Location</Text>
                 </View>
             </View>
             {/* <View style={styles.filmContainer}>
@@ -62,7 +57,6 @@ export function SceneDetails({ route, navigation }: ComponentProps<"Dettagli Sce
             <View style={styles.sceneLinkContainer}>
 
             </View> */}
-
 
             {/* <View style={{ padding: 20 }}>
                 <Text style={styles.title}>Fornisci il titolo della scena e il link al video YouTube</Text>
@@ -106,25 +100,23 @@ export function SceneDetails({ route, navigation }: ComponentProps<"Dettagli Sce
     );
 }
 
-
 const styles = StyleSheet.create({
     mainContainer: {
-        margin: '0%',
-        padding: '10%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
+        margin: "0%",
+        padding: "10%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between"
     },
     locationContainer: {
-        display: 'flex',
+        display: "flex",
         flex: 1,
-        justifyContent: 'center',
-
+        justifyContent: "center"
     },
     locationLabel: {
-        backgroundColor: 'yellow',
-        width: '100%',
-        justifyContent: 'space-between',
+        backgroundColor: "yellow",
+        width: "100%",
+        justifyContent: "space-between"
     },
     filmContainer: {
         flex: 1
@@ -136,9 +128,9 @@ const styles = StyleSheet.create({
         flex: 1
     },
     text: {
-        alignSelf: 'center',
+        alignSelf: "center",
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: "bold"
     },
     pinIcon: {}
 });

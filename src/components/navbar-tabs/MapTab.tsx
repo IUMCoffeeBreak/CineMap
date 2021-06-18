@@ -109,7 +109,7 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
 
     useEffect(() => {
         db.onReady().then(() => {
-            const locations = db.getAllRegisteredLocations()
+            const locations = db.getAllRegisteredLocations();
             setAllLocations(locations);
         });
     }, []);
@@ -155,7 +155,9 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                     style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
                     safeAreaProps={mapTabStyles.searchBar}
                     value={search}
-                    placeholder={showFilterButtons ? `Cerca ${filterByLocation ? "luogo" : "film"}` : "Cerca luogo o film"}
+                    placeholder={
+                        showFilterButtons ? `Cerca ${filterByLocation ? "luogo" : "film"}` : "Cerca luogo o film"
+                    }
                     onChangeText={text => {
                         setSearch(text);
                         if (!text) {

@@ -128,10 +128,7 @@ export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) 
                 />
 
                 {!_.isEmpty(movie) ? (
-                    <MovieCard
-                        movie={movie}
-                        onPress={() => navigation.navigate("Scheda film", { movie })}
-                    />
+                    <MovieCard movie={movie} onPress={() => navigation.navigate("Scheda film", { movie })} />
                 ) : null}
             </View>
         </SafeAreaView>

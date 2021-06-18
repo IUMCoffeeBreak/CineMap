@@ -247,18 +247,23 @@ export class DataLayer extends EventEmitter {
     }
 
     getLocationsFromMovieId(id: string) {
-        return this.getAssociations().filter(ass => {
-            return ass.movie?.imdbID === id
-        }).map(ass => ass.location).filter(Boolean) as Geolocation[]
+        return this.getAssociations()
+            .filter(ass => {
+                return ass.movie?.imdbID === id;
+            })
+            .map(ass => ass.location)
+            .filter(Boolean) as Geolocation[];
     }
 
     getAllRegisteredLocations() {
-        const dupMap = new Map()
-        return this.getAssociations().map(ass => {
-            if (dupMap.has(ass.location?.place_id)) return null
-            dupMap.set(ass.location?.place_id, true)
-            return ass.location
-        }).filter(Boolean) as Geolocation[]
+        const dupMap = new Map();
+        return this.getAssociations()
+            .map(ass => {
+                if (dupMap.has(ass.location?.place_id)) return null;
+                dupMap.set(ass.location?.place_id, true);
+                return ass.location;
+            })
+            .filter(Boolean) as Geolocation[];
     }
 
     getMoviesByLocation(place_id: number) {
