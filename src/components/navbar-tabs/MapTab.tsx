@@ -93,7 +93,7 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
     const [filterByLocation, setFilterByLocation] = useState<boolean>(false);
     const [movie, setMovie] = useState<Movie | null>(null);
 
-    function renderMarkers(locations: Geolocation[], navigation: any, cb?: (movies: Movie[]) => boolean) {
+    function renderMarkers(locations: Geolocation[], cb?: (movies: Movie[]) => boolean) {
         return locations.map((pin, i) => (
             <Marker
                 key={`${i}-${pin.display_name}`}
@@ -101,9 +101,10 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                 title={pin.display_name}
                 onPress={() => {
                     setSelectedLocation(pin);
+                    if (movie) return navigation.navigate("Scheda film", { movie: movie as Movie });
                     const moviesInLocation = db.getMoviesByLocation(pin.place_id);
                     if (cb && !cb(moviesInLocation)) return;
-                    navigation.navigate("Film nel luogo", {
+                    return navigation.navigate("Film nel luogo", {
                         pin,
                         movies: moviesInLocation
                     });
@@ -297,15 +298,15 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                         maximumZ={19}
                         flipY={false}
                     />
-                    {renderMarkers(searchedLocation, navigation, movies => {
+                    {renderMarkers(searchedLocation, movies => {
                         if (!movies.length) {
                             setShowUnassociatedPinModal(true);
                             return false;
                         }
                         return true;
                     })}
-                    {showSearchedMovieLocations ? renderMarkers(searchedMovieLocations, navigation) : null}
-                    {showAllLocations ? renderMarkers(allLocations, navigation) : null}
+                    {showSearchedMovieLocations ? renderMarkers(searchedMovieLocations) : null}
+                    {showAllLocations ? renderMarkers(allLocations) : null}
                 </MapView>
             </SafeAreaView>
         </>
