@@ -51,7 +51,7 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
     return (
         <SafeAreaView style={styles.mainContainer}>
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{}}>
-                <View style={{}}>
+                <View>
                     <Modal
                         isVisible={isModalPinVisible}
                         onBackdropPress={() => setModalPinVisible(false)}
@@ -138,6 +138,7 @@ const [selectedMovie, setSelectedMovie] = useState(!!routeData?.movie);
                                 onMovieClick={movie => {
                                     if (movie) setMovie(movie);
                                     setSearchModal(false);
+                                    setModalMovieVisible(false)
                                     setSelectedMovie(true);
                                 }}
                             />
