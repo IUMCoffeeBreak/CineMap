@@ -37,7 +37,7 @@ const TabNavigation = () => {
             tabBarOptions={{
                 activeTintColor: "tomato",
                 inactiveTintColor: "gray",
-                showLabel: false,
+                showLabel: true,
                 keyboardHidesTabBar: true
             }}
             screenOptions={({ route }) => ({
@@ -62,11 +62,11 @@ const TabNavigation = () => {
             })}
             initialRouteName={constants.tabs.HOME}
         >
-            <Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} listeners={listener} />
+            {/*<Tab.Screen name={constants.tabs.SEARCH} component={SearchTab} listeners={listener} />*/}
             <Tab.Screen name={constants.tabs.HOME} component={MapTab} listeners={listener} />
-            <Tab.Screen name={"Film nel luogo"} component={AssociationsList} listeners={listener} />
+            {/*<Tab.Screen name={"Film nel luogo"} component={AssociationsList} listeners={listener} />*/}
             <Tab.Screen name={constants.tabs.PROFILE} component={ProfileTab} listeners={listener} />
-            <Tab.Screen name={constants.tabs.MAP} component={MapTab} listeners={listener} />
+            {/*<Tab.Screen name={constants.tabs.MAP} component={MapTab} listeners={listener} />*/}
         </Tab.Navigator>
     );
 };
