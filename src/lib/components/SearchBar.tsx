@@ -7,6 +7,7 @@ import { Searchbar as PaperSearchBar } from "react-native-paper";
 export interface CustomSearchProps extends SearchBarProps {
     safeAreaProps?: StyleProp<ViewStyle>;
     style?: StyleProp<any>;
+    ref?;
 }
 
 export function SearchBar(props: CustomSearchProps) {

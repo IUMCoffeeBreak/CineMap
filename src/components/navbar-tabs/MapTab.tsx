@@ -11,6 +11,7 @@ import { CinePinButton } from "../../lib/components/CinePinButton";
 import { fetchMovieTitle, Movie } from "../../lib/DataLayer";
 import { MovieCard } from "../../lib/components/MovieCard";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
+import BottomSheet from "react-native-raw-bottom-sheet";
 
 const mapTabStyles = StyleSheet.create({
     map: {
@@ -87,6 +88,8 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
     const [showMovieCard, setShowMovieCard] = useState(false);
     const [showUnassociatedMoviesModal, setShowUnassociatedMoviesModal] = useState(false);
     const [showUnassociatedPinModal, setShowUnassociatedPinModal] = useState(false);
+    const [showSearchBottomSheet, setShowSearchBottomSheet] = useState(true); // todo
+    const [bottomSheetComponent, setBottomSheetComponent] = useState<BottomSheet>();
     const [selectedLocation, setSelectedLocation] = useState<Geolocation | null>(null);
     const [showFilterButtons, setShowFilterButtons] = useState(false);
     const [searchedMovieLocations, setSearchedMovieLocations] = useState<Geolocation[]>([]);
@@ -122,206 +125,229 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
     }, []);
 
     return (
-        <>
-            <SafeAreaView>
-                <Modal visible={!!searchErr} transparent={true} animationType={"fade"}>
-                    <View style={mapTabStyles.centeredView}>
-                        <View style={mapTabStyles.modalView}>
-                            <Text style={mapTabStyles.modalText}>{searchErr}</Text>
-                            <CinePinButton message={"Chiudi"} onPress={() => setSearchErr("")} />
-                        </View>
-                    </View>
-                </Modal>
-                <Modal visible={showUnassociatedPinModal} transparent={true} animationType={"fade"}>
-                    <View style={mapTabStyles.centeredView}>
-                        <View style={mapTabStyles.modalView}>
-                            <View>
-                                <Text style={mapTabStyles.modalText}>
-                                    Questo luogo non è ancora stato associato ad un film
-                                </Text>
-                                <View style={{ flexDirection: "row" }}>
-                                    <CinePinButton
-                                        message={"Aggiungi scena"}
-                                        style={{ margin: 10 }}
-                                        onPress={() => {
-                                            setShowUnassociatedPinModal(false);
-                                            navigation.push("Aggiungi scena", { pin: selectedLocation });
-                                        }}
-                                    />
-                                    <CinePinButton
-                                        style={{ margin: 10 }}
-                                        message={"Chiudi"}
-                                        onPress={() => setShowUnassociatedPinModal(false)}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
-                <Modal visible={showUnassociatedMoviesModal} transparent={true} animationType={"fade"}>
-                    <View style={mapTabStyles.centeredView}>
-                        <View style={mapTabStyles.modalView}>
-                            <View>
-                                <Text style={mapTabStyles.modalText}>
-                                    Questo film non è ancora stato inserito sulla mappa
-                                </Text>
-                                <View style={{ flexDirection: "row" }}>
-                                    <CinePinButton
-                                        message={"Aggiungi scena"}
-                                        style={{ margin: 10 }}
-                                        onPress={() => {
-                                            setShowUnassociatedMoviesModal(false);
-                                            navigation.push("Aggiungi scena", { movie });
-                                        }}
-                                    />
-                                    <CinePinButton
-                                        style={{ margin: 10 }}
-                                        message={"Chiudi"}
-                                        onPress={() => setShowUnassociatedMoviesModal(false)}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
-                <SearchBar
-                    style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
-                    safeAreaProps={mapTabStyles.searchBar}
-                    value={search}
-                    placeholder={`Cerca ${filterByLocation ? "luogo" : "film"}`}
-                    onChangeText={text => {
-                        setSearch(text);
-                        if (!text) {
-                            setMovie(null);
-                            setSearchErr("");
-                            setShowFilterButtons(true);
-                            setShowAllLocations(true);
-                        } else {
-                            setShowAllLocations(false);
-                            setShowFilterButtons(false);
-                            setShowSearchedMovieLocations(false);
+        <SafeAreaView>
+            {showSearchBottomSheet ? (
+                <BottomSheet
+                    ref={o => setBottomSheetComponent(o as BottomSheet)}
+                    height={800}
+                    openDuration={250}
+                    customStyles={{
+                        container: {
+                            // justifyContent: "center",
+                            // alignItems: "center"
                         }
-                        setSearchedLocations([]);
-                    }}
-                    onFocus={() => {
-                        setShowFilterButtons(true);
-                    }}
-                    onBlur={async () => {
-                        setShowFilterButtons(false);
-                        if (!search) return;
-                        // todo: should hide after clicking on it? prototype doesn't
-                        // setShowMovieCard(false);
-                        const altitude = 8000;
-                        const zoom = altitude;
-                        if (filterByLocation) {
-                            const locations =
-                                (await searchLocation({ q: search.replace(/roma$/i, "") + " roma" })) || [];
-                            // if (!locations || (locations && locations.length === 0)) return console.log("not found"); // todo handle
-                            const filteredGeolocations = locations.filter(
-                                o => o.importance > constants.map.IMPORTANCE_FILTER_TRESHOLD
-                            );
-                            if (filteredGeolocations.length === 0) {
-                                setSearchErr(`Nessun luogo trovato per "${search}"`);
-                                setMovie(null);
-                                return;
-                            }
-                            setSearchedLocations(filteredGeolocations);
-                            const [pin] = locations;
-                            map?.animateCamera({
-                                center: { latitude: pin.lat, longitude: pin.lon },
-                                altitude,
-                                zoom
-                            });
-                        } else {
-                            const { err, item: m } = await fetchMovieTitle(db, search);
-                            setMovie(m || null);
-                            setShowMovieCard(true);
-                            setSearchErr(err || "");
-                        }
-                    }}
-                />
-                <SegmentedControl
-                    values={["Film", "Luogo"]}
-                    style={{ zIndex: 1, backgroundColor: "#ccc", margin: 20, marginTop: 10 }}
-                    selectedIndex={filterByLocation ? 1 : 0}
-                    onChange={e => setFilterByLocation(e.nativeEvent.selectedSegmentIndex === 1)}
-                />
-                {false && !movie && searchedLocation.length === 0 ? (
-                    <SafeAreaView style={{ zIndex: 1, flex: 2, flexDirection: "row", justifyContent: "space-around" }}>
-                        <CinePinButton
-                            icon={"film"}
-                            style={mapTabStyles.filterButton}
-                            message={"film"}
-                            disabled={!filterByLocation}
-                            onPress={() => {
-                                setFilterByLocation(false);
-                                setSearchErr("");
-                            }}
-                        />
-                        <CinePinButton
-                            icon={"map"}
-                            style={mapTabStyles.filterButton}
-                            message={"luogo"}
-                            disabled={filterByLocation}
-                            onPress={() => {
-                                setFilterByLocation(true);
-                                setSearchErr("");
-                                setMovie(null);
-                            }}
-                        />
-                    </SafeAreaView>
-                ) : null}
-                {showMovieCard && movie ? (
-                    <MovieCard
-                        onPress={() => {
-                            const locations = db.getLocationsFromMovieId(movie.imdbID);
-                            setSearchedMovieLocations(locations);
-                            setShowSearchedMovieLocations(true);
-                            if (!locations.length) return setShowUnassociatedMoviesModal(true);
-                            setShowMovieCard(false);
-                            const [pinForAnimation] = locations;
-                            const altitude = 2000;
-                            const zoom = altitude;
-                            map?.animateCamera({
-                                center: { latitude: pinForAnimation.lat, longitude: pinForAnimation.lon },
-                                altitude,
-                                zoom
-                            });
-                        }}
-                        container={{ zIndex: 1 }}
-                        movie={movie}
-                    />
-                ) : null}
-                <MapView
-                    showsScale={true}
-                    zoomControlEnabled={true}
-                    showsUserLocation={true}
-                    showsCompass={true}
-                    ref={m => setMap(m as MapView)}
-                    style={mapTabStyles.map}
-                    initialRegion={{
-                        latitude: romeCoordinates.lat,
-                        longitude: romeCoordinates.lon,
-                        latitudeDelta: constants.map.DELTA,
-                        longitudeDelta: constants.map.DELTA
                     }}
                 >
-                    <UrlTile
-                        urlTemplate={"http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"}
-                        maximumZ={19}
-                        flipY={false}
+                    <SearchBar
+                        style={{ marginLeft: 20, marginRight: 20, marginTop: 50, marginBottom: 10 }}
+                        // safeAreaProps={mapTabStyles.searchBar}
+                        // enablesReturnKeyAutomatically={!search.length}
+                        autoFocus={showSearchBottomSheet}
+                        value={search}
+                        placeholder={`Cerca ${filterByLocation ? "luogo" : "film"}`}
+                        onChangeText={text => {
+                            setSearch(text);
+                            if (!text) {
+                                setMovie(null);
+                                setSearchErr("");
+                                setSearchErr("");
+                                setShowFilterButtons(true);
+                                setShowAllLocations(true);
+                            } else {
+                                setShowAllLocations(false);
+                                setShowFilterButtons(false);
+                                setShowSearchedMovieLocations(false);
+                            }
+                            setSearchedLocations([]);
+                        }}
+                        onFocus={() => {}}
+                        onBlur={async () => {
+                            setShowFilterButtons(false);
+                            if (!search) {
+                                setShowSearchBottomSheet(false);
+                                return;
+                            }
+                            // todo: should hide after clicking on it? prototype doesn't
+                            // setShowMovieCard(false);
+                            const altitude = 8000;
+                            const zoom = altitude;
+                            if (filterByLocation) {
+                                const locations =
+                                    (await searchLocation({ q: search.replace(/roma$/i, "") + " roma" })) || [];
+                                // if (!locations || (locations && locations.length === 0)) return console.log("not found"); // todo handle
+                                const filteredGeolocations = locations.filter(
+                                    o => o.importance > constants.map.IMPORTANCE_FILTER_TRESHOLD
+                                );
+                                if (filteredGeolocations.length === 0) {
+                                    setSearchErr(`Nessun luogo trovato per "${search}"`);
+                                    setMovie(null);
+                                    return;
+                                }
+                                setSearchedLocations(filteredGeolocations);
+                                const [pin] = locations;
+                                map?.animateCamera({
+                                    center: { latitude: pin.lat, longitude: pin.lon },
+                                    altitude,
+                                    zoom
+                                });
+                            } else {
+                                const { err, item: m } = await fetchMovieTitle(db, search);
+                                setMovie(m || null);
+                                setShowMovieCard(true);
+                                setSearchErr(err || "");
+                            }
+                        }}
                     />
-                    {renderMarkers(searchedLocation, movies => {
-                        if (!movies.length) {
-                            setShowUnassociatedPinModal(true);
-                            return false;
-                        }
-                        return true;
-                    })}
-                    {showSearchedMovieLocations ? renderMarkers(searchedMovieLocations) : null}
-                    {showAllLocations ? renderMarkers(allLocations) : null}
-                </MapView>
-            </SafeAreaView>
-        </>
+                </BottomSheet>
+            ) : null}
+            <Modal visible={!!searchErr} transparent={true} animationType={"fade"}>
+                <View style={mapTabStyles.centeredView}>
+                    <View style={mapTabStyles.modalView}>
+                        <Text style={mapTabStyles.modalText}>{searchErr}</Text>
+                        <CinePinButton message={"Chiudi"} onPress={() => setSearchErr("")} />
+                    </View>
+                </View>
+            </Modal>
+            <Modal visible={showUnassociatedPinModal} transparent={true} animationType={"fade"}>
+                <View style={mapTabStyles.centeredView}>
+                    <View style={mapTabStyles.modalView}>
+                        <View>
+                            <Text style={mapTabStyles.modalText}>
+                                Questo luogo non è ancora stato associato ad un film
+                            </Text>
+                            <View style={{ flexDirection: "row" }}>
+                                <CinePinButton
+                                    message={"Aggiungi scena"}
+                                    style={{ margin: 10 }}
+                                    onPress={() => {
+                                        setShowUnassociatedPinModal(false);
+                                        navigation.push("Aggiungi scena", { pin: selectedLocation });
+                                    }}
+                                />
+                                <CinePinButton
+                                    style={{ margin: 10 }}
+                                    message={"Chiudi"}
+                                    onPress={() => setShowUnassociatedPinModal(false)}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+            <Modal visible={showUnassociatedMoviesModal} transparent={true} animationType={"fade"}>
+                <View style={mapTabStyles.centeredView}>
+                    <View style={mapTabStyles.modalView}>
+                        <View>
+                            <Text style={mapTabStyles.modalText}>
+                                Questo film non è ancora stato inserito sulla mappa
+                            </Text>
+                            <View style={{ flexDirection: "row" }}>
+                                <CinePinButton
+                                    message={"Aggiungi scena"}
+                                    style={{ margin: 10 }}
+                                    onPress={() => {
+                                        setShowUnassociatedMoviesModal(false);
+                                        navigation.push("Aggiungi scena", { movie });
+                                    }}
+                                />
+                                <CinePinButton
+                                    style={{ margin: 10 }}
+                                    message={"Chiudi"}
+                                    onPress={() => setShowUnassociatedMoviesModal(false)}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+            <SearchBar
+                editable={showSearchBottomSheet}
+                style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
+                safeAreaProps={mapTabStyles.searchBar}
+                value={search}
+                placeholder={`Cerca ${filterByLocation ? "luogo" : "film"}`}
+                onFocus={() => {
+                    bottomSheetComponent?.open();
+                    setShowSearchBottomSheet(true);
+                }}
+            />
+            <SegmentedControl
+                values={["Film", "Luogo"]}
+                style={{ zIndex: 1, backgroundColor: "#ccc", margin: 20, marginTop: 10 }}
+                selectedIndex={filterByLocation ? 1 : 0}
+                onChange={e => setFilterByLocation(e.nativeEvent.selectedSegmentIndex === 1)}
+            />
+            {false && !movie && searchedLocation.length === 0 ? (
+                <SafeAreaView style={{ zIndex: 1, flex: 2, flexDirection: "row", justifyContent: "space-around" }}>
+                    <CinePinButton
+                        icon={"film"}
+                        style={mapTabStyles.filterButton}
+                        message={"film"}
+                        disabled={!filterByLocation}
+                        onPress={() => {
+                            setFilterByLocation(false);
+                            setSearchErr("");
+                        }}
+                    />
+                    <CinePinButton
+                        icon={"map"}
+                        style={mapTabStyles.filterButton}
+                        message={"luogo"}
+                        disabled={filterByLocation}
+                        onPress={() => {
+                            setFilterByLocation(true);
+                            setSearchErr("");
+                            setMovie(null);
+                        }}
+                    />
+                </SafeAreaView>
+            ) : null}
+            {showMovieCard && movie ? (
+                <MovieCard
+                    onPress={() => {
+                        const locations = db.getLocationsFromMovieId(movie.imdbID);
+                        setSearchedMovieLocations(locations);
+                        setShowSearchedMovieLocations(true);
+                        if (!locations.length) return setShowUnassociatedMoviesModal(true);
+                        setShowMovieCard(false);
+                        const [pinForAnimation] = locations;
+                        const altitude = 2000;
+                        const zoom = altitude;
+                        map?.animateCamera({
+                            center: { latitude: pinForAnimation.lat, longitude: pinForAnimation.lon },
+                            altitude,
+                            zoom
+                        });
+                    }}
+                    container={{ zIndex: 1 }}
+                    movie={movie}
+                />
+            ) : null}
+            <MapView
+                showsScale={true}
+                zoomControlEnabled={true}
+                showsUserLocation={true}
+                showsCompass={true}
+                ref={m => setMap(m as MapView)}
+                style={mapTabStyles.map}
+                initialRegion={{
+                    latitude: romeCoordinates.lat,
+                    longitude: romeCoordinates.lon,
+                    latitudeDelta: constants.map.DELTA,
+                    longitudeDelta: constants.map.DELTA
+                }}
+            >
+                <UrlTile urlTemplate={"http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"} maximumZ={19} flipY={false} />
+                {renderMarkers(searchedLocation, movies => {
+                    if (!movies.length) {
+                        setShowUnassociatedPinModal(true);
+                        return false;
+                    }
+                    return true;
+                })}
+                {showSearchedMovieLocations ? renderMarkers(searchedMovieLocations) : null}
+                {showAllLocations ? renderMarkers(allLocations) : null}
+            </MapView>
+        </SafeAreaView>
     );
 }
