@@ -10,6 +10,7 @@ import { ComponentProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
 import { fetchMovieTitle, Movie } from "../../lib/DataLayer";
 import { MovieCard } from "../../lib/components/MovieCard";
+import SegmentedControl from "@react-native-segmented-control/segmented-control";
 
 const mapTabStyles = StyleSheet.create({
     map: {
@@ -72,8 +73,8 @@ const mapTabStyles = StyleSheet.create({
 });
 
 export const romeCoordinates = {
-    lat: 41.9028,
-    lon: 12.4964
+    lat: 41.905611,
+    lon: 12.482362
 };
 
 export function MapTab({ navigation, route }: ComponentProps<"Map">) {
@@ -187,9 +188,7 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                     style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
                     safeAreaProps={mapTabStyles.searchBar}
                     value={search}
-                    placeholder={
-                        showFilterButtons ? `Cerca ${filterByLocation ? "luogo" : "film"}` : "Cerca luogo o film"
-                    }
+                    placeholder={`Cerca ${filterByLocation ? "luogo" : "film"}`}
                     onChangeText={text => {
                         setSearch(text);
                         if (!text) {
@@ -241,7 +240,13 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                         }
                     }}
                 />
-                {showFilterButtons && !movie && searchedLocation.length === 0 ? (
+                <SegmentedControl
+                    values={["Film", "Luogo"]}
+                    style={{ zIndex: 1, backgroundColor: "#ccc", margin: 20, marginTop: 10 }}
+                    selectedIndex={filterByLocation ? 1 : 0}
+                    onChange={e => setFilterByLocation(e.nativeEvent.selectedSegmentIndex === 1)}
+                />
+                {false && !movie && searchedLocation.length === 0 ? (
                     <SafeAreaView style={{ zIndex: 1, flex: 2, flexDirection: "row", justifyContent: "space-around" }}>
                         <CinePinButton
                             icon={"film"}
@@ -274,6 +279,14 @@ export function MapTab({ navigation, route }: ComponentProps<"Map">) {
                             setShowSearchedMovieLocations(true);
                             if (!locations.length) return setShowUnassociatedMoviesModal(true);
                             setShowMovieCard(false);
+                            const [pinForAnimation] = locations;
+                            const altitude = 2000;
+                            const zoom = altitude;
+                            map?.animateCamera({
+                                center: { latitude: pinForAnimation.lat, longitude: pinForAnimation.lon },
+                                altitude,
+                                zoom
+                            });
                         }}
                         container={{ zIndex: 1 }}
                         movie={movie}

@@ -45,7 +45,7 @@ const TabNavigation = () => {
                     let iconName;
                     switch (route.name) {
                         case constants.tabs.HOME:
-                            iconName = "home";
+                            iconName = "film";
                             break;
                         case constants.tabs.MAP:
                             // iconName = "map";

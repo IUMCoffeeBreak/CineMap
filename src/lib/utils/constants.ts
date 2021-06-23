@@ -44,7 +44,7 @@ export const constants = {
         ADDPIN: "Aggiungi pin"
     },
     map: {
-        DELTA: 0.5,
+        DELTA: 0.003,
         IMPORTANCE_FILTER_TRESHOLD: 0.3
     },
     componentsStyles: {
