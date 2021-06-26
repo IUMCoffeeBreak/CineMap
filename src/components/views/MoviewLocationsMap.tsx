@@ -3,9 +3,9 @@ import MapView, { Marker } from "react-native-maps";
 import { romeCoordinates } from "../navbar-tabs/MapTab";
 import constants from "../../lib/utils/constants";
 import React from "react";
-import { ComponentProps } from "../routeTypings";
+import { ViewProps } from "../routeTypings";
 
-export function LocationsMap({ navigation, route }: ComponentProps<"Luoghi nel film">) {
+export function LocationsMap({ navigation, route }: ViewProps<"Luoghi nel film">) {
     const pins = route.params;
     return (
         <>

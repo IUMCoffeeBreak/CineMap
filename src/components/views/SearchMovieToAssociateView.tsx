@@ -1,4 +1,4 @@
-import { ComponentProps } from "../routeTypings";
+import { ViewProps } from "../routeTypings";
 import { MovieSearch } from "../../lib/components/MovieSearch";
 import { Modal, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
@@ -34,7 +34,7 @@ const style = StyleSheet.create({
     }
 });
 
-export function SearchMovieToAssociateView({ route, navigation }: ComponentProps<"Cerca film">) {
+export function SearchMovieToAssociateView({ route, navigation }: ViewProps<"Cerca film">) {
     const { pin } = route.params;
     const [movie, setMovie] = useState<Movie>({} as any);
     const [err, setErr] = useState("");

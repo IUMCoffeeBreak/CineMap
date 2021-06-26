@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentProps } from "../routeTypings";
+import { ViewProps } from "../routeTypings";
 import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from "react-native";
 import constants from "../../lib/utils/constants";
 import { TextInput } from "react-native-paper";
@@ -20,7 +20,7 @@ export const romeCoordinates = {
     lon: 12.4964
 };
 
-export function CreateNewScene({ navigation, route }: ComponentProps<"Aggiungi scena">) {
+export function CreateNewScene({ navigation, route }: ViewProps<"Aggiungi scena">) {
     const routeData = route.params;
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");

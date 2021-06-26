@@ -1,7 +1,7 @@
 import React from "react";
 import { Dimensions, Image, StyleSheet, Text, View, ScrollView, Linking } from "react-native";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
-import { ComponentProps } from "../routeTypings";
+import { ViewProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
 import { db } from "../../db";
 import constants from "../../lib/utils/constants";
@@ -22,7 +22,7 @@ function randint(max = 100) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-export function MovieView({ route, navigation }: ComponentProps<"Scheda film">) {
+export function MovieView({ route, navigation }: ViewProps<"Scheda film">) {
     const movie = route.params.movie;
     const associations = db
         .getScenesFromMovie(movie.imdbID)

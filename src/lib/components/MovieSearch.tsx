@@ -5,6 +5,8 @@ import { SearchBar } from "./SearchBar";
 import { MovieCard } from "./MovieCard";
 import constants from "../utils/constants";
 import { db } from "../../db";
+import { CinepinModal } from "./CinepinModal";
+import { CinePinButton } from "./CinePinButton";
 
 export function MovieSearch(props: {
     style?: StyleProp<ViewProps>;
@@ -37,7 +39,11 @@ export function MovieSearch(props: {
                     <MovieCard movie={movie} />
                 </TouchableOpacity>
             )}
-            <Text> {err || ""} </Text>
+            {err ? (
+                <CinepinModal isVisible={!!err} message={err}>
+                    <CinePinButton message={"chiudi"} onPress={() => setErr("")} />
+                </CinepinModal>
+            ) : null}
         </View>
     );
 }

@@ -1,9 +1,9 @@
-import { ComponentProps } from "../routeTypings";
+import { ViewProps } from "../routeTypings";
 import React from "react";
 import { MovieSearch } from "../../lib/components/MovieSearch";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 
-export function SearchMovie(props: ComponentProps<"CercaFilm">) {
+export function SearchMovie(props: ViewProps<"CercaFilm">) {
     return (
         <SafeAreaView>
             <MovieSearch

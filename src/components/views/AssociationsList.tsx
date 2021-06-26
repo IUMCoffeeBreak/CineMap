@@ -1,7 +1,7 @@
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FilmCard } from "../../lib/components/FilmCard";
-import { ComponentProps } from "../routeTypings";
+import { ViewProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
 import constants from "../../lib/utils/constants";
 
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export function AssociationsList({ route, navigation }: ComponentProps<"Film nel luogo">) {
+export function AssociationsList({ route, navigation }: ViewProps<"Film nel luogo">) {
     const { movies, pin } = route.params;
 
     const titlePage = {

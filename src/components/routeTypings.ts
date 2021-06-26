@@ -20,7 +20,7 @@ export type RootStackParamList = {
     "Cerca film": { pin: Geolocation };
 };
 
-export type ComponentProps<T extends keyof RootStackParamList> = {
+export type ViewProps<T extends keyof RootStackParamList> = {
     route: RouteProp<RootStackParamList, T>;
     navigation: StackNavigationProp<RootStackParamList, T>;
 };

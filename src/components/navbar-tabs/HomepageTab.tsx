@@ -3,12 +3,12 @@ import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import constants from "../../lib/utils/constants";
 import { romeCoordinates } from "./MapTab";
-import { ComponentProps } from "../routeTypings";
+import { ViewProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
 import { db } from "./../../db";
 import { Geolocation } from "../../lib/geolocation";
 
-export function HomepageTab({ navigation }: ComponentProps<"Home">) {
+export function HomepageTab({ navigation }: ViewProps<"Home">) {
     const [associations, setAssociations] = useState<Geolocation[]>(Object.values(db.locationModel.list()));
     useEffect(() => {
         db.onReady().then(() => setAssociations(Object.values(db.locationModel.list())));

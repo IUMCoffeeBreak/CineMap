@@ -1,4 +1,4 @@
-import { ComponentProps } from "../routeTypings";
+import { ViewProps } from "../routeTypings";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { TextInput } from "react-native-paper";
 import constants from "../../lib/utils/constants";
@@ -10,7 +10,7 @@ import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { MovieSearch } from "../../lib/components/MovieSearch";
 import { Movie } from "../../lib/DataLayer";
 
-export function SceneDetails({ route, navigation }: ComponentProps<"Dettagli Scena">) {
+export function SceneDetails({ route, navigation }: ViewProps<"Dettagli Scena">) {
     const { pin, movie } = route.params;
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");
@@ -23,7 +23,7 @@ export function SceneDetails({ route, navigation }: ComponentProps<"Dettagli Sce
             <View style={styles.locationContainer}>
                 <Text style={styles.text}>Dove si è svolta la scena che vuoi inserire?</Text>
                 <View style={styles.locationLabel}>
-                    {/* <Image 
+                    {/* <Image
                         style={styles.pinIcon}
                         source={require('./../../assets/')}
                     /> */}
@@ -46,7 +46,7 @@ export function SceneDetails({ route, navigation }: ComponentProps<"Dettagli Sce
                         setSearchModal(false);
                     }}
                 />
-                <CinePinButton 
+                <CinePinButton
                     message={''}
                     onPress={()=> {}}
                 />

@@ -6,7 +6,7 @@ import constants from "../../lib/utils/constants";
 import { db } from "../../db";
 import { Movie } from "../../lib/DataLayer";
 import _ from "lodash";
-import { ComponentProps } from "../routeTypings";
+import { ViewProps } from "../routeTypings";
 import { MovieCard } from "../../lib/components/MovieCard";
 import { CinePinButton } from "../../lib/components/CinePinButton";
 
@@ -83,7 +83,7 @@ export async function submitSearch(text: string) {
     return await db.searchMovieTitle(text);
 }
 
-export function SearchTab({ navigation, route }: ComponentProps<"Scheda film">) {
+export function SearchTab({ navigation, route }: ViewProps<"Scheda film">) {
     const [search, setSearch] = useState("");
     const [movie, setMovie] = useState<Movie>({} as any);
     const [err, setErr] = useState("");
