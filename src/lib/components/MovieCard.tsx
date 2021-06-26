@@ -5,10 +5,11 @@ import { Movie } from "../DataLayer";
 
 const style = StyleSheet.create({
     info: {
-        fontSize: constants.text.BODY_FONT
+        fontSize: 15
     },
     title: {
-        fontSize: constants.text.TITLE_FONT
+        fontSize: 20,
+        fontWeight: "bold"
     },
     poster: {
         aspectRatio: 2 / 3,

@@ -18,6 +18,7 @@ import { SearchMovieToAssociateView } from "./src/components/views/SearchMovieTo
 import SearchTab from "./src/components/navbar-tabs/SearchTab";
 import { Screen } from "react-native-screens";
 import { CreateNewScene } from "./src/components/views/CreateNewScene";
+import { SearchMovie } from "./src/components/views/SearchMovie";
 
 declare const global: { HermesInternal: null | {} };
 
@@ -110,9 +111,14 @@ const App = () => {
                         component={CreateNewScene}
                         options={stackOpts("Aggiungi scena")}
                     />
+                    {/*<Stack.Screen*/}
+                    {/*    name={"Cerca film"}*/}
+                    {/*    component={SearchMovieToAssociateView}*/}
+                    {/*    options={stackOpts("Cerca film")}*/}
+                    {/*/>*/}
                     <Stack.Screen
-                        name={"Cerca film"}
-                        component={SearchMovieToAssociateView}
+                        name={"CercaFilm"}
+                        component={SearchMovie}
                         options={stackOpts("Cerca film")}
                     />
                     <Stack.Screen name={"Search"} component={SearchTab} options={stackOpts("Cerca film")} />

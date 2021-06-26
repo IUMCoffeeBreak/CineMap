@@ -20,7 +20,7 @@ export function MovieSearch(props: {
                 safeAreaProps={constants.componentsStyles.searchBar}
                 style={constants.componentsStyles.searchBar}
                 value={search}
-                placeholder={"Cerca film  "}
+                placeholder={"Cerca film"}
                 onChangeText={text => {
                     if (!text) setMovie(null as any);
                     setSearch(text);
