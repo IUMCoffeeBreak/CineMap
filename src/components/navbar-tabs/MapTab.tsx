@@ -1,5 +1,5 @@
 import React, { LegacyRef } from "react";
-import { Modal, StyleSheet, Text, View } from "react-native";
+import { Keyboard, Modal, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
 import MapView, { Marker, UrlTile } from "react-native-maps";
 import constants from "../../lib/utils/constants";
 import { SearchBar } from "../../lib/components/SearchBar";
@@ -10,6 +10,7 @@ import { ViewProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
 import { Movie } from "../../lib/DataLayer";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
+import { CinepinModal } from "../../lib/components/CinepinModal";
 
 const mapTabStyles = StyleSheet.create({
     map: {
@@ -139,162 +140,153 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
         ));
     };
 
+    movieWithoutPinModal = () => {
+        return <CinepinModal isVisible={this.state.showUnassociatedPinModal} message={"Questo luogo non è ancora stato associato ad un film"}>
+            <View style={{ flexDirection: "row" }}>
+                <CinePinButton
+                  message={"Aggiungi scena"}
+                  style={{ margin: 10 }}
+                  onPress={() => {
+                      this.setState({ showUnassociatedPinModal: false }, () => {
+                          this.props.navigation.push("Aggiungi scena", {
+                              pin: this.state.selectedLocation
+                          });
+                      });
+                  }}
+                />
+                <CinePinButton
+                  style={{ margin: 10 }}
+                  message={"Chiudi"}
+                  onPress={() => this.setState({ showUnassociatedPinModal: false })}
+                />
+            </View>
+        </CinepinModal>
+    }
+
+    errModal = () => {
+        return <CinepinModal isVisible={!!this.state.searchErr} message={this.state.searchErr}>
+            <CinePinButton message={"Chiudi"} onPress={() => this.setState({ searchErr: "" })} />
+        </CinepinModal>
+    }
+
+    unassociatedMoviesModal = () => {
+        return <CinepinModal isVisible={this.state.showUnassociatedMoviesModal} message={"Questo film non è ancora stato inserito sulla mappa"}>
+            <View style={{ flexDirection: "row" }}>
+                <CinePinButton
+                  message={"Aggiungi scena"}
+                  style={{ margin: 10 }}
+                  onPress={() => {
+                      this.setState({ showUnassociatedMoviesModal: false }, () => {
+                          this.props.navigation.push("Aggiungi scena", {
+                              movie: this.props.route.params.movie
+                          });
+                      });
+                  }}
+                />
+                <CinePinButton
+                  style={{ margin: 10 }}
+                  message={"Chiudi"}
+                  onPress={() => this.setState({ showUnassociatedMoviesModal: false })}
+                />
+            </View>
+        </CinepinModal>
+    }
+
     render = () => {
         return (
-            <SafeAreaView>
-                <Modal visible={!!this.state.searchErr} transparent={true} animationType={"fade"}>
-                    <View style={mapTabStyles.centeredView}>
-                        <View style={mapTabStyles.modalView}>
-                            <Text style={mapTabStyles.modalText}>{this.state.searchErr}</Text>
-                            <CinePinButton message={"Chiudi"} onPress={() => this.setState({ searchErr: "" })} />
-                        </View>
-                    </View>
-                </Modal>
-                <Modal visible={this.state.showUnassociatedPinModal} transparent={true} animationType={"fade"}>
-                    <View style={mapTabStyles.centeredView}>
-                        <View style={mapTabStyles.modalView}>
-                            <View>
-                                <Text style={mapTabStyles.modalText}>
-                                    Questo luogo non è ancora stato associato ad un film
-                                </Text>
-                                <View style={{ flexDirection: "row" }}>
-                                    <CinePinButton
-                                        message={"Aggiungi scena"}
-                                        style={{ margin: 10 }}
-                                        onPress={() => {
-                                            this.setState({ showUnassociatedPinModal: false }, () => {
-                                                this.props.navigation.push("Aggiungi scena", {
-                                                    pin: this.state.selectedLocation
-                                                });
-                                            });
-                                        }}
-                                    />
-                                    <CinePinButton
-                                        style={{ margin: 10 }}
-                                        message={"Chiudi"}
-                                        onPress={() => this.setState({ showUnassociatedPinModal: false })}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
-                <Modal visible={this.state.showUnassociatedMoviesModal} transparent={true} animationType={"fade"}>
-                    <View style={mapTabStyles.centeredView}>
-                        <View style={mapTabStyles.modalView}>
-                            <View>
-                                <Text style={mapTabStyles.modalText}>
-                                    Questo film non è ancora stato inserito sulla mappa
-                                </Text>
-                                <View style={{ flexDirection: "row" }}>
-                                    <CinePinButton
-                                        message={"Aggiungi scena"}
-                                        style={{ margin: 10 }}
-                                        onPress={() => {
-                                            this.setState({ showUnassociatedMoviesModal: false }, () => {
-                                                this.props.navigation.push("Aggiungi scena", {
-                                                    movie: this.props.route.params.movie
-                                                });
-                                            });
-                                        }}
-                                    />
-                                    <CinePinButton
-                                        style={{ margin: 10 }}
-                                        message={"Chiudi"}
-                                        onPress={() => this.setState({ showUnassociatedMoviesModal: false })}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
-                <SearchBar
-                    // editable={filterByLocation}
-                    ref={r => (this.searchBarRef = r as any)}
-                    style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
-                    safeAreaProps={mapTabStyles.searchBar}
-                    value={this.state.locationSearchText}
-                    placeholder={`Cerca ${this.state.filterByLocation ? "luogo" : "film"}`}
-                    onChangeText={text => {
-                        this.setState({
-                            locationSearchText: text,
-                            showAllLocations: !text,
-                            searchedLocations: []
-                        });
-                        if (text) this.setState({ showSearchedMovieLocations: false });
-                    }}
-                    onBlur={async () => {
-                        this.setState({ isSearchbarFocused: false });
-                        const altitude = 8000;
-                        const zoom = altitude;
-                        const q = this.state.locationSearchText.replace(/roma$/i, "") + " roma";
-                        const locations = (await searchLocation({ q })) || [];
-                        // if (!locations || (locations && locations.length === 0)) return console.log("not found"); // todo handle
-                        const filteredGeolocations = locations.filter(
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <SafeAreaView>
+                    {this.errModal()}
+                    {this.movieWithoutPinModal()}
+                    {this.unassociatedMoviesModal()}
+                    <SearchBar
+                      // editable={filterByLocation}
+                      ref={r => (this.searchBarRef = r as any)}
+                      style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
+                      safeAreaProps={mapTabStyles.searchBar}
+                      value={this.state.locationSearchText}
+                      placeholder={`Cerca ${this.state.filterByLocation ? "luogo" : "film"}`}
+                      onChangeText={text => {
+                          this.setState({
+                              locationSearchText: text,
+                              showAllLocations: !text,
+                              searchedLocations: []
+                          });
+                          if (text) this.setState({ showSearchedMovieLocations: false });
+                      }}
+                      onBlur={async () => {
+                          this.setState({ isSearchbarFocused: false });
+                          const altitude = 8000;
+                          const zoom = altitude;
+                          const q = this.state.locationSearchText.replace(/roma$/i, "") + " roma";
+                          const locations = (await searchLocation({ q })) || [];
+                          // if (!locations || (locations && locations.length === 0)) return console.log("not found"); // todo handle
+                          const filteredGeolocations = locations.filter(
                             o => o.importance > constants.map.IMPORTANCE_FILTER_TRESHOLD
-                        );
-                        if (filteredGeolocations.length === 0) {
-                            return this.setState({
-                                searchErr: `Nessun luogo trovato per "${this.state.locationSearchText}"`
-                            });
-                        }
-                        this.setState({
-                            searchedMovieLocations: filteredGeolocations,
-                            showSearchedMovieLocations: true
-                        });
-                        const [pin] = locations;
-                        (this.map as any)?.animateCamera({
-                            center: { latitude: pin.lat, longitude: pin.lon },
-                            altitude,
-                            zoom
-                        });
-                    }}
-                    onFocus={() => {
-                        if (!this.state.filterByLocation) return this.props.navigation.navigate("CercaFilm");
-                        this.setState({ isSearchbarFocused: true });
-                    }}
-                />
-                <SegmentedControl
-                    enabled={!this.state.isSearchbarFocused || !this.state.filterByLocation}
-                    values={["Film", "Luogo"]}
-                    style={{ zIndex: 1, backgroundColor: "#ccc", margin: 20, marginTop: 10 }}
-                    selectedIndex={this.state.filterByLocation ? 1 : 0}
-                    onChange={e => {
-                        const isLocationSelected = e.nativeEvent.selectedSegmentIndex === 1;
-                        this.setState({ filterByLocation: isLocationSelected });
-                    }}
-                />
-                <MapView
-                    showsScale={true}
-                    zoomControlEnabled={true}
-                    showsUserLocation={true}
-                    showsCompass={true}
-                    ref={m => (this.map = m as any)}
-                    style={mapTabStyles.map}
-                    initialRegion={{
-                        latitude: romeCoordinates.lat,
-                        longitude: romeCoordinates.lon,
-                        latitudeDelta: constants.map.DELTA,
-                        longitudeDelta: constants.map.DELTA
-                    }}
-                >
-                    <UrlTile
-                        urlTemplate={"http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"}
-                        maximumZ={19}
-                        flipY={false}
+                          );
+                          if (filteredGeolocations.length === 0) {
+                              return this.setState({
+                                  searchErr: `Nessun luogo trovato per "${this.state.locationSearchText}"`
+                              });
+                          }
+                          this.setState({
+                              searchedMovieLocations: filteredGeolocations,
+                              showSearchedMovieLocations: true
+                          });
+                          const [pin] = locations;
+                          (this.map as any)?.animateCamera({
+                              center: { latitude: pin.lat, longitude: pin.lon },
+                              altitude,
+                              zoom
+                          });
+                      }}
+                      onFocus={() => {
+                          if (!this.state.filterByLocation) return this.props.navigation.navigate("CercaFilm");
+                          this.setState({ isSearchbarFocused: true });
+                      }}
                     />
-                    {this.renderMarkers(this.state.searchedLocations, movies => {
-                        console.log(">>>>", movies);
-                        if (movies.length > 0) return true;
-                        this.setState({ showUnassociatedPinModal: true });
-                        return false;
-                    })}
-                    {this.state.showSearchedMovieLocations
-                        ? this.renderMarkers(this.state.searchedMovieLocations)
-                        : null}
-                    {this.state.showAllLocations ? this.renderMarkers(this.state.allLocations) : null}
-                </MapView>
-            </SafeAreaView>
+                    <SegmentedControl
+                      enabled={!this.state.isSearchbarFocused || !this.state.filterByLocation}
+                      values={["Film", "Luogo"]}
+                      style={{ zIndex: 1, backgroundColor: "#ccc", margin: 20, marginTop: 10 }}
+                      selectedIndex={this.state.filterByLocation ? 1 : 0}
+                      onChange={e => {
+                          const isLocationSelected = e.nativeEvent.selectedSegmentIndex === 1;
+                          this.setState({ filterByLocation: isLocationSelected });
+                      }}
+                    />
+                    <MapView
+                      showsScale={true}
+                      zoomControlEnabled={true}
+                      showsUserLocation={true}
+                      showsCompass={true}
+                      ref={m => (this.map = m as any)}
+                      style={mapTabStyles.map}
+                      initialRegion={{
+                          latitude: romeCoordinates.lat,
+                          longitude: romeCoordinates.lon,
+                          latitudeDelta: constants.map.DELTA,
+                          longitudeDelta: constants.map.DELTA
+                      }}
+                    >
+                        <UrlTile
+                          urlTemplate={"http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+                          maximumZ={19}
+                          flipY={false}
+                        />
+                        {this.renderMarkers(this.state.searchedLocations, movies => {
+                            console.log(">>>>", movies);
+                            if (movies.length > 0) return true;
+                            this.setState({ showUnassociatedPinModal: true });
+                            return false;
+                        })}
+                        {this.state.showSearchedMovieLocations
+                          ? this.renderMarkers(this.state.searchedMovieLocations)
+                          : null}
+                        {this.state.showAllLocations ? this.renderMarkers(this.state.allLocations) : null}
+                    </MapView>
+                </SafeAreaView>
+            </TouchableWithoutFeedback>
         );
     };
 }
