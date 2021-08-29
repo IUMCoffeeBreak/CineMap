@@ -253,7 +253,12 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                             });
                         }}
                         onFocus={() => {
-                            if (!this.state.filterByLocation) return this.props.navigation.navigate("CercaFilm");
+                            if (!this.state.filterByLocation) return this.props.navigation.navigate("CercaFilm", {
+                                onMovieClick: movie => {
+                                    // todo: cannot pass non serializable data structures, only json
+                                    this.props.navigation.push("Map" , { movie })
+                                }
+                            });
                             this.setState({ isSearchbarFocused: true });
                         }}
                     />
