@@ -218,63 +218,66 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                     {this.errModal()}
                     {this.movieWithoutPinModal()}
                     {this.unassociatedMoviesModal()}
-                    {!this.props.route.params?.movie ? (
-                        <SearchBar
-                            // editable={filterByLocation}
-                            ref={r => (this.searchBarRef = r as any)}
-                            style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
-                            safeAreaProps={mapTabStyles.searchBar}
-                            value={this.state.locationSearchText}
-                            placeholder={`Cerca ${this.state.filterByLocation ? "luogo" : "film"}`}
-                            onChangeText={text => {
-                                this.setState({
-                                    locationSearchText: text,
-                                    showAllLocations: !text,
-                                    searchedLocations: []
+
+                    <SearchBar
+                        editable={!this.props.route.params?.movie}
+                        ref={r => (this.searchBarRef = r as any)}
+                        style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
+                        safeAreaProps={mapTabStyles.searchBar}
+                        value={
+                            this.props.route.params?.movie
+                                ? this.props.route.params.movie.Title
+                                : this.state.locationSearchText
+                        }
+                        placeholder={`Cerca ${this.state.filterByLocation ? "luogo" : "film"}`}
+                        onChangeText={text => {
+                            this.setState({
+                                locationSearchText: text,
+                                showAllLocations: !text,
+                                searchedLocations: []
+                            });
+                            if (text) this.setState({ showSearchedMovieLocations: false });
+                        }}
+                        onBlur={async () => {
+                            this.setState({ isSearchbarFocused: false });
+                            const altitude = 8000;
+                            const zoom = altitude;
+                            const q = this.state.locationSearchText.replace(/roma$/i, "") + " roma";
+                            const locations = (await searchLocation({ q })) || [];
+                            // if (!locations || (locations && locations.length === 0)) return console.log("not found"); // todo handle
+                            const filteredGeolocations = locations.filter(
+                                o => o.importance > constants.map.IMPORTANCE_FILTER_TRESHOLD
+                            );
+                            if (filteredGeolocations.length === 0) {
+                                return this.setState({
+                                    searchErr: `Nessun luogo trovato per "${this.state.locationSearchText}"`
                                 });
-                                if (text) this.setState({ showSearchedMovieLocations: false });
-                            }}
-                            onBlur={async () => {
-                                this.setState({ isSearchbarFocused: false });
-                                const altitude = 8000;
-                                const zoom = altitude;
-                                const q = this.state.locationSearchText.replace(/roma$/i, "") + " roma";
-                                const locations = (await searchLocation({ q })) || [];
-                                // if (!locations || (locations && locations.length === 0)) return console.log("not found"); // todo handle
-                                const filteredGeolocations = locations.filter(
-                                    o => o.importance > constants.map.IMPORTANCE_FILTER_TRESHOLD
-                                );
-                                if (filteredGeolocations.length === 0) {
-                                    return this.setState({
-                                        searchErr: `Nessun luogo trovato per "${this.state.locationSearchText}"`
-                                    });
-                                }
-                                this.setState({
-                                    searchedMovieLocations: filteredGeolocations,
-                                    showSearchedMovieLocations: true
+                            }
+                            this.setState({
+                                searchedMovieLocations: filteredGeolocations,
+                                showSearchedMovieLocations: true
+                            });
+                            const [pin] = locations;
+                            (this.map as any)?.animateCamera({
+                                center: { latitude: pin.lat, longitude: pin.lon },
+                                altitude,
+                                zoom
+                            });
+                        }}
+                        onFocus={() => {
+                            if (!this.state.filterByLocation)
+                                return this.props.navigation.push("CercaFilm", {
+                                    onMovieClick: movie => {
+                                        // todo: cannot pass non serializable data structures, only json
+                                        this.props.navigation.push("Map", {
+                                            movie,
+                                            movieLocations: db.getLocationsFromMovieId(movie.imdbID)
+                                        });
+                                    }
                                 });
-                                const [pin] = locations;
-                                (this.map as any)?.animateCamera({
-                                    center: { latitude: pin.lat, longitude: pin.lon },
-                                    altitude,
-                                    zoom
-                                });
-                            }}
-                            onFocus={() => {
-                                if (!this.state.filterByLocation)
-                                    return this.props.navigation.push("CercaFilm", {
-                                        onMovieClick: movie => {
-                                            // todo: cannot pass non serializable data structures, only json
-                                            this.props.navigation.push("Map", {
-                                                movie,
-                                                movieLocations: db.getLocationsFromMovieId(movie.imdbID)
-                                            });
-                                        }
-                                    });
-                                this.setState({ isSearchbarFocused: true });
-                            }}
-                        />
-                    ) : null}
+                            this.setState({ isSearchbarFocused: true });
+                        }}
+                    />
                     {!this.props.route.params?.movie ? (
                         <SegmentedControl
                             enabled={!this.state.isSearchbarFocused || !this.state.filterByLocation}
