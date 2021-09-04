@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, StyleSheet, Text, View } from "react-native";
+import { Alert, Modal, StyleSheet, Text, View } from "react-native";
 import { SearchBar } from "../../lib/components/SearchBar";
 import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import constants from "../../lib/utils/constants";
@@ -95,20 +95,6 @@ export function SearchTab({ navigation, route }: ViewProps<"Scheda film">) {
     };
     return (
         <SafeAreaView>
-            <Modal visible={!!err} transparent={true} animationType={"fade"}>
-                <View style={searchTabStyles.centeredView}>
-                    <View style={searchTabStyles.modalView}>
-                        <Text style={searchTabStyles.modalText}>Nessun film trovato per "{search}"</Text>
-                        <CinePinButton
-                            message={"chiudi"}
-                            onPress={() => {
-                                setErr("");
-                                setMovie({} as any);
-                            }}
-                        />
-                    </View>
-                </View>
-            </Modal>
             <View style={searchTabStyles.headerContainer}>
                 <SearchBar
                     safeAreaProps={constants.componentsStyles.searchBar}

@@ -1,5 +1,5 @@
 import React, { LegacyRef } from "react";
-import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import { Alert, Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import MapView, { Marker, UrlTile } from "react-native-maps";
 import constants from "../../lib/utils/constants";
 import { SearchBar } from "../../lib/components/SearchBar";
@@ -131,66 +131,74 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
     searchBarRef: LegacyRef<any>;
     map: MapView;
 
-    renderMarkers = (locations?: Geolocation[], cb?: (movies: Movie[]) => boolean) => {
-        if (locations)
-            return locations.map((pin, i) => (
-                <Marker
-                    key={`${i}-${pin.display_name}`}
-                    coordinate={{ latitude: pin.lat, longitude: pin.lon }}
-                    title={pin.display_name}
-                    onPress={() => {
-                        this.setState({ selectedLocation: pin });
+    /**
+     * binds an array of movies to each one of the locations specified, so that
+     * for every pin you click, you already have movies to show
+     * @param locations
+     * @param cb funtion to call
+     */
+    renderMarkers = (locations?: Geolocation[], cb?: (movies: Movie[]) => boolean | void) => {
+        if (!locations) return;
+        return locations.map((pin, i) => (
+            <Marker
+                key={`${i}-${pin.display_name}`}
+                coordinate={{ latitude: pin.lat, longitude: pin.lon }}
+                title={pin.display_name}
+                onPress={() => {
+                    this.setState({ selectedLocation: pin }, () => {
                         if (this.props.route.params?.movie)
-                            return this.props.navigation.navigate("Scheda film", {
+                            return this.props.navigation.push("Scheda film", {
                                 movie: this.props.route.params.movie
                             });
                         const moviesInLocation = db.getMoviesByLocation(pin.place_id);
-                        if (cb && !cb(moviesInLocation)) return;
-                        return this.props.navigation.navigate("Film nel luogo", {
+                        if (cb) cb(moviesInLocation);
+                        if (moviesInLocation.length === 0) return;
+                        return this.props.navigation.push("Film nel luogo", {
                             pin,
                             movies: moviesInLocation
                         });
-                    }}
-                />
-            ));
+                    });
+                }}
+            />
+        ));
     };
 
-    movieWithoutPinModal = () => {
-        return (
-            <CinepinModal
-                isVisible={this.state.showUnassociatedPinModal}
-                message={"Questo luogo non è ancora stato associato ad un film"}
-            >
-                <View style={{ flexDirection: "row" }}>
-                    <CinePinButton
-                        message={"Aggiungi scena"}
-                        style={{ margin: 10 }}
-                        onPress={() => {
-                            this.setState({ showUnassociatedPinModal: false }, () => {
-                                this.props.navigation.push("Aggiungi scena", {
-                                    pin: this.state.selectedLocation
-                                });
-                            });
-                        }}
-                    />
-                    <CinePinButton
-                        style={{ margin: 10 }}
-                        message={"Chiudi"}
-                        onPress={() => this.setState({ showUnassociatedPinModal: false })}
-                    />
-                </View>
-            </CinepinModal>
-        );
+    locationWithoutAssociatedMoviesAlert = () => {
+        if (!this.state.selectedLocation) return;
+        const location = (this.state.selectedLocation as any) as Geolocation;
+        if (!location) return;
+        Alert.alert("Attenzione", "Questo luogo non è ancora stato associato ad un film", [
+            {
+                text: "Aggiungi scena",
+                onPress: () => {
+                    this.setState({ showUnassociatedPinModal: false }, () => {
+                        this.props.navigation.push("Aggiungi scena", {
+                            pin: this.state.selectedLocation
+                        });
+                    });
+                }
+            },
+            {
+                text: "Chiudi",
+                onPress: () => this.setState({ showUnassociatedPinModal: false, selectedLocation: null })
+            }
+        ]);
     };
 
     errModal = () => {
-        return (
-            <CinepinModal isVisible={!!this.state.searchErr} message={this.state.searchErr}>
-                <CinePinButton message={"Chiudi"} onPress={() => this.setState({ searchErr: "" })} />
-            </CinepinModal>
-        );
+        if (!this.state.searchErr) return;
+        Alert.alert("Attenzione", this.state.searchErr, [
+            {
+                onPress: () => {
+                    this.setState({ searchErr: "" });
+                }
+            }
+        ]);
     };
 
+    /**
+     * cerca by film
+     */
     unassociatedMoviesModal = () => {
         return (
             <CinepinModal
@@ -224,7 +232,6 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <SafeAreaView>
                     {this.errModal()}
-                    {this.movieWithoutPinModal()}
                     {this.unassociatedMoviesModal()}
 
                     <SearchBar
@@ -276,9 +283,9 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                             if (!this.state.filterByLocation)
                                 return this.props.navigation.push("CercaFilm", {
                                     onMovieClick: movie => {
-                                        const movieLocations = db.getLocationsFromMovieId(movie.imdbID)
+                                        const movieLocations = db.getLocationsFromMovieId(movie.imdbID);
                                         if (!movieLocations?.length) {
-                                            return this.setState({showUnassociatedMoviesModal: true})
+                                            return this.setState({ showUnassociatedMoviesModal: true });
                                         }
                                         // todo: cannot pass non serializable data structures, only json
                                         this.props.navigation.push("Map", {
@@ -287,7 +294,7 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                                         });
                                     },
                                     onMovieFound: (err, movie) => {
-                                        if (!err) this.setState({searchedMovie: movie as any})
+                                        if (!err) this.setState({ searchedMovie: movie as any });
                                     }
                                 });
                             this.setState({ isSearchbarFocused: true });
@@ -344,12 +351,13 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                             flipY={false}
                         />
                         {this.renderMarkers(this.props.route.params?.movieLocations, movies => {
-                            if (movies.length > 0) return true;
+                            if (movies.length > 0) return
                             this.setState({ showUnassociatedPinModal: true });
-                            return false;
                         })}
                         {this.state.showSearchedMovieLocations
-                            ? this.renderMarkers(this.state.searchedMovieLocations)
+                            ? this.renderMarkers(this.state.searchedMovieLocations, movies => {
+                                  if (!movies.length) this.locationWithoutAssociatedMoviesAlert();
+                              })
                             : null}
                         {this.state.showAllLocations ? this.renderMarkers(this.state.allLocations) : null}
                     </MapView>
