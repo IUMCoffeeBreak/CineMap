@@ -19,6 +19,7 @@ export function MovieSearch(props: {
     return (
         <View style={props.style}>
             <SearchBar
+                autoFocus={true}
                 safeAreaProps={constants.componentsStyles.searchBar}
                 style={constants.componentsStyles.searchBar}
                 value={search}

@@ -287,7 +287,7 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                                         });
                                     },
                                     onMovieFound: (err, movie) => {
-                                        this.setState({searchedMovie: movie as any})
+                                        if (!err) this.setState({searchedMovie: movie as any})
                                     }
                                 });
                             this.setState({ isSearchbarFocused: true });
