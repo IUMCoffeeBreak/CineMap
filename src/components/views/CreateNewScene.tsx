@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ViewProps } from "../routeTypings";
-import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import constants from "../../lib/utils/constants";
 import { TextInput } from "react-native-paper";
 import { CinePinButton } from "../../lib/components/CinePinButton";
@@ -14,6 +14,7 @@ import { Geolocation, searchLocation } from "../../lib/geolocation";
 import Modal from "react-native-modal";
 import { SearchBar } from "../../lib/components/SearchBar";
 import MapView, { Marker, UrlTile } from "react-native-maps";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export const romeCoordinates = {
     lat: 41.9028,
@@ -48,8 +49,8 @@ export function CreateNewScene({ navigation, route }: ViewProps<"Aggiungi scena"
 
     return (
         <SafeAreaView style={styles.mainContainer}>
-            {/*<KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{}}>*/}
-                <View>
+            <KeyboardAwareScrollView>
+                <ScrollView>
                     <Modal
                         isVisible={isModalPinVisible}
                         avoidKeyboard={true}
@@ -153,7 +154,7 @@ export function CreateNewScene({ navigation, route }: ViewProps<"Aggiungi scena"
                             />
                         </View>
                     </Modal>
-                </View>
+                </ScrollView>
                 <View style={styles.locationContainer}>
                     <Text style={styles.text}>Dove si è svolta la scena che vuoi inserire?</Text>
                     <View style={styles.locationLabel}>
@@ -219,7 +220,7 @@ export function CreateNewScene({ navigation, route }: ViewProps<"Aggiungi scena"
                         disabled={!sceneTitle || !sceneLink || _.isEmpty(movie)}
                     />
                 </View>
-            {/*</KeyboardAvoidingView>*/}
+            </KeyboardAwareScrollView>
         </SafeAreaView>
     );
 }

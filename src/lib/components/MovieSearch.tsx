@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import { StyleProp, Text, TouchableOpacity, View, ViewProps } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, StyleProp, TouchableOpacity, View, ViewProps } from "react-native";
 import { fetchMovieTitle, Movie } from "../DataLayer";
 import { SearchBar } from "./SearchBar";
 import { MovieCard } from "./MovieCard";
 import constants from "../utils/constants";
 import { db } from "../../db";
-import { CinepinModal } from "./CinepinModal";
-import { CinePinButton } from "./CinePinButton";
 
 export function MovieSearch(props: {
     style?: StyleProp<ViewProps>;
@@ -16,6 +14,17 @@ export function MovieSearch(props: {
     const [search, setSearch] = useState("");
     const [movie, setMovie] = useState<Movie>(null as any);
     const [err, setErr] = useState("");
+    useEffect(() => {
+        if (!err) return;
+        Alert.alert("Attenzione", `Nessun film trovato per ${search}`, [
+            {
+                text: "Chiudi",
+                onPress: () => {
+                    setErr("");
+                }
+            }
+        ]);
+    }, [err]);
     return (
         <View style={props.style}>
             <SearchBar
@@ -29,6 +38,7 @@ export function MovieSearch(props: {
                     setSearch(text);
                 }}
                 onBlur={async () => {
+                    if (!search) return
                     const { err, item } = await fetchMovieTitle(db, search);
                     setErr(err || "");
                     setMovie(item || (null as any));
@@ -40,11 +50,11 @@ export function MovieSearch(props: {
                     <MovieCard movie={movie} />
                 </TouchableOpacity>
             )}
-            {err ? (
-                <CinepinModal isVisible={!!err} message={err}>
-                    <CinePinButton message={"chiudi"} onPress={() => setErr("")} />
-                </CinepinModal>
-            ) : null}
+            {/*{err ? (*/}
+            {/*    <CinepinModal isVisible={!!err} message={err}>*/}
+            {/*        <CinePinButton message={"chiudi"} onPress={() => setErr("")} />*/}
+            {/*    </CinepinModal>*/}
+            {/*) : null}*/}
         </View>
     );
 }
