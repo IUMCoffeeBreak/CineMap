@@ -24,7 +24,6 @@ export function CreateNewScene({ navigation, route }: ViewProps<"Aggiungi scena"
     const routeData = route.params;
     const [sceneTitle, setSceneTitle] = useState("");
     const [sceneLink, setSceneLink] = useState("");
-    const [movieFromRoute, setFromRoute] = useState(false);
 
     const [err, setErr] = useState("");
     const [searchModal, setSearchModal] = useState(true);
@@ -37,7 +36,6 @@ export function CreateNewScene({ navigation, route }: ViewProps<"Aggiungi scena"
     const [isModalMovieVisible, setModalMovieVisible] = useState(false);
     const [search, setSearch] = useState("");
     const [pins, setPins] = useState<Geolocation[]>([]);
-    const [movieAssociations, setMovieAssociations] = useState<ReturnType<typeof db.getMoviesByLocation>>([]);
     const [map, setMap] = useState<MapView>();
 
     const toggleModal = () => {
@@ -50,7 +48,7 @@ export function CreateNewScene({ navigation, route }: ViewProps<"Aggiungi scena"
 
     return (
         <SafeAreaView style={styles.mainContainer}>
-            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{}}>
+            {/*<KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{}}>*/}
                 <View>
                     <Modal
                         isVisible={isModalPinVisible}
@@ -221,7 +219,7 @@ export function CreateNewScene({ navigation, route }: ViewProps<"Aggiungi scena"
                         disabled={!sceneTitle || !sceneLink || _.isEmpty(movie)}
                     />
                 </View>
-            </KeyboardAvoidingView>
+            {/*</KeyboardAvoidingView>*/}
         </SafeAreaView>
     );
 }

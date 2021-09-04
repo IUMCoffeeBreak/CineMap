@@ -113,7 +113,7 @@ const style = StyleSheet.create({
     },
     sceneLink: {
         marginBottom: "2%",
-        fontSize: 25,
+        // fontSize: 18,
         color: "white",
         textAlign: "center",
         backgroundColor: constants.colors.MAIN_GREEN,

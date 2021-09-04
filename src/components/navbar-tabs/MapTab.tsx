@@ -77,7 +77,7 @@ export const romeCoordinates = {
 
 interface State {
     searchErr: string;
-    locationSearchText: string;
+    searchText: string;
     allLocations: Geolocation[];
     searchedLocations: Geolocation[];
     /**
@@ -106,7 +106,7 @@ interface State {
 export class MapTab extends React.Component<ViewProps<"Map">, State> {
     state = {
         searchErr: "",
-        locationSearchText: "",
+        searchText: "",
         allLocations: [],
         searchedLocations: [],
         selectedLocation: null,
@@ -231,12 +231,12 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                         value={
                             this.props.route.params?.movie
                                 ? this.props.route.params.movie.Title
-                                : this.state.locationSearchText
+                                : this.state.searchText
                         }
                         placeholder={`Cerca ${this.state.filterByLocation ? "luogo" : "film"}`}
                         onChangeText={text => {
                             this.setState({
-                                locationSearchText: text,
+                                searchText: text,
                                 showAllLocations: !text,
                                 searchedLocations: []
                             });
@@ -246,7 +246,7 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                             this.setState({ isSearchbarFocused: false });
                             const altitude = 8000;
                             const zoom = altitude;
-                            const q = this.state.locationSearchText.replace(/roma$/i, "") + " roma";
+                            const q = this.state.searchText.replace(/roma$/i, "") + " roma";
                             const locations = (await searchLocation({ q })) || [];
                             // if (!locations || (locations && locations.length === 0)) return console.log("not found"); // todo handle
                             const filteredGeolocations = locations.filter(
@@ -254,7 +254,7 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                             );
                             if (filteredGeolocations.length === 0) {
                                 return this.setState({
-                                    searchErr: `Nessun luogo trovato per "${this.state.locationSearchText}"`
+                                    searchErr: `Nessun luogo trovato per "${this.state.searchText}"`
                                 });
                             }
                             this.setState({
