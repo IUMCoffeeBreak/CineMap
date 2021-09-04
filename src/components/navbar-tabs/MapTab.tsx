@@ -87,7 +87,13 @@ interface State {
      */
     selectedLocation: Geolocation | null;
     showAllLocations: boolean;
+    /**
+     * true quando un film (cercato) non e' stato associato a un pin
+     */
     showUnassociatedMoviesModal: boolean;
+    /**
+     * true quando un pin (cercato) non e' stato associato a un film
+     */
     showUnassociatedPinModal: boolean;
     showSearchedMovieLocations: boolean;
     /**
@@ -95,6 +101,7 @@ interface State {
      */
     searchedMovieLocations: Geolocation[];
     filterByLocation: boolean;
+    searchedMovie?: Movie | null;
     isSearchbarFocused: boolean;
 }
 
@@ -111,7 +118,8 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
         showSearchedMovieLocations: false,
         searchedMovieLocations: [],
         filterByLocation: true,
-        isSearchbarFocused: false
+        isSearchbarFocused: false,
+        searchedMovie: null
     };
     componentDidMount = () => {
         db.onReady().then(() => {
@@ -196,7 +204,7 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                         onPress={() => {
                             this.setState({ showUnassociatedMoviesModal: false }, () => {
                                 this.props.navigation.push("Aggiungi scena", {
-                                    movie: this.props.route.params.movie
+                                    movie: this.state.searchedMovie as any
                                 });
                             });
                         }}
@@ -268,11 +276,18 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                             if (!this.state.filterByLocation)
                                 return this.props.navigation.push("CercaFilm", {
                                     onMovieClick: movie => {
+                                        const movieLocations = db.getLocationsFromMovieId(movie.imdbID)
+                                        if (!movieLocations?.length) {
+                                            return this.setState({showUnassociatedMoviesModal: true})
+                                        }
                                         // todo: cannot pass non serializable data structures, only json
                                         this.props.navigation.push("Map", {
                                             movie,
-                                            movieLocations: db.getLocationsFromMovieId(movie.imdbID)
+                                            movieLocations
                                         });
+                                    },
+                                    onMovieFound: (err, movie) => {
+                                        this.setState({searchedMovie: movie as any})
                                     }
                                 });
                             this.setState({ isSearchbarFocused: true });
