@@ -2,20 +2,32 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { romeCoordinates } from "../navbar-tabs/MapTab";
 import constants from "../../lib/utils/constants";
-import React from "react";
+import React, { useState } from "react";
 import { ViewProps } from "../routeTypings";
 
 export function LocationsMap({ navigation, route }: ViewProps<"Luoghi nel film">) {
     const pins = route.params;
+    const [map, setMap] = useState(null)
     return (
         <>
             <SafeAreaView>
                 <View style={style.mapContainer}>
                     <MapView
+                      ref={m => setMap(m as any)}
                         showsScale={true}
                         zoomControlEnabled={true}
                         showsUserLocation={true}
                         showsCompass={true}
+                        onMapReady={() => {
+                            if (!pins?.length) return
+                            const [pin] = pins;
+                            if (!pin) return;
+                            (map as any)?.animateCamera({
+                                center: { latitude: pin.location!.lat, longitude: pin.location!.lon },
+                                altitude: 8000,
+                                zoom: 8000
+                            });
+                        }}
                         style={style.map}
                         initialRegion={{
                             latitude: romeCoordinates.lat,

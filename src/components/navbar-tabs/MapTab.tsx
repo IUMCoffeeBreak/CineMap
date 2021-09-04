@@ -295,6 +295,9 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                         onMapReady={() => {
                             const movie = this.props.route.params?.movie;
                             // todo: la discriminante dovrebbe essere la lunghezza di this.props.route.params?.movieLocations, non .movie
+                            /**
+                             * se viene dato movie si e' nella ricerca per film e l'array da centrare e' quello delle movieLocations dalle route props
+                             */
                             if (movie) {
                                 const pins = this.props.route.params.movieLocations;
                                 if (!pins?.length) return;

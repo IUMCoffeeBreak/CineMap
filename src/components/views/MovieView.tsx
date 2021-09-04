@@ -5,11 +5,6 @@ import { ViewProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
 import { db } from "../../db";
 import constants from "../../lib/utils/constants";
-import CCarousel from "react-native-snap-carousel";
-import { MovieCard } from "../../lib/components/MovieCard";
-import { map } from "lodash";
-import { Link } from "@react-navigation/native";
-import { color } from "react-native-reanimated";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
