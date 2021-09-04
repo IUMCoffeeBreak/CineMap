@@ -1,5 +1,5 @@
 import React, { LegacyRef } from "react";
-import { Keyboard, Modal, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import MapView, { Marker, UrlTile } from "react-native-maps";
 import constants from "../../lib/utils/constants";
 import { SearchBar } from "../../lib/components/SearchBar";
@@ -82,11 +82,17 @@ interface State {
     locationSearchText: string;
     allLocations: Geolocation[];
     searchedLocations: Geolocation[];
+    /**
+     * location ottenute a partire dalla ricerca di un luogo
+     */
     selectedLocation: Geolocation | null;
     showAllLocations: boolean;
     showUnassociatedMoviesModal: boolean;
     showUnassociatedPinModal: boolean;
     showSearchedMovieLocations: boolean;
+    /**
+     * luoghi associati al film ricercato a partire dalla ricerca per film
+     */
     searchedMovieLocations: Geolocation[];
     filterByLocation: boolean;
     isSearchbarFocused: boolean;
@@ -117,27 +123,28 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
     searchBarRef: LegacyRef<any>;
     map: MapView;
 
-    renderMarkers = (locations: Geolocation[], cb?: (movies: Movie[]) => boolean) => {
-        return locations.map((pin, i) => (
-            <Marker
-                key={`${i}-${pin.display_name}`}
-                coordinate={{ latitude: pin.lat, longitude: pin.lon }}
-                title={pin.display_name}
-                onPress={() => {
-                    this.setState({ selectedLocation: pin });
-                    if (this.props.route.params?.movie)
-                        return this.props.navigation.navigate("Scheda film", {
-                            movie: this.props.route.params.movie
+    renderMarkers = (locations?: Geolocation[], cb?: (movies: Movie[]) => boolean) => {
+        if (locations)
+            return locations.map((pin, i) => (
+                <Marker
+                    key={`${i}-${pin.display_name}`}
+                    coordinate={{ latitude: pin.lat, longitude: pin.lon }}
+                    title={pin.display_name}
+                    onPress={() => {
+                        this.setState({ selectedLocation: pin });
+                        if (this.props.route.params?.movie)
+                            return this.props.navigation.navigate("Scheda film", {
+                                movie: this.props.route.params.movie
+                            });
+                        const moviesInLocation = db.getMoviesByLocation(pin.place_id);
+                        if (cb && !cb(moviesInLocation)) return;
+                        return this.props.navigation.navigate("Film nel luogo", {
+                            pin,
+                            movies: moviesInLocation
                         });
-                    const moviesInLocation = db.getMoviesByLocation(pin.place_id);
-                    if (cb && !cb(moviesInLocation)) return;
-                    return this.props.navigation.navigate("Film nel luogo", {
-                        pin,
-                        movies: moviesInLocation
-                    });
-                }}
-            />
-        ));
+                    }}
+                />
+            ));
     };
 
     movieWithoutPinModal = () => {
@@ -211,72 +218,96 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                     {this.errModal()}
                     {this.movieWithoutPinModal()}
                     {this.unassociatedMoviesModal()}
-                    <SearchBar
-                        // editable={filterByLocation}
-                        ref={r => (this.searchBarRef = r as any)}
-                        style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
-                        safeAreaProps={mapTabStyles.searchBar}
-                        value={this.state.locationSearchText}
-                        placeholder={`Cerca ${this.state.filterByLocation ? "luogo" : "film"}`}
-                        onChangeText={text => {
-                            this.setState({
-                                locationSearchText: text,
-                                showAllLocations: !text,
-                                searchedLocations: []
-                            });
-                            if (text) this.setState({ showSearchedMovieLocations: false });
-                        }}
-                        onBlur={async () => {
-                            this.setState({ isSearchbarFocused: false });
-                            const altitude = 8000;
-                            const zoom = altitude;
-                            const q = this.state.locationSearchText.replace(/roma$/i, "") + " roma";
-                            const locations = (await searchLocation({ q })) || [];
-                            // if (!locations || (locations && locations.length === 0)) return console.log("not found"); // todo handle
-                            const filteredGeolocations = locations.filter(
-                                o => o.importance > constants.map.IMPORTANCE_FILTER_TRESHOLD
-                            );
-                            if (filteredGeolocations.length === 0) {
-                                return this.setState({
-                                    searchErr: `Nessun luogo trovato per "${this.state.locationSearchText}"`
+                    {!this.props.route.params?.movie ? (
+                        <SearchBar
+                            // editable={filterByLocation}
+                            ref={r => (this.searchBarRef = r as any)}
+                            style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
+                            safeAreaProps={mapTabStyles.searchBar}
+                            value={this.state.locationSearchText}
+                            placeholder={`Cerca ${this.state.filterByLocation ? "luogo" : "film"}`}
+                            onChangeText={text => {
+                                this.setState({
+                                    locationSearchText: text,
+                                    showAllLocations: !text,
+                                    searchedLocations: []
                                 });
-                            }
-                            this.setState({
-                                searchedMovieLocations: filteredGeolocations,
-                                showSearchedMovieLocations: true
-                            });
-                            const [pin] = locations;
-                            (this.map as any)?.animateCamera({
-                                center: { latitude: pin.lat, longitude: pin.lon },
-                                altitude,
-                                zoom
-                            });
-                        }}
-                        onFocus={() => {
-                            if (!this.state.filterByLocation) return this.props.navigation.navigate("CercaFilm", {
-                                onMovieClick: movie => {
-                                    // todo: cannot pass non serializable data structures, only json
-                                    this.props.navigation.push("Map" , { movie })
+                                if (text) this.setState({ showSearchedMovieLocations: false });
+                            }}
+                            onBlur={async () => {
+                                this.setState({ isSearchbarFocused: false });
+                                const altitude = 8000;
+                                const zoom = altitude;
+                                const q = this.state.locationSearchText.replace(/roma$/i, "") + " roma";
+                                const locations = (await searchLocation({ q })) || [];
+                                // if (!locations || (locations && locations.length === 0)) return console.log("not found"); // todo handle
+                                const filteredGeolocations = locations.filter(
+                                    o => o.importance > constants.map.IMPORTANCE_FILTER_TRESHOLD
+                                );
+                                if (filteredGeolocations.length === 0) {
+                                    return this.setState({
+                                        searchErr: `Nessun luogo trovato per "${this.state.locationSearchText}"`
+                                    });
                                 }
-                            });
-                            this.setState({ isSearchbarFocused: true });
-                        }}
-                    />
-                    <SegmentedControl
-                        enabled={!this.state.isSearchbarFocused || !this.state.filterByLocation}
-                        values={["Film", "Luogo"]}
-                        style={{ zIndex: 1, backgroundColor: "#ccc", margin: 20, marginTop: 10 }}
-                        selectedIndex={this.state.filterByLocation ? 1 : 0}
-                        onChange={e => {
-                            const isLocationSelected = e.nativeEvent.selectedSegmentIndex === 1;
-                            this.setState({ filterByLocation: isLocationSelected });
-                        }}
-                    />
+                                this.setState({
+                                    searchedMovieLocations: filteredGeolocations,
+                                    showSearchedMovieLocations: true
+                                });
+                                const [pin] = locations;
+                                (this.map as any)?.animateCamera({
+                                    center: { latitude: pin.lat, longitude: pin.lon },
+                                    altitude,
+                                    zoom
+                                });
+                            }}
+                            onFocus={() => {
+                                if (!this.state.filterByLocation)
+                                    return this.props.navigation.push("CercaFilm", {
+                                        onMovieClick: movie => {
+                                            // todo: cannot pass non serializable data structures, only json
+                                            this.props.navigation.push("Map", {
+                                                movie,
+                                                movieLocations: db.getLocationsFromMovieId(movie.imdbID)
+                                            });
+                                        }
+                                    });
+                                this.setState({ isSearchbarFocused: true });
+                            }}
+                        />
+                    ) : null}
+                    {!this.props.route.params?.movie ? (
+                        <SegmentedControl
+                            enabled={!this.state.isSearchbarFocused || !this.state.filterByLocation}
+                            values={["Film", "Luogo"]}
+                            style={{ zIndex: 1, backgroundColor: "#ccc", margin: 20, marginTop: 10 }}
+                            selectedIndex={this.state.filterByLocation ? 1 : 0}
+                            onChange={e => {
+                                const isLocationSelected = e.nativeEvent.selectedSegmentIndex === 1;
+                                this.setState({ filterByLocation: isLocationSelected });
+                            }}
+                        />
+                    ) : null}
                     <MapView
                         showsScale={true}
                         zoomControlEnabled={true}
                         showsUserLocation={true}
                         showsCompass={true}
+                        onMapReady={() => {
+                            const movie = this.props.route.params?.movie;
+                            // todo: la discriminante dovrebbe essere la lunghezza di this.props.route.params?.movieLocations, non .movie
+                            if (movie) {
+                                const pins = this.props.route.params.movieLocations;
+                                if (!pins?.length) return;
+                                const [pin] = pins;
+                                const altitude = 8000;
+                                const zoom = altitude;
+                                (this.map as any)?.animateCamera({
+                                    center: { latitude: pin.lat, longitude: pin.lon },
+                                    altitude,
+                                    zoom
+                                });
+                            }
+                        }}
                         ref={m => (this.map = m as any)}
                         style={mapTabStyles.map}
                         initialRegion={{
@@ -291,8 +322,7 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                             maximumZ={19}
                             flipY={false}
                         />
-                        {this.renderMarkers(this.state.searchedLocations, movies => {
-                            console.log(">>>>", movies);
+                        {this.renderMarkers(this.props.route.params?.movieLocations, movies => {
                             if (movies.length > 0) return true;
                             this.setState({ showUnassociatedPinModal: true });
                             return false;
