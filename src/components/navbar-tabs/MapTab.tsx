@@ -1,5 +1,5 @@
 import React, { LegacyRef } from "react";
-import { Alert, Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import { Alert, Keyboard, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import MapView, { Marker, UrlTile } from "react-native-maps";
 import constants from "../../lib/utils/constants";
 import { SearchBar } from "../../lib/components/SearchBar";
@@ -7,10 +7,8 @@ import { SafeAreaView } from "../../lib/components/SafeAreaView";
 import { Geolocation, searchLocation } from "../../lib/geolocation";
 import { db } from "../../db";
 import { ViewProps } from "../routeTypings";
-import { CinePinButton } from "../../lib/components/CinePinButton";
 import { Movie } from "../../lib/DataLayer";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
-import { CinepinModal } from "../../lib/components/CinepinModal";
 
 const mapTabStyles = StyleSheet.create({
     map: {
@@ -200,31 +198,23 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
      * cerca by film
      */
     unassociatedMoviesModal = () => {
-        return (
-            <CinepinModal
-                isVisible={this.state.showUnassociatedMoviesModal}
-                message={"Questo film non è ancora stato inserito sulla mappa"}
-            >
-                <View style={{ flexDirection: "row" }}>
-                    <CinePinButton
-                        message={"Aggiungi scena"}
-                        style={{ margin: 10 }}
-                        onPress={() => {
-                            this.setState({ showUnassociatedMoviesModal: false }, () => {
-                                this.props.navigation.push("Aggiungi scena", {
-                                    movie: this.state.searchedMovie as any
-                                });
-                            });
-                        }}
-                    />
-                    <CinePinButton
-                        style={{ margin: 10 }}
-                        message={"Chiudi"}
-                        onPress={() => this.setState({ showUnassociatedMoviesModal: false })}
-                    />
-                </View>
-            </CinepinModal>
-        );
+        if (!this.state.searchedMovie) return;
+        Alert.alert("Attenzione", "Questo film non è ancora stato inserito sulla mappa", [
+            {
+                text: "Aggiungi scena",
+                onPress: () => {
+                    this.setState({ showUnassociatedMoviesModal: false }, () => {
+                        this.props.navigation.push("Aggiungi scena", {
+                            movie: this.state.searchedMovie as any
+                        });
+                    });
+                }
+            },
+            {
+                text: "Chiudi",
+                onPress: () => this.setState({ showUnassociatedPinModal: false, selectedLocation: null })
+            }
+        ]);
     };
 
     render = () => {
@@ -232,7 +222,6 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <SafeAreaView>
                     {this.errModal()}
-                    {this.unassociatedMoviesModal()}
 
                     <SearchBar
                         editable={!this.props.route.params?.movie}
@@ -285,6 +274,8 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                                     onMovieClick: movie => {
                                         const movieLocations = db.getLocationsFromMovieId(movie.imdbID);
                                         if (!movieLocations?.length) {
+                                            this.unassociatedMoviesModal();
+                                            // this.setState({ searchedMovie: null });
                                             return this.setState({ showUnassociatedMoviesModal: true });
                                         }
                                         // todo: cannot pass non serializable data structures, only json
@@ -351,7 +342,7 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                             flipY={false}
                         />
                         {this.renderMarkers(this.props.route.params?.movieLocations, movies => {
-                            if (movies.length > 0) return
+                            if (movies.length > 0) return;
                             this.setState({ showUnassociatedPinModal: true });
                         })}
                         {this.state.showSearchedMovieLocations
