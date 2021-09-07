@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-around"
     },
     locationContainer: {
-        justifyContent: "center"
+        // justifyContent: "center"
     },
     locationLabel: {
         justifyContent: "space-around",
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     },
     filmContainer: {
         marginTop: "5%",
-        height: 245
+        // height: 245
         // marginBottom: "20%"
     },
     movieSearch: {
