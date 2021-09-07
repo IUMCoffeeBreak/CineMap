@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FilmCard } from "../../lib/components/FilmCard";
 import { ViewProps } from "../routeTypings";
 import { CinePinButton } from "../../lib/components/CinePinButton";
@@ -28,16 +28,30 @@ export function AssociationsList({ route, navigation }: ViewProps<"Film nel luog
                 </View>
                 <View style={style.bodyContainer}>
                     <ScrollView>
-                        {movies.map((movie, id) => {
-                            return (
-                                <TouchableOpacity
-                                    key={id}
-                                    onPress={() => navigation.navigate("Scheda film", { movie })}
-                                >
-                                    <FilmCard title={movie.Title} preview={movie.Poster} />
-                                </TouchableOpacity>
-                            );
-                        })}
+                        <FlatList
+                            data={movies}
+                            ItemSeparatorComponent={() => (
+                                <View
+                                    style={{
+                                        height: 1,
+                                        width: "65%",
+                                        backgroundColor: "rgba(0, 0, 0, .5)",
+                                        marginLeft: "auto",
+                                        marginRight: "5%"
+                                    }}
+                                />
+                            )}
+                            renderItem={({ item: movie }) => {
+                                return (
+                                    <TouchableOpacity
+                                        key={movie.imdbID}
+                                        onPress={() => navigation.navigate("Scheda film", { movie })}
+                                    >
+                                        <FilmCard title={movie.Title} preview={movie.Poster} />
+                                    </TouchableOpacity>
+                                );
+                            }}
+                        />
                     </ScrollView>
                 </View>
                 <View style={style.footerContainer}>
