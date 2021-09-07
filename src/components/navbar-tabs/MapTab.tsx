@@ -229,9 +229,7 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                         style={{ marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10 }}
                         safeAreaProps={mapTabStyles.searchBar}
                         value={
-                            this.props.route.params?.movie
-                                ? this.props.route.params.movie.Title
-                                : this.state.searchText
+                            this.props.route.params?.movie ? this.props.route.params.movie.Title : this.state.searchText
                         }
                         placeholder={`Cerca ${this.state.filterByLocation ? "luogo" : "film"}`}
                         onChangeText={text => {
@@ -299,7 +297,12 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                             selectedIndex={this.state.filterByLocation ? 1 : 0}
                             onChange={e => {
                                 const isLocationSelected = e.nativeEvent.selectedSegmentIndex === 1;
-                                this.setState({ filterByLocation: isLocationSelected });
+                                this.setState({
+                                    filterByLocation: isLocationSelected,
+                                    searchText: "",
+                                    showAllLocations: true,
+                                    showSearchedMovieLocations: false
+                                });
                             }}
                         />
                     ) : null}
