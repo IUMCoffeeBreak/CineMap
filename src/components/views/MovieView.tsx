@@ -40,7 +40,9 @@ export function MovieView({ route, navigation }: ViewProps<"Scheda film">) {
                 <View style={style.card}>
                     <Text style={style.plot}>{movie.Plot}</Text>
                 </View>
-
+                <View style={{padding: 10}}>
+                    <Text style={{ ...style.title, fontWeight: "500" }}>Scene</Text>
+                </View>
                 <View style={style.bodyContainer}>
                     <ScrollView style={style.scrollTabs}>
                         {associations.map(movieProps => {
