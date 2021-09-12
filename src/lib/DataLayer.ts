@@ -1,5 +1,5 @@
 import constants from "./utils/constants";
-import { Geolocation } from "./geolocation";
+import { Geolocation, searchLocation } from "./geolocation";
 import RNFS, { readFile, writeFile } from "react-native-fs";
 import EventEmitter from "events";
 
@@ -196,11 +196,26 @@ export class DataLayer extends EventEmitter {
                 this.locationModel.setData(data.locations);
                 this.ready = true;
                 this.emit("ready");
+            }, async e => {
+                console.error("db init error", e.toString());
+                await this.initDemoData()
+            }).catch(e=>{
+                console.error("init demo data error:", e.toString())
             })
-            .catch(e => {
-                console.debug("db init error", e.message);
-            });
         setInterval(this.writeToDisk.bind(this), writePollInterval || 60000);
+    }
+
+    async initDemoData() {
+        const {item: laDolceVita} = await this.searchMovieTitle("la dolce vita");
+        const {item: angelsAndDemons} = await this.searchMovieTitle("Angels & Demons");
+        const [fontanaDiTrevi] = await searchLocation({ q: "fontana di trevi roma" });
+        const [piazzaDelPopolo] = await searchLocation({ q: "piazza del popolo roma" });
+        const [vaticano] = await searchLocation({ q: "basilica san pietro roma" });
+        const [pantheon] = await searchLocation({ q: "pantheon roma" });
+        this.createMovieLocationAssociation({movie: laDolceVita as Movie, location: fontanaDiTrevi, scene_name: "Marcello come here", scene_video_link: "https://youtu.be/hiBcONS1HVI"});
+        this.createMovieLocationAssociation({movie: laDolceVita as Movie, location: piazzaDelPopolo, scene_name: "Marcello e Maddalena", scene_video_link: "https://youtu.be/g145TIVjMjM"});
+        this.createMovieLocationAssociation({movie: angelsAndDemons as Movie, location: pantheon, scene_name: "La rivelazione del professor Langdon", scene_video_link: "https://youtu.be/99dOPdlLIw0"});
+        this.createMovieLocationAssociation({movie: angelsAndDemons as Movie, location: vaticano, scene_name: "Esplosione a Piazza San Pietro", scene_video_link: "https://youtu.be/0VJDUOkbLa4"});
     }
 
     async onReady() {
@@ -209,7 +224,7 @@ export class DataLayer extends EventEmitter {
     }
 
     async searchMovieTitle(text: string): Promise<Response<Movie>> {
-        console.log(`searching ${text} ...`);
+        console.log(`searching movie ${text} ...`);
         const dbSearch = this.movieModel.searchTitle(text);
         if (dbSearch) return { item: dbSearch };
         console.debug("movie not found in internal db...");

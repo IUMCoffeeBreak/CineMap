@@ -26,7 +26,7 @@ export interface Geolocation {
     icon: string;
 }
 
-export async function searchLocation(props: SearchProps): Promise<Geolocation[] | null> {
+export async function searchLocation(props: SearchProps): Promise<Geolocation[]> {
     props.format = props.format || "json";
     const url = `https://nominatim.openstreetmap.org/search?${buildQs(props)}`;
     try {
@@ -41,9 +41,10 @@ export async function searchLocation(props: SearchProps): Promise<Geolocation[] 
             geo.lat = Number(geo.lat);
             geo.lon = Number(geo.lon);
             return geo;
-        });
+        })
     } catch (e) {
         console.error("search location error:", e);
-        return null;
+        // ignore typescript warning if Geolocation[] type is not returned
+        return undefined as any
     }
 }
