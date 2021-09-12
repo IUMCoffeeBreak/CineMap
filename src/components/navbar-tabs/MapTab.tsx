@@ -120,6 +120,7 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
         searchedMovie: null
     };
     componentDidMount = () => {
+        if (this.props.route.params?.movie) this.setState({showAllLocations: false})
         db.onReady().then(() => {
             const locations = db.getAllRegisteredLocations();
             this.setState({ allLocations: locations });
