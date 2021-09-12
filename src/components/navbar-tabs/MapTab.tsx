@@ -240,6 +240,7 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                             });
                             if (text) this.setState({ showSearchedMovieLocations: false });
                         }}
+                        clearButtonMode={!this.props.route.params?.movie ? 'never' : 'while-editing'}
                         onBlur={async () => {
                             this.setState({ isSearchbarFocused: false });
                             const altitude = 8000;
@@ -257,7 +258,7 @@ export class MapTab extends React.Component<ViewProps<"Map">, State> {
                             }
                             this.setState({
                                 searchedMovieLocations: filteredGeolocations,
-                                showSearchedMovieLocations: true
+                                showSearchedMovieLocations: !!this.state.searchText
                             });
                             const [pin] = locations;
                             (this.map as any)?.animateCamera({

@@ -214,7 +214,7 @@ export class DataLayer extends EventEmitter {
         const { item: laDolceVita } = await this.searchMovieTitle("la dolce vita");
         const { item: angelsAndDemons } = await this.searchMovieTitle("Angels & Demons");
         const { item: theTalentedMrRipley } = await this.searchMovieTitle("The talented Mr. Ripley");
-        const { item: romanHoliday } = await this.searchMovieTitle("Roman Hoiday");
+        const { item: romanHoliday } = await this.searchMovieTitle("Roman Holiday");
         const { item: totoTruffa } = await this.searchMovieTitle("totòtruffa 62");
         const { item: habemusPapam } = await this.searchMovieTitle("habemus papam");
         const { item: smettoQuandoVoglio } = await this.searchMovieTitle("smetto quando voglio");
@@ -229,12 +229,11 @@ export class DataLayer extends EventEmitter {
         const [fontanaDiTrevi] = await searchLocation({ q: "fontana di trevi roma" });
         const [pantheon] = await searchLocation({ q: "pantheon roma" });
         const [vaticano] = await searchLocation({ q: "basilica san pietro roma" });
-        const [basilicaDiSanPietro] = await searchLocation({ q: "basilica di san pietro in vaticano" });
         const [boccaDellaVerita] = await searchLocation({ q: "bocca della verita" });
         const [galleriaColonna] = await searchLocation({ q: "galleria colonna" });
         const [piazzaDellaMinerva] = await searchLocation({ q: "piazzale della Minerva" });
-        const [facolataChimica] = await searchLocation({ q: "facoltà di chimica, Sapienza università di Roma" });
-        const [villaAdriana] = await searchLocation({ q: "villa Adriana, Tivoli" });
+        const [facolataChimica] = await searchLocation({ q: "sapienza universita" });
+        const [villaAdriana] = await searchLocation({ q: "villa adriana tivoli" });
         const [ostiaLido] = await searchLocation({ q: "ostia lido" });
         const [piazzaNavona] = await searchLocation({ q: "piazza Navona" });
         const [piazzaDiSpagna] = await searchLocation({ q: "piazza di spagna" });
@@ -261,12 +260,6 @@ export class DataLayer extends EventEmitter {
             movie: angelsAndDemons as Movie,
             location: vaticano,
             scene_name: "Esplosione a Piazza San Pietro",
-            scene_video_link: "https://youtu.be/0VJDUOkbLa4"
-        });
-        this.createMovieLocationAssociation({
-            movie: angelsAndDemons as Movie,
-            location: basilicaDiSanPietro,
-            scene_name: "Esplosione a pizza San Pietro",
             scene_video_link: "https://youtu.be/0VJDUOkbLa4"
         });
         this.createMovieLocationAssociation({
@@ -307,7 +300,7 @@ export class DataLayer extends EventEmitter {
         });
         this.createMovieLocationAssociation({
             movie: habemusPapam as Movie,
-            location: basilicaDiSanPietro,
+            location: vaticano,
             scene_name: "Conecetto di anima e inconscio",
             scene_video_link: "https://youtu.be/0VJDUOkbLa4"
         });
