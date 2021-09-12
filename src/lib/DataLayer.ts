@@ -194,7 +194,7 @@ export class DataLayer extends EventEmitter {
                 this.movieLocAssocModel.setData(data.movieLocationAssoc);
                 this.movieModel.setData(data.movie);
                 this.locationModel.setData(data.locations);
-                this.ready = false;
+                this.ready = true;
                 this.emit("ready");
             })
             .catch(e => {
