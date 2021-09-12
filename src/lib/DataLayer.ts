@@ -222,7 +222,7 @@ export class DataLayer extends EventEmitter {
         const { item: smettoQuandoVoglioMasterclass } = await this.searchMovieTitle(
             "smetto quando voglio: Masterclass"
         );
-        const { item: laGrandeBellezza } = await this.searchMovieTitle("the Great Beauty");
+        const { item: laGrandeBellezza } = await this.searchMovieTitle("la grande bellezza");
         const { item: nonEssereCattivo } = await this.searchMovieTitle("Non essere cattivo");
 
         const [piazzaDelPopolo] = await searchLocation({ q: "piazza del popolo roma" });
