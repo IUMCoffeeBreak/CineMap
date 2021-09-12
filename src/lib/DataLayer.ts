@@ -190,32 +190,163 @@ export class DataLayer extends EventEmitter {
     constructor(writePollInterval?: number) {
         super();
         this.loadDbFromDisk()
-            .then(data => {
-                this.movieLocAssocModel.setData(data.movieLocationAssoc);
-                this.movieModel.setData(data.movie);
-                this.locationModel.setData(data.locations);
-                this.ready = true;
-                this.emit("ready");
-            }, async e => {
-                console.error("db init error", e.toString());
-                await this.initDemoData()
-            }).catch(e=>{
-                console.error("init demo data error:", e.toString())
-            })
+            .then(
+                data => {
+                    this.movieLocAssocModel.setData(data.movieLocationAssoc);
+                    this.movieModel.setData(data.movie);
+                    this.locationModel.setData(data.locations);
+                    this.ready = true;
+                    this.emit("ready");
+                },
+                async e => {
+                    console.error("db init error", e.toString());
+                    await this.initDemoData();
+                }
+            )
+            .catch(e => {
+                console.error("init demo data error:", e.toString());
+            });
         setInterval(this.writeToDisk.bind(this), writePollInterval || 60000);
     }
 
     async initDemoData() {
-        const {item: laDolceVita} = await this.searchMovieTitle("la dolce vita");
-        const {item: angelsAndDemons} = await this.searchMovieTitle("Angels & Demons");
-        const [fontanaDiTrevi] = await searchLocation({ q: "fontana di trevi roma" });
+        //la dolce vita
+        const { item: laDolceVita } = await this.searchMovieTitle("la dolce vita");
+        const { item: angelsAndDemons } = await this.searchMovieTitle("Angels & Demons");
+        const { item: theTalentedMrRipley } = await this.searchMovieTitle("The talented Mr. Ripley");
+        const { item: romanHoliday } = await this.searchMovieTitle("Roman Hoiday");
+        const { item: totoTruffa } = await this.searchMovieTitle("totòtruffa 62");
+        const { item: habemusPapam } = await this.searchMovieTitle("habemus papam");
+        const { item: smettoQuandoVoglio } = await this.searchMovieTitle("smetto quando voglio");
+        const { item: smettoQuandoVoglioAdHonorem } = await this.searchMovieTitle("smetto quando voglio: ad Honorem");
+        const { item: smettoQuandoVoglioMasterclass } = await this.searchMovieTitle(
+            "smetto quando voglio: Masterclass"
+        );
+        const { item: laGrandeBellezza } = await this.searchMovieTitle("the Great Beauty");
+        const { item: nonEssereCattivo } = await this.searchMovieTitle("Non essere cattivo");
+
         const [piazzaDelPopolo] = await searchLocation({ q: "piazza del popolo roma" });
-        const [vaticano] = await searchLocation({ q: "basilica san pietro roma" });
+        const [fontanaDiTrevi] = await searchLocation({ q: "fontana di trevi roma" });
         const [pantheon] = await searchLocation({ q: "pantheon roma" });
-        this.createMovieLocationAssociation({movie: laDolceVita as Movie, location: fontanaDiTrevi, scene_name: "Marcello come here", scene_video_link: "https://youtu.be/hiBcONS1HVI"});
-        this.createMovieLocationAssociation({movie: laDolceVita as Movie, location: piazzaDelPopolo, scene_name: "Marcello e Maddalena", scene_video_link: "https://youtu.be/g145TIVjMjM"});
-        this.createMovieLocationAssociation({movie: angelsAndDemons as Movie, location: pantheon, scene_name: "La rivelazione del professor Langdon", scene_video_link: "https://youtu.be/99dOPdlLIw0"});
-        this.createMovieLocationAssociation({movie: angelsAndDemons as Movie, location: vaticano, scene_name: "Esplosione a Piazza San Pietro", scene_video_link: "https://youtu.be/0VJDUOkbLa4"});
+        const [vaticano] = await searchLocation({ q: "basilica san pietro roma" });
+        const [basilicaDiSanPietro] = await searchLocation({ q: "basilica di san pietro in vaticano" });
+        const [boccaDellaVerita] = await searchLocation({ q: "bocca della verita" });
+        const [galleriaColonna] = await searchLocation({ q: "galleria colonna" });
+        const [piazzaDellaMinerva] = await searchLocation({ q: "piazzale della Minerva" });
+        const [facolataChimica] = await searchLocation({ q: "facoltà di chimica, Sapienza università di Roma" });
+        const [villaAdriana] = await searchLocation({ q: "villa Adriana, Tivoli" });
+        const [ostiaLido] = await searchLocation({ q: "ostia lido" });
+        const [piazzaNavona] = await searchLocation({ q: "piazza Navona" });
+        const [piazzaDiSpagna] = await searchLocation({ q: "piazza di spagna" });
+
+        this.createMovieLocationAssociation({
+            movie: laDolceVita as Movie,
+            location: fontanaDiTrevi,
+            scene_name: "Marcello come here",
+            scene_video_link: "https://youtu.be/hiBcONS1HVI"
+        });
+        this.createMovieLocationAssociation({
+            movie: laDolceVita as Movie,
+            location: piazzaDelPopolo,
+            scene_name: "Marcello e Maddalena",
+            scene_video_link: "https://youtu.be/g145TIVjMjM"
+        });
+        this.createMovieLocationAssociation({
+            movie: angelsAndDemons as Movie,
+            location: pantheon,
+            scene_name: "La rivelazione del professor Langdon",
+            scene_video_link: "https://youtu.be/99dOPdlLIw0"
+        });
+        this.createMovieLocationAssociation({
+            movie: angelsAndDemons as Movie,
+            location: vaticano,
+            scene_name: "Esplosione a Piazza San Pietro",
+            scene_video_link: "https://youtu.be/0VJDUOkbLa4"
+        });
+        this.createMovieLocationAssociation({
+            movie: angelsAndDemons as Movie,
+            location: basilicaDiSanPietro,
+            scene_name: "Esplosione a pizza San Pietro",
+            scene_video_link: "https://youtu.be/0VJDUOkbLa4"
+        });
+        this.createMovieLocationAssociation({
+            movie: theTalentedMrRipley as Movie,
+            location: piazzaDiSpagna,
+            scene_name: "Tom e Marge",
+            scene_video_link: "https://youtu.be/8XFaJzA7S7o"
+        });
+        this.createMovieLocationAssociation({
+            movie: romanHoliday as Movie,
+            location: piazzaDiSpagna,
+            scene_name: "La principessa",
+            scene_video_link: "https://youtu.be/mUZ8lgaBoSU"
+        });
+        this.createMovieLocationAssociation({
+            movie: romanHoliday as Movie,
+            location: pantheon,
+            scene_name: "Champagne a colazione",
+            scene_video_link: "https://youtu.be/MpyXOFJHZHY"
+        });
+        this.createMovieLocationAssociation({
+            movie: romanHoliday as Movie,
+            location: boccaDellaVerita,
+            scene_name: "Joe spaventa la principessa",
+            scene_video_link: "https://youtu.be/None37_vatw"
+        });
+        this.createMovieLocationAssociation({
+            movie: romanHoliday as Movie,
+            location: galleriaColonna,
+            scene_name: "La scelta della principessa",
+            scene_video_link: "https://youtu.be/ZDlrDueT-mg"
+        });
+        this.createMovieLocationAssociation({
+            movie: totoTruffa as Movie,
+            location: fontanaDiTrevi,
+            scene_name: "Il cavalier Trevi vende la fontana di Trevi",
+            scene_video_link: "https://youtu.be/0BybcKpxdS8"
+        });
+        this.createMovieLocationAssociation({
+            movie: habemusPapam as Movie,
+            location: basilicaDiSanPietro,
+            scene_name: "Conecetto di anima e inconscio",
+            scene_video_link: "https://youtu.be/0VJDUOkbLa4"
+        });
+        this.createMovieLocationAssociation({
+            movie: smettoQuandoVoglio as Movie,
+            location: piazzaDellaMinerva,
+            scene_name: "Ricercatori",
+            scene_video_link: "https://youtu.be/qgWBm_je-ug"
+        });
+        this.createMovieLocationAssociation({
+            movie: smettoQuandoVoglioAdHonorem as Movie,
+            location: piazzaDellaMinerva,
+            scene_name: "Bomba alla Sapienza",
+            scene_video_link: "https://youtu.be/VMhjcZs7AgA"
+        });
+        this.createMovieLocationAssociation({
+            movie: smettoQuandoVoglioAdHonorem as Movie,
+            location: facolataChimica,
+            scene_name: "Confronto tra Pietro e Walter",
+            scene_video_link: "https://youtu.be/jNuycD08rCY"
+        });
+        this.createMovieLocationAssociation({
+            movie: smettoQuandoVoglioMasterclass as Movie,
+            location: villaAdriana,
+            scene_name: "Ma che sono strade di Roma queste?",
+            scene_video_link: "https://www.youtube.com/watch?v=KigfN2WYfHE"
+        });
+        this.createMovieLocationAssociation({
+            movie: laGrandeBellezza as Movie,
+            location: piazzaNavona,
+            scene_name: "Il monologo di Jep",
+            scene_video_link: "https://youtu.be/IiJgy6Xst7I"
+        });
+        this.createMovieLocationAssociation({
+            movie: nonEssereCattivo as Movie,
+            location: ostiaLido,
+            scene_name: "Io sto incazzato fracico e te te stai a magna il gelato",
+            scene_video_link: "https://youtu.be/ItgwJy4U9hM"
+        });
     }
 
     async onReady() {
